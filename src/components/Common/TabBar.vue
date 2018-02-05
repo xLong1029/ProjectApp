@@ -47,7 +47,7 @@
 					{
 						routeName: "ProjectNews",
 						class: "icon-project-list",
-						title: "申报信息",
+						title: "申报资讯",
 						submenu: []
 					},
 					{
