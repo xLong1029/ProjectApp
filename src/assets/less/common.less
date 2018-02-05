@@ -1,0 +1,298 @@
+@charset "utf-8";
+
+/*HTML文档常规设置*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/*100 ÷ 16 × 100% = 625% 谷歌浏览器不兼容最小10px默认为12px，改成100px的相对字体大小可解决*/
+
+html {
+    font-size: 625%;
+}
+
+body {
+    width: 100%;
+    -webkit-text-size-adjust: none;
+    color: @ft_base_color;
+    font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    background: #fff;
+    font-size: 14*@rem;
+    line-height: 1.5;
+}
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, nav, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+}
+
+article, aside, details,
+figcaption, figure, footer,
+nav, hgroup, menu, nav,
+section {
+    display: block;
+}
+
+p {
+    margin-bottom: 15*@rem;
+}
+
+
+/*设置列表标签通用样式*/
+
+ul,
+ol {
+    list-style: none;
+    list-style-image: none;
+    li {
+        list-style: none;
+    }
+}
+
+
+/*设置超链接标签通用样式*/
+
+a {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    text-decoration: none;
+    background: transparent;
+    vertical-align: baseline;
+    color: #333;
+    &:hover {
+        color: @base_color;
+    }
+    &.disabled {
+        cursor: default;
+    }
+}
+
+
+/*设置超链接标签通用样式*/
+
+img {
+    border: 0;
+    height: auto;
+    width: 100%;
+    -ms-interpolation-mode: bicubic;
+}
+
+
+/* 设置输入框通用样式 */
+
+input[type="text"],
+input[type="password"],
+textarea {
+    border: @border_deep;
+    outline: none;
+    width: 100%;
+    margin-bottom: 15*@rem;
+    font-size: @base_ft_size;
+    font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    .border_radius_4;
+}
+
+input[type="text"],
+input[type="password"] {
+    text-indent: 10px;
+}
+
+textarea {
+    padding: 10*@rem;
+}
+
+button,
+input {
+    display: block;
+    outline: none;
+    font-size: @base_ft_size;
+    height: 70*@half_rem;
+    line-height: 70*@half_rem;
+    font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    .border_radius_4;
+}
+
+
+/* 设置按钮通用样式 */
+
+button,
+input[type="button"],
+input[type="submit"] {
+    border: none;
+    background: @base_color;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+/* 设置浮动类型 */
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+
+/* 设置清除浮动类型 */
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: '.';
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    height: 0;
+}
+
+
+/* page setting */
+
+.fullwidth {
+    width: 100%;
+}
+
+.edge_frame {
+    padding-left: @edge_w;
+    padding-right: @edge_w;
+}
+
+.content {
+    margin-top: @navbar_h;
+    margin-bottom: @tabbar_h;
+}
+
+
+/* wrapper */
+
+.wrapper {
+    width: 100%;
+    // vh是相对于视口的高度。视口被均分为100单位的vh
+    min-height: 100vh;
+    margin: 0 auto;
+    background: #fff;
+    position: relative;
+    overflow-x: hidden;
+}
+
+
+/* push_body */
+
+.push_body {
+    overflow-x: hidden;
+    position: relative;
+    left: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.push_body_toright {
+    left: 480*@half_rem;
+}
+
+
+/* icon-list-next */
+
+.icon-list-next {
+    display: block;
+    float: right;
+    margin-top: HalfRem(26px);
+    // 因为是App.vue引用该公用样式，所以路径只需要./
+    // background: url("./assets/images/icon-list-next.png") no-repeat;
+    background-size: 100%;
+    width: 18*@half_rem;
+    height: 30*@half_rem;
+}
+
+
+/* layout */
+
+@media screen and (min-width: 375px) {
+    /* solution */
+    .solution-list {
+        .solution-desc {
+            width: 68%;
+        }
+    }
+}
+
+@media screen and (min-width: 414px) {
+    // 动态修改字体大小
+    html {
+        font-size: 690%; // 414/375*625%
+    }
+    /* solution */
+    .solution-list {
+        p {
+            font-size: @base_ft_size;
+        }
+    }
+}
+
+@media screen and (min-width: 480px) {
+    html {
+        font-size: 800%; // 480/375*625%
+    }
+}
+
+@media screen and (min-width: 640px) {
+    html {
+        font-size: 938%; // 1.5*625%
+    }
+}
+
+@media screen and (min-width: 768px) {
+    /* solution */
+    .solution-list {
+        .solution-desc {
+            width: 70%;
+        }
+    }
+}
+
+@media screen and (min-width: 960px) {
+    body {
+        background: #eee;
+    }
+    .wrapper {
+        width: @wrapper_max_w;
+    }
+    .edge_frame {
+        padding-left: 30*@half_rem;
+        padding-right: 30*@half_rem;
+    }
+    .push_body_toright {
+        left: 0;
+    }
+}

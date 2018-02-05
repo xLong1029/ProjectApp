@@ -1,0 +1,71 @@
+@charset "utf-8";
+
+/* 相对缩放设置 */
+
+// 根字体大小(单位px)
+@root_ft_size : 100;
+// 单位px转换rem
+@rem: 1rem/ @root_ft_size;
+// 平时切图,可能要按照比例来,字体大小\行高之类的可能就取设计稿大小的一半,为了节省计算时间设置一个half_rem
+@half_rem: 0.5rem/ @root_ft_size;
+
+/* 字体大小 */
+
+// 默认字体大小
+@base_ft_size : 14*@rem;
+
+/* 颜色 */
+
+// 页面主色
+@base_color : #3B89C0;
+// 侧边栏浮动背景颜色
+@sidebar_hover_color: #adecff;
+
+// 默认字体颜色
+@ft_base_color : #333;
+// 介绍字体颜色
+@ft_desc_color: #666;
+// 英文小字颜色
+@ft_eng_color : #b5b5b5;
+// 灰色字体颜色
+@ft_gray_color: #888;
+
+/* 间距高宽*/
+
+// 页面边距
+@edge_w : 16*@half_rem;
+// 导航栏高度
+@navbar_h : 80*@half_rem;
+// 标签栏高度
+@tabbar_h : 86*@half_rem;
+// 页面最大宽度
+@wrapper_max_w: 640px;
+
+/* 边框 */
+
+// 深边框
+@border_deep : 1px solid #ccc;
+// 浅边框
+@border_light : 1px solid #eee;
+
+/* Mixin */
+
+// 圆角设置
+.border_radius(@radius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    -o-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.border_radius_4 {
+    .border_radius(4px);
+}
+
+.border_radius_6 {
+    .border_radius(6px);
+}
+
+.border_radius_8 {
+    .border_radius(8px);
+}
