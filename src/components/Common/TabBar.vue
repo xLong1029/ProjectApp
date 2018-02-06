@@ -4,14 +4,14 @@
 			<!-- 通过 tab定义的route值 和 路由定义名称 是否一致来判断当前页，是则添加class=on激活当前页样式 -->
 			<li v-for="(item, index) in menu" :key="index" :class="['tabbar_menu', item.routeName === $route.name ? 'on' : '']" :style="{ width:menuItemW }">				
 				<!-- 含二级菜单的一级菜单 -->
-				<div v-if="item.submenu.length > 0" class="menu_item">
-					<div @click="showSubmenu(index)">
+				<div v-if="item.submenu.length > 0" class="menu_item" @click="showSubmenu(index)">
+					<div>
 						<i :class="['menu_icon',item.class]"></i>
 						<span class="menu_title">{{ item.title }}</span>
 					</div>
 					<!-- 二级菜单 -->
 					<div class="tabbar_submenu">
-						<span class="trangle_down"></span>
+						<span class="trangle_down"><em></em></span>
 						<ul>
 							<li class="submenu" v-for="(subitem, i) in item.submenu" :key="i">
 								<router-link :to="{ name: subitem.routeName }" class="submenu_item">{{ subitem.title }}</router-link>
@@ -20,10 +20,10 @@
 					</div>
 				</div>
 				<!-- 一级菜单 -->
-				<router-link v-else :to="{ name: item.routeName }" class="menu_item">
+				<div v-else class="menu_item" @click="showPage(index, item.routeName)">
 					<i :class="['menu_icon', item.class]"></i>
 					<span class="menu_title">{{ item.title }}</span>
-				</router-link>
+				</div>
 			</li>
 		</ul>
   </nav>
@@ -31,6 +31,7 @@
 
 <script>
 	import $ from "jquery";
+	import Common from 'common/common.js'
 
 	export default {
 		name: "tabBar",
@@ -46,14 +47,14 @@
 					},
 					{
 						routeName: "ProjectNews",
-						class: "icon-project-list",
+						class: "icon-news",
 						title: "申报资讯",
 						submenu: []
 					},
 					{
-						routeName: "NewsCenter",
-						class: "icon-news",
-						title: "新闻资讯",
+						routeName: "SuccCases",
+						class: "icon-case",
+						title: "成功案例",
 						submenu: []
 					},
 					{
@@ -83,6 +84,30 @@
 			// 显示二级菜单
 			showSubmenu(index) {
 				$(".menu_item").eq(index).find(".tabbar_submenu").toggle();
+
+				// 判断是否需要激活样式
+				let tabbarM = $(".tabbar_menu").eq(index);
+				if(tabbarM.hasClass('on')){
+					tabbarM.removeClass('on');
+					for(let i = 0; i < this.menu.length; i++){
+						if(this.$route.name == this.menu[i].routeName){
+							$(".tabbar_menu").eq(i).addClass('on');
+						}
+					}
+				}
+				else{
+					tabbarM.addClass('on').siblings().removeClass('on');
+				}
+			},
+			// 显示页面
+			showPage(index, routeName){	
+				if(routeName){
+					Common.gotoPage(routeName, {}, this);
+					// 移除菜单样式
+					$(".tabbar_menu").eq(index).addClass('on').siblings().removeClass('on');
+				}
+				// 隐藏所有二级菜单
+				$(".tabbar_submenu").hide();
 			}
 		}
 	};
@@ -96,9 +121,9 @@
 
 	.tabbar {
 		height: @tabbar_h;
-		background: @base_color;
+		background: #fff;
 		bottom: 0;
-		border-top: 1px solid @base_color;
+		border-top: @border_deep;
 		font-size: 12*@rem;
 		width: 100%;
 		position: fixed;
@@ -113,10 +138,6 @@
 			height: 86*@half_rem;
 		}
 
-		.tabbar_menu.on {
-			background: #fff;
-		}
-
 		.tabbar_menu.on .menu_item {
 			color: @base_color;
 		}
@@ -125,7 +146,7 @@
 			float: left;
 			width: 100%;
 			height: 100%;
-			color: #fff;
+			color: #888;
 			cursor: pointer;
 			position: relative;
 		}
@@ -146,19 +167,28 @@
 			display: none;
 			position: absolute;
 			top: -@tabbar_h - 50*@rem;
-			background: @base_color;
+			background: #fff;
 			width: 100%;
+			border: @border_deep;
+			.border_radius_4
+		}
+
+		.submenu{
+			border-bottom: @border_deep;
+
+			&:last-child{
+				border-bottom: none;
+			}
 		}
 
 		.submenu_item {
-			color: #fff;
+			color: @ft_base_color;
 			text-align: center;
 			height: 40*@rem;
-			line-height: 40*@rem;
-			background: lighten(@base_color, 5%);
+			line-height: 40*@rem;			
 
 			&:hover {
-				background: lighten(@base_color, 12%);
+				color: @base_color;
 			}
 		}
 
@@ -171,7 +201,18 @@
 			height: 0;
 			border-width: 6*@rem;
 			border-style: solid;
-			border-color: lighten(@base_color, 5%) transparent transparent transparent;
+			border-color:  #ccc transparent transparent;/*灰 透明 透明 */
+
+			em{
+				position: absolute;
+				margin-left: -6*@rem;
+				width: 0;
+				height: 0;
+				border-width: 6*@rem;
+				border-style: solid;
+				border-color: #fff transparent transparent;/*黄 透明 透明 */
+				top: -7*@rem;
+			}
 		}
 	}
 

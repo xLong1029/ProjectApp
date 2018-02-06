@@ -100,32 +100,27 @@ img {
 
 /* 设置输入框通用样式 */
 
-input[type="text"],
-input[type="password"],
-textarea {
+input[type="text"], input[type="password"], textarea {
     border: @border_deep;
     outline: none;
     width: 100%;
-    margin-bottom: 15*@rem;
     font-size: @base_ft_size;
+    margin-bottom: 15*@rem;
     font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     .border_radius_4;
 }
 
-input[type="text"],
-input[type="password"] {
-    text-indent: 10px;
+input[type="text"], input[type="password"] {
+    text-indent: 10*@rem;
 }
 
 textarea {
     padding: 10*@rem;
 }
 
-button,
-input {
+.button, input {
     display: block;
     outline: none;
-    font-size: @base_ft_size;
     height: 70*@half_rem;
     line-height: 70*@half_rem;
     font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -135,14 +130,13 @@ input {
 
 /* 设置按钮通用样式 */
 
-button,
-input[type="button"],
-input[type="submit"] {
+.button{
     border: none;
     background: @base_color;
     color: #fff;
     text-align: center;
     cursor: pointer;
+    margin-bottom: 15*@rem;
 }
 
 
@@ -163,8 +157,7 @@ input[type="submit"] {
     clear: both;
 }
 
-.clearfix:before,
-.clearfix:after {
+.clearfix:before, .clearfix:after {
     content: '.';
     display: block;
     overflow: hidden;
@@ -192,6 +185,13 @@ input[type="submit"] {
     margin-bottom: @tabbar_h;
 }
 
+.cont_frame{
+    padding:@edge_w;
+    border-bottom: @border_light;
+    margin-bottom: 15*@rem;
+    background: #fff;
+}
+
 
 /* wrapper */
 
@@ -200,7 +200,7 @@ input[type="submit"] {
     // vh是相对于视口的高度。视口被均分为100单位的vh
     min-height: 100vh;
     margin: 0 auto;
-    background: #fff;
+    background: #f8f8f8;
     position: relative;
     overflow-x: hidden;
 }
@@ -221,18 +221,51 @@ input[type="submit"] {
     left: 480*@half_rem;
 }
 
+/* 遮罩层 */
 
-/* icon-list-next */
-
-.icon-list-next {
+.mask.mask_show {
     display: block;
-    float: right;
-    margin-top: HalfRem(26px);
-    // 因为是App.vue引用该公用样式，所以路径只需要./
-    // background: url("./assets/images/icon-list-next.png") no-repeat;
-    background-size: 100%;
-    width: 18*@half_rem;
-    height: 30*@half_rem;
+}
+
+.mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 88;
+    background: #101620;
+    display: none;
+    min-width: 768px;
+    opacity: 0.65;
+    min-height: 100vh;
+}
+
+/* 弹出层 */
+
+.pop_model{
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 50%;
+    background: #fff;
+    width: 100%;
+}
+
+/* 解决移动端系统自带样式问题 */
+
+* {
+    // 取消移动端浏览器自带样式
+    -webkit-appearance:none;
+    //这一句是用来解决在安卓上的点击出现蓝色背景问题
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+
+// 下面是解决ios上去除微信点击蓝色背景
+a:focus, input:focus, p:focus, div:focus{
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+    -webkit-user-modify:read-write-plaintext-only; 
 }
 
 
@@ -287,6 +320,11 @@ input[type="submit"] {
     }
     .wrapper {
         width: @wrapper_max_w;
+    }
+    .pop_model{
+        width: @wrapper_max_w;
+        left: 50%;
+        margin-left: -@wrapper_max_w * 0.5;
     }
     .edge_frame {
         padding-left: 30*@half_rem;

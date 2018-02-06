@@ -11,7 +11,7 @@
 			</ul>
 		</div>
 		<!-- 遮罩层 -->
-		<div :class="['mask', showSideBar ? 'mask_show' : '']" ref="mask" @click="hideSideBar(null)"></div>
+		<div :class="['mask', showSideBar ? 'mask_show' : '']" @click="hideSideBar(null)"></div>
 	</aside>
 </template>
 
@@ -34,16 +34,16 @@
 						title: "首页"
 					},
 					{
-						routeName: 'ProjectNews',
-						title: "申报资讯"
-					},
-					{
-						routeName: 'NewsCenter',
-						title: "新闻资讯"
-					},
-					{
 						routeName: 'CompanyIntro',
 						title: "公司简介"
+					},
+					{
+						routeName: 'SuccCases',
+						title: "成功案例"
+					},					
+					{
+						routeName: 'ProjectNews',
+						title: "申报资讯"
 					},
 					{
 						routeName: 'ContactUs',
@@ -105,30 +105,12 @@
 			cursor: pointer;
 
 			&:hover {
-				background: lighten(@base_color, 45%);
+				background: @base_hover_color;
 			}
 		}
 
 		.sidebar_item.on{
 			color: @base_color;
 		}
-	}
-
-	.mask.mask_show {
-		display: block;
-	}
-
-	.mask {
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 88;
-		background: #101620;
-		display: none;
-		min-width: 768px;
-		opacity: 0.85;
-		min-height: 100vh;
 	}
 </style>

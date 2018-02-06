@@ -52,7 +52,7 @@
 	};
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	//引入通用设置文件
 	@import "../../assets/less/setting";
 
@@ -85,9 +85,9 @@
 
 		i {
 			display: inline-block;
-			color: @base_color;
-			font-size: 20*@rem;
-			margin-top: 8*@rem;
+			color: #888;
+			font-size: 18*@rem;
+			margin-top: 10*@rem;
 		}
 	}
 

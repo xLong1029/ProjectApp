@@ -1,6 +1,10 @@
 <template>
-  <div id="projectNews" class="edge_frame">
-    项目申报信息
+  <div id="projectNews">
+    <section class="cont_frame">
+			<p>
+				项目申报信息
+			</p>
+		</section>
   </div>
 </template>
 

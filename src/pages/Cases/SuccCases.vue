@@ -1,19 +1,18 @@
 <template>
-  <div id="index">
+  <div id="newsCenter">    
     <section class="cont_frame">
-			<p>
-				首页
-			</p>
-		</section>
+        <p>
+            成功案例
+        </p>
+    </section>
   </div>
 </template>
 
 <script>
 export default {
-  name: "index"
-};
+  name: 'newsCenter'
+}
 </script>
 
 <style>
-
 </style>

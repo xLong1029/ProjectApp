@@ -1,6 +1,10 @@
 <template>
-	<div id="search" class="edge_frame">
-		信息搜索
+	<div id="search">
+		<section class="cont_frame">
+			<p>
+				项目申报信息
+			</p>
+		</section>
 	</div>
 </template>
 

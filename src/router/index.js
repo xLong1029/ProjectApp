@@ -7,12 +7,13 @@ import Index from 'pages/Index/Index'
 import CompanyIntro from 'pages/AboutUs/CompanyIntro'
 // 联系我们
 import ContactUs from 'pages/AboutUs/ContactUs'
-// 新闻资讯
-import NewsCenter from 'pages/NewsCenter/NewsCenter'
 // 申报资讯
 import ProjectNews from 'pages/ProjectNews/ProjectNews'
+// 成功案例
+import SuccCases from 'pages/Cases/SuccCases'
 // 信息搜索
 import Search from 'pages/Search/Search'
+
 
 Vue.use(Router)
 
@@ -23,8 +24,8 @@ export default new Router({
     { path: '/Index', name: 'Index', component: Index },
     { path: '/CompanyIntro', name: 'CompanyIntro', component: CompanyIntro },
     { path: '/ContactUs', name: 'ContactUs', component: ContactUs },
-    { path: '/NewsCenter', name: 'NewsCenter', component: NewsCenter },
     { path: '/ProjectNews', name: 'ProjectNews', component: ProjectNews },
-    { path: '/Search', name: 'Search', component: Search }
+    { path: '/Search', name: 'Search', component: Search },
+    { path: '/SuccCases', name: 'SuccCases', component: SuccCases }
   ]
 })

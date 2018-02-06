@@ -12,10 +12,10 @@
 					<transition name="animate">
 						<router-view></router-view>
 					</transition>
-				</div>
-				<!-- 版权信息 -->
-				<div class="copyright">
-					<p>Copyright © 2018-2019<br/>SOLO之队版权所有 桂ICP备12345678号-1</p>
+					<!-- 版权信息 -->
+					<div class="copyright">
+						<p>Copyright © 2018-2019<br/>SOLO之队版权所有 桂ICP备12345678号-1</p>
+					</div>
 				</div>
 				<!-- 标签栏 -->
 				<TabBar v-if="secondPages.indexOf($route.name) === -1"></TabBar>
@@ -54,7 +54,7 @@
 	@import "./assets/less/common";
 
 	.copyright {
-		border-top: @border_deep;
+		// border-top: @border_deep;
 		padding: @edge_w;
 		font-size: 12*@rem;
 		margin-top: 15*@rem;

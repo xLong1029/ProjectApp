@@ -1,6 +1,10 @@
 <template>
-	<div id="companyInfo" class="edge_frame">
-		公司简介
+	<div id="companyInfo">
+		<section class="cont_frame">
+			<p>
+				这里是公司简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介......
+			</p>
+		</section>
 	</div>
 </template>
 
