@@ -13,7 +13,7 @@
 						<router-view></router-view>
 					</transition>
 					<!-- 版权信息 -->
-					<div class="copyright">
+					<div class="copyright edge_frame">
 						<p>Copyright © 2018-2019<br/>SOLO之队版权所有 桂ICP备12345678号-1</p>
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 		data(){
 			return{
 				// 定义二级页面名称，作为动态props值
-       			secondPages:['CompanyIntro', 'ContactUs', 'Search'],
+       			secondPages:['CompanyIntro', 'ContactUs', 'Search', 'NewsDetail'],
 			}
 		}
 	};
@@ -55,7 +55,6 @@
 
 	.copyright {
 		// border-top: @border_deep;
-		padding: @edge_w;
 		font-size: 12*@rem;
 		margin-top: 15*@rem;
 

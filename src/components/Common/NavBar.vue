@@ -7,7 +7,7 @@
 			</a>			
 			<!-- 是否为二级页面，显示返回图标 -->
 			<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="$router.go(-1)">
-				<i class='icon-back'></i>
+				<i class="icon-back"></i>
 			</a>
 			<!-- 非二级页面，显示搜索图标 -->
 			<a v-else class="btn fr" @click="toSearch">

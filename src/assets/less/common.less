@@ -153,11 +153,8 @@ textarea {
 
 /* 设置清除浮动类型 */
 
-.clearfix:after {
-    clear: both;
-}
-
 .clearfix:before, .clearfix:after {
+    clear: both;
     content: '.';
     display: block;
     overflow: hidden;
@@ -263,7 +260,7 @@ textarea {
 
 
 // 下面是解决ios上去除微信点击蓝色背景
-a:focus, input:focus, p:focus, div:focus{
+input:focus, p:focus, div:focus{
     -webkit-tap-highlight-color:rgba(0,0,0,0);
     -webkit-user-modify:read-write-plaintext-only; 
 }

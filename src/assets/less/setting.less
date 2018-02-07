@@ -47,25 +47,27 @@
 @border_deep : 1px solid #ddd;
 // 浅边框
 @border_light : 1px solid #eee;
+// 蓝色边框
+@border_blue : 1px solid #9ec5ec;
 
 /* Mixin */
 
 // 圆角设置
 .border_radius(@radius) {
-    -webkit-border-radius: @radius;
-    -moz-border-radius: @radius;
-    -o-border-radius: @radius;
-    border-radius: @radius;
+    -webkit-border-radius: @radius*@rem;
+    -moz-border-radius: @radius*@rem;
+    -o-border-radius: @radius*@rem;
+    border-radius: @radius*@rem;
 }
 
 .border_radius_4 {
-    .border_radius(4px);
+    .border_radius(4);
 }
 
 .border_radius_6 {
-    .border_radius(6px);
+    .border_radius(6);
 }
 
 .border_radius_8 {
-    .border_radius(8px);
+    .border_radius(8);
 }
