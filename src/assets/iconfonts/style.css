@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'solo';
-  src:  url('fonts/solo.eot?afd93z');
-  src:  url('fonts/solo.eot?afd93z#iefix') format('embedded-opentype'),
-    url('fonts/solo.ttf?afd93z') format('truetype'),
-    url('fonts/solo.woff?afd93z') format('woff'),
-    url('fonts/solo.svg?afd93z#solo') format('svg');
+  src:  url('fonts/solo.eot?qkbfi1');
+  src:  url('fonts/solo.eot?qkbfi1#iefix') format('embedded-opentype'),
+    url('fonts/solo.ttf?qkbfi1') format('truetype'),
+    url('fonts/solo.woff?qkbfi1') format('woff'),
+    url('fonts/solo.svg?qkbfi1#solo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,32 +25,35 @@
 }
 
 .icon-arrow-down:before {
-  content: "\e909";
-}
-.icon-back:before {
   content: "\e900";
 }
-.icon-case:before {
+.icon-back:before {
   content: "\e901";
 }
-.icon-company:before {
+.icon-case:before {
   content: "\e902";
 }
-.icon-group:before {
+.icon-company:before {
   content: "\e903";
 }
-.icon-home:before {
+.icon-group:before {
   content: "\e904";
 }
-.icon-list:before {
+.icon-home:before {
   content: "\e905";
 }
-.icon-news:before {
+.icon-list:before {
   content: "\e906";
 }
-.icon-project-list:before {
+.icon-logo:before {
   content: "\e907";
 }
-.icon-search:before {
+.icon-news:before {
   content: "\e908";
+}
+.icon-project-list:before {
+  content: "\e909";
+}
+.icon-search:before {
+  content: "\e90a";
 }

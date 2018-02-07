@@ -31,6 +31,7 @@
 
 <script>
 	import $ from "jquery";
+	// 通用js
 	import Common from 'common/common.js'
 
 	export default {
@@ -153,14 +154,14 @@
 
 		.menu_icon {
 			margin: 0 auto;
-			margin-top: 2*@rem;
+			margin-top: 4*@rem;
 			text-align: center;
 			font-size: 18*@rem;
 		}
 
 		.menu_title {
 			text-align: center;
-			margin-top: 2*@rem;
+			margin-top: 1*@rem;
 		}
 
 		.tabbar_submenu {

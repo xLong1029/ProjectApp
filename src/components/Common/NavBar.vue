@@ -10,13 +10,13 @@
 				<i class='icon-back'></i>
 			</a>
 			<!-- 非二级页面，显示搜索图标 -->
-			<a v-else class="btn fr" href="/Search">
+			<a v-else class="btn fr" @click="toSearch">
 				<i class="icon-search"></i>
 			</a>
 			<!-- 二级页面标题 -->
 			<div class="title fl">
 				<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>
-				<a v-else class="logo" href="/Index"></a>
+				<span v-else class="icon-logo" href="/Index"></span>
 			</div>
 		</div>
 	</header>
@@ -25,6 +25,8 @@
 <script>
 	// Vuex
 	import { mapGetters } from 'vuex'
+	// 通用js
+	import Common from 'common/common.js'
 
 	export default {
 		name: "navBar",
@@ -45,8 +47,13 @@
 			};
 		},
 		methods:{
+			// 向右推出
 			pushRight(){
 				this.$store.commit('SET_SHOW_SIDE_BAR', true);
+			},
+			// 跳转“搜索”页面
+			toSearch(){
+				Common.gotoPage('Search', {}, this);
 			}
 		}
 	};
@@ -63,8 +70,8 @@
 		position: fixed;
 		z-index: 66;
 		height: @navbar_h;
-		background: #fff;
-		border-bottom: 1px solid #d5d5d5;
+		background: @base_color;
+		// border-bottom: 1px solid #d5d5d5;
 		top: 0;
 
 		.btn {
@@ -79,25 +86,21 @@
 			text-align: center;
 			font-size: 16*@rem;
 			line-height: @navbar_h;
-			color: @base_color;
+			color: #fff;
 			font-weight: bold;
 		}
 
 		i {
 			display: inline-block;
-			color: #888;
+			color: #fff;
 			font-size: 18*@rem;
 			margin-top: 10*@rem;
 		}
 	}
 
-	.logo {
-		display: inline-block;
-		background: url("../../assets/images/logo.png") no-repeat;
-		background-size: 100%;
-		width: 166*@half_rem;
-		height: 44*@half_rem;
-		margin-top: 20*@half_rem;
+	.icon-logo {
+		font-size: 64*@rem;
+		line-height: 35*@rem;
 	}
 
 	/* layout */

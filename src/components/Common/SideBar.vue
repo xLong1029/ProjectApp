@@ -101,7 +101,7 @@
 			height: 80*@half_rem;
 			line-height: 80*@half_rem;
 			padding: 0 @edge_w;
-			border-bottom: @border_deep;
+			border-bottom: @border_light;
 			cursor: pointer;
 
 			&:hover {

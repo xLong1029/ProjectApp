@@ -203,7 +203,7 @@
 			margin-bottom: 10*@rem;
 		}
 		p{
-			color:#888;
+			color:#666;
 		}
 	}
 
