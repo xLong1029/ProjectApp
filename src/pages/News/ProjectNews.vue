@@ -4,7 +4,7 @@
 			<li v-for="(item, index) in newsList" :key="index" class="news_li_item proj_news">
 				<router-link :to="{ name: 'NewsDetail' }">
 					<div class="news_li_cont fl">
-						<div class="news_li_title">{{ item.title }}</div>
+						<h2 class="news_li_title">{{ item.title }}</h2>
 						<div class="news_li_tags">
 							<span v-for="(tag, i) in item.tags" :key="i" class="tag fl">{{ tag }}</span>
 							<span class="news_li_time fr">{{ item.time }}</span>	

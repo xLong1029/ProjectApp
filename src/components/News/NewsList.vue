@@ -1,10 +1,10 @@
 <template>
 	<div id="newsList">
         <ul class="news_list">
-            <li v-for="(item, index) in data" :key="index" class="news_li_item">
+            <li v-for="(item, index) in data" v-if="index < num" :key="index" class="news_li_item">
                 <router-link :to="{ name: 'NewsDetail' }">
                     <div class="news_li_cont">
-                        <span class="news_li_title fl">{{ item.title }}</span>
+                        <h2 class="news_li_title fl">{{ item.title }}</h2>
                         <span class="news_li_time fr">{{ item.time }}</span>	
                     </div>
                 </router-link>
@@ -21,7 +21,12 @@
 			data:{
 				type: Array,
 				default: []
-			},
+            },
+            // 显示数量
+            num:{
+                type: Number,
+                default: 5
+            }
 		},
 		data(){
 			return{}

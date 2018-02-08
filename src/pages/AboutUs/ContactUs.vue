@@ -2,11 +2,11 @@
 	<div id="contact">
 		<section id="dituContent" class="map">抱歉，您的浏览器不支持显示该地图信息</section>
 		<div class="contact_info">
-			<section class="cont_frame contact_part">
+			<section class="cont_frame c_info_part">
 				<h1>公司地址</h1>
 				<p style="margin-bottom:0">广西壮族自治区南宁市青秀区月湾路1号南国弈园508室</p>
 			</section>
-			<section class="cont_frame contact_part">
+			<section class="cont_frame c_info_part">
 				<h1>联系方式</h1>
 				<p style="cont_frame margin-bottom:0">
 					联系人：肖健<br/>
@@ -14,7 +14,7 @@
 					邮箱：xiaojian@zhujia.com
 				</p>
 			</section>
-			<section class="cont_frame contact_part">
+			<section class="cont_frame c_info_part">
 				<h1>申报入口</h1>
 				<p>请留下您的联系信息，我们会尽快与您联系。</p>
 				<div id="form-message">
@@ -190,7 +190,8 @@
 	.contact_info{
 		margin-top: 10*@rem;
 	}
-	.contact_part{
+
+	.c_info_part{
 		&:last-child{
 			border-bottom:none;
 		}
