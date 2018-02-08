@@ -22,7 +22,7 @@ body {
     font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: normal;
     background: #fff;
-    font-size: 14*@rem;
+    font-size: @base_ft_size;
     line-height: 1.5;
 }
 
@@ -53,7 +53,7 @@ section {
 }
 
 p {
-    margin-bottom: 15*@rem;
+    .mb(15);
 }
 
 
@@ -105,13 +105,14 @@ input[type="text"], input[type="password"], textarea {
     outline: none;
     width: 100%;
     font-size: @base_ft_size;
-    margin-bottom: 15*@rem;
     font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
     .border_radius_4;
+    .mb(15);
 }
 
 input[type="text"], input[type="password"] {
-    text-indent: 10*@rem;
+    padding: 0 10*@rem;
 }
 
 textarea {
@@ -121,22 +122,26 @@ textarea {
 .button, input {
     display: block;
     outline: none;
-    height: 70*@half_rem;
-    line-height: 70*@half_rem;
+    height: 35*@rem;
+    line-height: 35*@rem;
     font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
     .border_radius_4;
+    .ft(14);
 }
 
 
 /* 设置按钮通用样式 */
 
 .button{
+    width: 100%;
     border: none;
     background: @base_color;
     color: #fff;
     text-align: center;
     cursor: pointer;
-    margin-bottom: 15*@rem;
+
+    .mb(15);
 }
 
 
@@ -154,15 +159,7 @@ textarea {
 /* 设置清除浮动类型 */
 
 .clearfix:before, .clearfix:after {
-    clear: both;
-    content: '.';
-    display: block;
-    overflow: hidden;
-    visibility: hidden;
-    font-size: 0;
-    line-height: 0;
-    width: 0;
-    height: 0;
+    .clr;
 }
 
 
@@ -185,7 +182,7 @@ textarea {
 .cont_frame{
     padding:@edge_w;
     border-bottom: @border_light;
-    margin-bottom: 15*@rem;
+    .mb(12);
     background: #fff;
 }
 
@@ -265,7 +262,6 @@ input:focus, p:focus, div:focus{
     -webkit-user-modify:read-write-plaintext-only; 
 }
 
-
 /* layout */
 
 @media screen and (min-width: 375px) {
@@ -324,8 +320,7 @@ input:focus, p:focus, div:focus{
         margin-left: -@wrapper_max_w * 0.5;
     }
     .edge_frame {
-        padding-left: 30*@half_rem;
-        padding-right: 30*@half_rem;
+        padding: 0 15*@rem;
     }
     .push_body_toright {
         left: 0;

@@ -55,13 +55,14 @@
 
 	.copyright {
 		// border-top: @border_deep;
-		font-size: 12*@rem;
-		margin-top: 15*@rem;
+		.ft(12);
+		.mt(15);
+		.pb(10);
 
 		p {
 			color: @ft_gray_color;
 			text-align: center;
-			margin-bottom: 0;
+			.mb(0);
 		}
 	}
 </style>

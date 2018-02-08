@@ -86,7 +86,8 @@
 	}
 
 	.sidebar {
-		background: #fff;
+		background: @base_color;
+		color: #fff;
 		position: fixed;
 		width: 480*@half_rem;
 		height: 100%;
@@ -101,16 +102,17 @@
 			height: 80*@half_rem;
 			line-height: 80*@half_rem;
 			padding: 0 @edge_w;
-			border-bottom: @border_light;
+			border-bottom: 1px solid lighten(@base_color, 10%);
 			cursor: pointer;
 
 			&:hover {
-				background: @base_hover_color;
+				background: lighten(@base_color, 10%);
 			}
 		}
 
 		.sidebar_item.on{
 			color: @base_color;
+			background: #fff;
 		}
 	}
 </style>

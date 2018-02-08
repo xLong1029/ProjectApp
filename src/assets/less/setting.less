@@ -33,11 +33,11 @@
 /* 间距高宽*/
 
 // 页面边距
-@edge_w : 16*@half_rem;
+@edge_w : 8*@rem;
 // 导航栏高度
-@navbar_h : 80*@half_rem;
+@navbar_h : 40*@rem;
 // 标签栏高度
-@tabbar_h : 86*@half_rem;
+@tabbar_h : 43*@rem;
 // 页面最大宽度
 @wrapper_max_w: 640px;
 
@@ -64,10 +64,41 @@
     .border_radius(4);
 }
 
-.border_radius_6 {
-    .border_radius(6);
-}
+// 边距设置
+.mt(@edge){ margin-top: @edge*@rem; }
 
-.border_radius_8 {
-    .border_radius(8);
+.mb(@edge){ margin-bottom: @edge*@rem; }
+
+.ml(@edge){ margin-left: @edge*@rem; }
+
+.mr(@edge){ margin-right: @edge*@rem; }
+
+.pt(@edge){ padding-top: @edge*@rem; }
+
+.pb(@edge){ padding-bottom: @edge*@rem; }
+
+.pl(@edge){ padding-left: @edge*@rem; }
+
+.pr(@edge){ padding-right: @edge*@rem; }
+
+// 字体大小
+.ft(@font){ font-size: @font*@rem; }
+
+// 高度设置
+.ht(@height){ height: @height*@rem; }
+
+// 宽度设置
+.wd(@width){ width: @width*@rem; }
+
+// 清除浮动
+.clr{
+    clear: both;
+    content: '.';
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    height: 0;
 }

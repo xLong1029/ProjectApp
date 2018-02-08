@@ -58,7 +58,7 @@
 					// 地图坐标
 					point:{
 						X: '108.402460',
-						Y: '22.821733'
+						Y: '22.821999'
 					},
 					// 缩放级别
 					zoom: 17,
@@ -150,42 +150,39 @@
 	};
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
   
 	/* map */
 
-	// 取消“百度地图”字样显示
-	.BMap_cpyCtrl.anchorBL, .BMap_cpyCtrl, .anchorBL{
-		display: none;
-		visibility: hidden;
-	}
-
 	.iw_poi_title {
 		color: #CC5522;
-		font-size: 14px;
 		font-weight: bold;
 		overflow: hidden;
-		padding-right: 13px;
-		white-space: nowrap
+		white-space: nowrap;
+
+		.ft(14);
+		.pr(12);
 	}
 
 	.iw_poi_content {
 		font:12px arial,sans-serif;
 		overflow: visible;
-		padding-top: 4px;
 		white-space: -moz-pre-wrap;
-		word-wrap: break-word
+		word-wrap: break-word;
+
+		.pt(4);
 	}
 
 	.map{
 		width: 100%;
-		height: 200*@rem;
 		text-align:center;
 		background: #eee;
 		color: @base_color;
-		line-height: 200*@rem;
+		line-height: 150*@rem;
+
+		.ht(150);
 	}
 
 	/* contact */
@@ -205,10 +202,6 @@
 		p{
 			color:#666;
 		}
-	}
-
-	input[type="button"]{
-		width:100%;
 	}
 
 	textarea{
