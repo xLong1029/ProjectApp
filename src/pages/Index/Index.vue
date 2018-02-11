@@ -8,7 +8,7 @@
 			</div>
 		</section>
 		<section class="news_part">
-			<SectionTitle title="申报资讯" :read-more="true" route-name="ProjectNews"></SectionTitle>
+			<SectionTitle title="最新资讯" :read-more="true" route-name="ProjectNews"></SectionTitle>
 			<NewsList :data="newsList"></NewsList>
 		</section>
 		<section class="case_part">
