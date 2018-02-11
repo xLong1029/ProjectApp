@@ -13,11 +13,28 @@
 		</section>
 		<section class="case_part">
 			<SectionTitle title="成功案例" :read-more="true" route-name="SuccCases"></SectionTitle>
-			<div class="cont_frame">内容</div>
+			<div>
+				<ul class="case_list cont_frame">
+					<li v-for="(item, index) in caseList" :key="index" class="case_li_item fl">
+						<a :href="item.url">
+							<img class="case_logo" :src="item.logo" alt=""/>
+							<span class="case_title">{{ item.companyName }}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
 		</section>
 		<section class="cooper_part">
 			<SectionTitle title="合作伙伴" :read-more="true"></SectionTitle>
-			<div class="cont_frame">内容</div>
+			<div>
+				<ul class="cooper_list cont_frame">
+					<li v-for="(item, index) in cooperList" :key="index" class="cooper_li_item fl">
+						<a :href="item.url">
+							<img class="cooper_logo" :src="item.logo" alt=""/>
+						</a>
+					</li>
+				</ul>
+			</div>
 		</section>
 	</div>
 </template>
@@ -83,6 +100,41 @@
 					'恭喜xLong成功申请了牛逼轰轰的项目！！',
 					'恭喜Lio.Huang成功申请了牛逼轰轰的项目！！'
 				],
+				caseList: [
+					{
+						logo: require('assets/images/default.png'),
+						companyName: '华蓝集团',
+						url: null
+					},
+					{
+						logo: require('assets/images/default.png'),
+						companyName: '华蓝集团',
+						url: null
+					},
+					{
+						logo: require('assets/images/default.png'),
+						companyName: '华蓝集团',
+						url: null
+					}
+				],
+				cooperList: [
+					{
+						logo: require('assets/images/default.png'),
+						url: null
+					},
+					{
+						logo: require('assets/images/default.png'),
+						url: null
+					},
+					{
+						logo: require('assets/images/default.png'),
+						url: null
+					},
+					{
+						logo: require('assets/images/default.png'),
+						url: null
+					}
+				],
 				noticeTxt: '',
 			}
 		},
@@ -113,8 +165,6 @@
 						scroll_list.scrollLeft -= scroll_begin.offsetWidth;
 					else
 						scroll_list.scrollLeft++;
-
-					console.log(scroll_list.scrollLeft);
 				}, speed);
 			}
 		}
@@ -143,25 +193,69 @@
     }
 
 	.notice_part{
-	}
+		.notice_icon{
+			color: @base_color;
 
-	.notice_icon{
-		color: @base_color;
-
-		i{
-			.mr(5);
+			i{
+				.mr(5);
+			}
 		}
-	}
 
-	.notice_list{		
-		width: 79%;
-		.ht(24);
+		.notice_list{		
+			width: 79%;
+			.ht(24);
 
-		.ellipsis;		
+			.ellipsis;		
+		}
 	}
 
 	.news_part{
 		.mb(10);
+	}
+
+	.case_list, .cooper_list{
+		.pb(0);
+
+		&:after, &:before {
+			.clr;
+		}
+	}
+
+	.case_part{
+		.case_li_item{
+			width: 32%;
+			margin-right: 2%;
+			
+			.ft(12);
+			.mb(10);
+
+			&:nth-child(3n){
+				.mr(0);
+			}
+
+			.case_title{
+				display: block;
+				text-align: center;
+				width: 100%;
+
+				.ellipsis;
+			}
+			
+		}
+	}
+
+	.cooper_part{
+		.cooper_li_item{
+			width: 24%;
+			margin-right: 1.2%;
+			
+			.ft(12);
+			.mb(10);
+
+			&:nth-child(4n){
+				.mr(0);
+			}			
+		}
 	}
 
 	@media screen and (min-width: 414px) {

@@ -8,7 +8,7 @@
 			</section>
 			<section class="cont_frame c_info_part">
 				<h1>联系方式</h1>
-				<p style="cont_frame margin-bottom:0">
+				<p style="margin-bottom:0">
 					联系人：肖健<br/>
 					电话：0771-5829196<br/>
 					邮箱：xiaojian@zhujia.com
