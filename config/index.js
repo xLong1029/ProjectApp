@@ -44,7 +44,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    // 将"/"修改成"./"解决打包后资源文件报错404的问题
+    assetsPublicPath: './',
 
     /**
      * Source Maps
