@@ -9,8 +9,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    // 将"/"修改成"./"解决打包后资源文件报错404的问题
-    assetsPublicPath: './',
+    assetsPublicPath: '/',
     proxyTable: {},
 
     // Various Dev Server settings
