@@ -2,9 +2,10 @@
 	<div id="index">
 		<section class="notice_part cont_frame">
 			<span class="notice_icon fl"><i class="icon-horn"></i>通知：</span>
-			<div id="scroll_list" class="notice_list" >
-				<div id="scroll_begin">{{ noticeTxt }}</div>
-				<div id="scroll_end"></div>
+			<div class="notice_list">
+				<ul class="scroll_list">
+					<li v-for="(item, index) in noticeList" :key="index" class="fl">{{ item }}</li>
+				</ul>
 			</div>
 		</section>
 		<section class="news_part">
@@ -139,7 +140,7 @@
 			}
 		},
 		created(){
-			this.setNoticeTxt();
+			this.noticeList = this.noticeList.concat(this.noticeList);
 		},
 		mounted(){
 			this.noticeMove();
@@ -149,22 +150,29 @@
 			setNoticeTxt(){
 				if(this.noticeList.length > 0){
 					for(let i = 0; i < this.noticeList.length; i++){
-						this.noticeTxt += this.noticeList[i];
+						this.noticeTxt += this.noticeList[i] + '  ';
 					}
 				}
 			},
 			// 通知移动
 			noticeMove(){
-				var speed = 50;
-				var scroll_begin = document.getElementById("scroll_begin");
-				var scroll_end = document.getElementById("scroll_end");
-				var scroll_list = document.getElementById("scroll_list");
-				scroll_end.innerHTML = scroll_begin.innerHTML;
+				var num = 0, speed = 50, ulWidth = 0;
+
+				// 累加所有li的宽度
+				for(let i = 0; i < $(".scroll_list").find('li').length; i++){
+					ulWidth += $(".scroll_list").find('li').eq(i).width();
+				}
+
+				$(".scroll_list").css({ 'width': ulWidth });
+
+				//设置滚动速度
 				noticeScroll = setInterval(function(){
-					if (scroll_end.offsetWidth - scroll_list.scrollLeft <= 0)
-						scroll_list.scrollLeft -= scroll_begin.offsetWidth;
-					else
-						scroll_list.scrollLeft++;
+					//750是根据你给的尺寸，可变的
+					if (num == -$(".scroll_list").width()/2) {
+						num = 0;
+					}
+					num -= 1;
+					$(".scroll_list").css({ left: num });
 				}, speed);
 			}
 		}
@@ -174,23 +182,6 @@
 <style lang="less" scoped>
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
-
-	#gongao {
-        width: 1000px;
-        height: 30px;
-        overflow: hidden;
-        line-height: 30px;
-        font-size: 13px;
-        font-family: '宋体';
-        background: #DDE5ED;
-        color: #0C77CF;
-        font-weight: bold;
-    }
-
-    #gongao #scroll_begin,
-    #gongao #scroll_end {
-        display: inline
-    }
 
 	.notice_part{
 		.notice_icon{
@@ -203,9 +194,17 @@
 
 		.notice_list{		
 			width: 79%;
+			position: relative;
+
 			.ht(24);
 
 			.ellipsis;		
+		}
+
+		.scroll_list {
+			position:absolute;
+			left:0px;
+			top:0px;
 		}
 	}
 
@@ -246,8 +245,8 @@
 
 	.cooper_part{
 		.cooper_li_item{
-			width: 24%;
-			margin-right: 1.2%;
+			width: 23%;
+			margin-right: 2.6%;
 			
 			.ft(12);
 			.mb(10);
