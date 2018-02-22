@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'solo';
-  src:  url('fonts/solo.eot?hps5av');
-  src:  url('fonts/solo.eot?hps5av#iefix') format('embedded-opentype'),
-    url('fonts/solo.ttf?hps5av') format('truetype'),
-    url('fonts/solo.woff?hps5av') format('woff'),
-    url('fonts/solo.svg?hps5av#solo') format('svg');
+  src:  url('fonts/solo.eot?mka8pf');
+  src:  url('fonts/solo.eot?mka8pf#iefix') format('embedded-opentype'),
+    url('fonts/solo.ttf?mka8pf') format('truetype'),
+    url('fonts/solo.woff?mka8pf') format('woff'),
+    url('fonts/solo.svg?mka8pf#solo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,9 +24,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-horn:before {
-  content: "\e90c";
-}
 .icon-arrow-down:before {
   content: "\e900";
 }
@@ -45,21 +42,27 @@
 .icon-home:before {
   content: "\e905";
 }
-.icon-list:before {
+.icon-horn:before {
   content: "\e906";
 }
-.icon-logo:before {
+.icon-list:before {
   content: "\e907";
 }
-.icon-news:before {
+.icon-loading:before {
   content: "\e908";
 }
-.icon-next:before {
+.icon-logo:before {
   content: "\e909";
 }
-.icon-project-list:before {
+.icon-news:before {
   content: "\e90a";
 }
-.icon-search:before {
+.icon-next:before {
   content: "\e90b";
+}
+.icon-project-list:before {
+  content: "\e90c";
+}
+.icon-search:before {
+  content: "\e90d";
 }

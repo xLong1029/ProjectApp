@@ -1,25 +1,33 @@
 <template>
-	<div id="search" class="search_cont">
-		<section class="cont_frame">
-			<div class="search_input">
-				<i class="icon-search"></i>
-				<input type="text" v-model="keyword" placeholder="请输入搜索关键词"/>
-			</div>
-		</section>
-		<section v-if="getResult" class="search_result">
-			<p class="res_title edge_frame">搜索结果：<span v-if="noResult" class="no_result">搜索不到该信息</span></p>
-			<NewsList :data="newsList"></NewsList>
-		</section>
+	<div id="search">
+		<!-- 搜索 -->
+		<div class="search_cont">
+			<section class="cont_frame">
+				<div class="search_input">
+					<i class="icon-search"></i>
+					<input type="text" v-model="keyword" placeholder="请输入搜索关键词"/>
+				</div>
+			</section>
+			<section v-if="getResult" class="search_result">				
+				<p class="res_title edge_frame">搜索结果：
+					<span v-if="noResult" class="no_result">搜索不到该信息</span>
+				</p>
+				<NewsList :data="resList"></NewsList>
+			</section>
+		</div>
+		<!-- 版权信息 -->
+		<Copyright></Copyright>
 	</div>
 </template>
 
 <script>
-	// 引入组件
+	// 组件
 	import NewsList from "components/News/NewsList.vue";
+	import Copyright from "components/Common/Copyright.vue";
 
 	export default {
 		name: "search",
-		components: { NewsList },
+		components: { NewsList, Copyright },
 		data(){
 			return{
 				// 搜索关键词
@@ -28,7 +36,8 @@
 				getResult: true,
 				// 无搜索结果
 				noResult: false,
-				newsList: [
+				// 搜索结果列表
+				resList: [
 					{
 						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
 						time: '2017/12/4'

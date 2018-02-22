@@ -12,10 +12,6 @@
 					<transition name="animate">
 						<router-view></router-view>
 					</transition>
-					<!-- 版权信息 -->
-					<div class="copyright edge_frame">
-						<p>Copyright © 2018-2019<br/>SOLO之队版权所有 桂ICP备12345678号-1</p>
-					</div>
 				</div>
 			</div>
 			<!-- 标签栏 -->
@@ -52,17 +48,4 @@
 	@import "./assets/less/setting";
 	// 引入公用样式文件
 	@import "./assets/less/common";
-
-	.copyright {
-		// border-top: @border_deep;
-		.ft(12);
-		.mt(15);
-		.pb(10);
-
-		p {
-			color: @ft_gray_color;
-			text-align: center;
-			.mb(0);
-		}
-	}
 </style>

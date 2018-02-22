@@ -1,44 +1,53 @@
 <template>
 	<div id="contact">
-		<section id="dituContent" class="map">抱歉，您的浏览器不支持显示该地图信息</section>
-		<div class="contact_info">
-			<section class="cont_frame c_info_part">
-				<h1>公司地址</h1>
-				<p style="margin-bottom:0">广西壮族自治区南宁市青秀区月湾路1号南国弈园508室</p>
-			</section>
-			<section class="cont_frame c_info_part">
-				<h1>联系方式</h1>
-				<p style="margin-bottom:0">
-					联系人：肖健<br/>
-					电话：0771-5829196<br/>
-					邮箱：xiaojian@zhujia.com
-				</p>
-			</section>
-			<section class="cont_frame c_info_part">
-				<h1>申报入口</h1>
-				<p>请留下您的联系信息，我们会尽快与您联系。</p>
-				<div id="form-message">
-					<form>
-						<div class="select_cont">
-							<i class="icon-arrow-down"></i>
-							<input type="text" class="select_btn" v-model="form.serType" readonly="readonly" placeholder="选择服务类型（必选）" @click="popModel"/>
-						</div>
-						<input type="text" v-model="form.companyName" placeholder="企业名称（必填）"/>
-						<input type="text" v-model="form.linkMan" placeholder="联系人姓名（必填）"/>
-						<input type="text" v-model="form.linkPhone" placeholder="联系人电话（必填）"/>
-						<textarea v-model="form.companyInfo" placeholder="企业简介（选填）"></textarea>
-						<input type="button" class="button" value="提交" @click="onSubmit"/>
-					</form>
+		<!-- 加载数据 -->
+		<Loading v-if="loading"></Loading>
+		<!-- 加载结束 -->
+		<div v-else>
+			<!-- 百度地图 -->
+			<section id="dituContent" class="map">抱歉，您的浏览器不支持显示该地图信息</section>
+			<!-- 联系信息 -->
+			<div class="contact_info">
+				<section class="cont_frame c_info_part">
+					<h1>公司地址</h1>
+					<p style="margin-bottom:0">广西壮族自治区南宁市青秀区月湾路1号南国弈园508室</p>
+				</section>
+				<section class="cont_frame c_info_part">
+					<h1>联系方式</h1>
+					<p style="margin-bottom:0">
+						联系人：肖健<br/>
+						电话：0771-5829196<br/>
+						邮箱：xiaojian@zhujia.com
+					</p>
+				</section>
+				<section class="cont_frame c_info_part">
+					<h1>申报入口</h1>
+					<p>请留下您的联系信息，我们会尽快与您联系。</p>
+					<div id="form-message">
+						<form>
+							<div class="select_cont">
+								<i class="icon-arrow-down"></i>
+								<input type="text" class="select_btn" v-model="form.serType" readonly="readonly" placeholder="选择服务类型（必选）" @click="popModel"/>
+							</div>
+							<input type="text" v-model="form.companyName" placeholder="企业名称（必填）"/>
+							<input type="text" v-model="form.linkMan" placeholder="联系人姓名（必填）"/>
+							<input type="text" v-model="form.linkPhone" placeholder="联系人电话（必填）"/>
+							<textarea v-model="form.companyInfo" placeholder="企业简介（选填）"></textarea>
+							<input type="button" class="button" value="提交" @click="onSubmit"/>
+						</form>
+					</div>
+				</section>
+				<!-- 选择窗口 -->
+				<div class="pop_model" v-show="showModel" ref="popModel">
+					<ul class="select_list">
+						<li v-for="(item, index) in serTypeList" :key="index" @click="selectService(index)">{{ item.name }}</li>
+					</ul>
 				</div>
-			</section>
-			<!-- 选择窗口 -->
-			<div class="pop_model" v-show="showModel" ref="popModel">
-				<ul class="select_list">
-					<li v-for="(item, index) in serTypeList" :key="index" @click="selectService(index)">{{ item.name }}</li>
-				</ul>
+				<!-- 遮罩层 -->
+				<div :class="['mask', showModel ? 'mask_show' : '']"></div>
 			</div>
-			<!-- 遮罩层 -->
-			<div :class="['mask', showModel ? 'mask_show' : '']"></div>
+			<!-- 版权信息 -->
+			<Copyright></Copyright>
 		</div>
 	</div>
 </template>
@@ -47,11 +56,18 @@
 	import $ from "jquery";
 	// 百度地图
 	import {initMap} from '@/assets/js/map.js'
+	// 组件
+	import Loading from "components/Common/Loading.vue";
+	import Copyright from "components/Common/Copyright.vue";
 
 	export default {
 		name: "contactUs",
+		components: { Copyright },
 		data(){
 			return{
+				// 是否加载
+				loading: false,
+				// 地图配置
 				map:{
 					// 需要生成地图的容器ID
 					id: 'dituContent',

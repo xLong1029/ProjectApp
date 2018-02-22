@@ -1,5 +1,6 @@
 <template>
 	<div id="index">
+		<!-- 消息通知 -->
 		<section class="notice_part cont_frame">
 			<span class="notice_icon fl"><i class="icon-horn"></i>通知：</span>
 			<div class="notice_list">
@@ -8,10 +9,12 @@
 				</ul>
 			</div>
 		</section>
+		<!-- 最新资讯 -->
 		<section class="news_part">
 			<SectionTitle title="最新资讯" :read-more="true" route-name="ProjectNews"></SectionTitle>
 			<NewsList :data="newsList"></NewsList>
 		</section>
+		<!-- 成功案例 -->
 		<section class="case_part">
 			<SectionTitle title="成功案例" :read-more="true" route-name="SuccCases"></SectionTitle>
 			<div>
@@ -25,6 +28,7 @@
 				</ul>
 			</div>
 		</section>
+		<!-- 合作伙伴 -->
 		<section class="cooper_part">
 			<SectionTitle title="合作伙伴" :read-more="true"></SectionTitle>
 			<div>
@@ -37,6 +41,8 @@
 				</ul>
 			</div>
 		</section>
+		<!-- 版权信息 -->
+		<Copyright></Copyright>
 	</div>
 </template>
 
@@ -45,13 +51,14 @@
 	// 引入组件
 	import SectionTitle from "components/Common/SectionTitle.vue";
 	import NewsList from "components/News/NewsList.vue";
+	import Copyright from "components/Common/Copyright.vue";
 
 	// 定时器
 	var noticeScroll;
 
 	export default {
 		name: "index",
-		components: { SectionTitle, NewsList },
+		components: { SectionTitle, NewsList, Copyright },
 		data() {
 			return {
 				newsList: [
@@ -120,19 +127,19 @@
 				],
 				cooperList: [
 					{
-						logo: require('assets/images/default.png'),
+						logo: require('assets/images/pic-logo-hualan.jpg'),
 						url: null
 					},
 					{
-						logo: require('assets/images/default.png'),
+						logo: require('assets/images/pic-logo-hualan.jpg'),
 						url: null
 					},
 					{
-						logo: require('assets/images/default.png'),
+						logo: require('assets/images/pic-logo-hualan.jpg'),
 						url: null
 					},
 					{
-						logo: require('assets/images/default.png'),
+						logo: require('assets/images/pic-logo-hualan.jpg'),
 						url: null
 					}
 				],
@@ -262,6 +269,10 @@
 			&:nth-child(4n){
 				.mr(0);
 			}			
+		}
+
+		.cooper_logo{
+			border: @border_light;
 		}
 	}
 
