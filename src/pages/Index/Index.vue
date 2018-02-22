@@ -103,17 +103,17 @@
 				],
 				caseList: [
 					{
-						logo: require('assets/images/default.png'),
+						logo: require('assets/images/pic-logo-hualan.jpg'),
 						companyName: '华蓝集团',
 						url: null
 					},
 					{
-						logo: require('assets/images/default.png'),
+						logo: require('assets/images/pic-logo-hualan.jpg'),
 						companyName: '华蓝集团',
 						url: null
 					},
 					{
-						logo: require('assets/images/default.png'),
+						logo: require('assets/images/pic-logo-hualan.jpg'),
 						companyName: '华蓝集团',
 						url: null
 					}
@@ -164,6 +164,9 @@
 				}
 
 				$(".scroll_list").css({ 'width': ulWidth });
+
+				// 清除定时器，解决二次返回该页面时胡乱滚动BUG
+				clearInterval(noticeScroll);
 
 				//设置滚动速度
 				noticeScroll = setInterval(function(){
@@ -230,6 +233,11 @@
 
 			&:nth-child(3n){
 				.mr(0);
+			}
+
+			.case_logo{
+				width: 100%;
+				border: @border_light;
 			}
 
 			.case_title{

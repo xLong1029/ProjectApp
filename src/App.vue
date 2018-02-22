@@ -41,7 +41,7 @@
 		data(){
 			return{
 				// 定义二级页面名称，作为动态props值
-       			secondPages:['CompanyIntro', 'ContactUs', 'Search', 'NewsDetail'],
+       			secondPages:['CompanyIntro', 'ContactUs', 'Search', 'NewsDetail', 'CaseDetail' ],
 			}
 		}
 	};
