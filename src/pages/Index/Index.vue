@@ -35,7 +35,7 @@
 				<ul class="cooper_list cont_frame">
 					<li v-for="(item, index) in cooperList" :key="index" class="cooper_li_item fl">
 						<a :href="item.url">
-							<img class="cooper_logo" :src="item.logo" alt=""/>
+							<img class="cooper_logo" :src="item.logo" alt="" @error="setDefaultPic"/>
 						</a>
 					</li>
 				</ul>
@@ -184,6 +184,13 @@
 					num -= 1;
 					$(".scroll_list").css({ left: num });
 				}, speed);
+			},
+			// 设置默认图片
+			setDefaultPic(event) {
+				// event.currentTarget 当前DOM对象
+				event.currentTarget.src = require('@/assets/images/default.png');
+				//控制不要一直跳动
+				event.currentTarget.onerror = null;
 			}
 		}
 	};

@@ -13,8 +13,6 @@ import ProjectNews from 'pages/News/ProjectNews'
 import NewsDetail from 'pages/News/NewsDetail'
 // 成功案例
 import SuccCases from 'pages/Cases/SuccCases'
-// 案例详情
-// import CaseDetail from 'pages/Cases/CaseDetail'
 // 信息搜索
 import Search from 'pages/Search/Search'
 
@@ -36,6 +34,5 @@ export default new Router({
     { path: '/Search', name: 'Search', component: Search },
     // 案例
     { path: '/SuccCases', name: 'SuccCases', component: SuccCases },
-    // { path: '/CaseDetail', name: 'CaseDetail', component: CaseDetail }
   ]
 })

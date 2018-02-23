@@ -42,7 +42,8 @@
         components: { Loading, Copyright },
 		data(){
 			return{
-
+                // 是否加载内容
+                loading: false,
 			}
 		},
 		created(){

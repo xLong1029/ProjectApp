@@ -106,6 +106,10 @@
 
 		.pb(10);
 
+		&:hover{
+			background: #f8f8f8;
+		}
+
 		.case_logo{
 			display: block;
 			text-align: center;
@@ -123,42 +127,6 @@
 		.case_icon, .case_title{
 			color: @base_color;
 			.mr(5);
-		}
-	}
-
-	@media screen and (min-width: 320px) {
-		.case_info{
-			width: 70%;
-		}
-	}
-
-	@media screen and (min-width: 414px) {
-		.case_info{
-			width: 75%;
-		}
-	}
-
-	@media screen and (min-width: 480px) {
-		.case_info{
-			width: 76%;
-		}
-	}
-
-	@media screen and (min-width: 640px) {
-		.case_info{
-			width: 78%;
-		}
-	}
-
-	@media screen and (min-width: 768px) {
-		.case_info{
-			width: 80%;
-		}
-	}
-
-	@media screen and (min-width: 960px) {
-		.case_info{
-			width: 78%;
 		}
 	}
 </style>
