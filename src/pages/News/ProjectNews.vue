@@ -142,6 +142,7 @@
 					self.loadmore = false;
 				}, 1000)
 			}
+
 		}
 	};
 </script>
