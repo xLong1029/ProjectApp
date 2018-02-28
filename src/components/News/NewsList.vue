@@ -5,7 +5,7 @@
                 <router-link :to="{ name: 'NewsDetail' }">
                     <div class="news_li_cont">
                         <h2 class="news_li_title fl">{{ item.title }}</h2>
-                        <span class="news_li_time fr">{{ item.time }}</span>	
+                        <span class="news_li_time fr">{{ item.publishDate }}</span>	
                     </div>
                 </router-link>
             </li>

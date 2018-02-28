@@ -5,21 +5,21 @@
 			<span class="notice_icon fl"><i class="icon-horn"></i>通知：</span>
 			<div class="notice_list">
 				<ul class="scroll_list">
-					<li v-for="(item, index) in noticeList" :key="index" class="fl">{{ item }}</li>
+					<li v-for="(item, index) in report" :key="index" class="fl">{{ item }}</li>
 				</ul>
 			</div>
 		</section>
 		<!-- 最新资讯 -->
 		<section class="news_part">
 			<SectionTitle title="最新资讯" :read-more="true" route-name="ProjectNews"></SectionTitle>
-			<NewsList :data="newsList"></NewsList>
+			<NewsList :data="declareData"></NewsList>
 		</section>
 		<!-- 成功案例 -->
 		<section class="case_part">
 			<SectionTitle title="成功案例" :read-more="true" route-name="SuccCases"></SectionTitle>
 			<div>
 				<ul class="case_list cont_frame">
-					<li v-for="(item, index) in caseList" :key="index" class="case_li_item fl">
+					<li v-for="(item, index) in caseDate" :key="index" class="case_li_item fl">
 						<a :href="item.url">
 							<img class="case_logo" :src="item.logo" alt=""/>
 							<span class="case_title">{{ item.companyName }}</span>
@@ -33,9 +33,9 @@
 			<SectionTitle title="合作伙伴" :read-more="true"></SectionTitle>
 			<div>
 				<ul class="cooper_list cont_frame">
-					<li v-for="(item, index) in cooperList" :key="index" class="cooper_li_item fl">
-						<a :href="item.url">
-							<img class="cooper_logo" :src="item.logo" alt="" @error="setDefaultPic"/>
+					<li v-for="(item, index) in partner" :key="index" class="cooper_li_item fl">
+						<a class="cooper_logo" :href="item.url">
+							<img :src="item.logo" alt="" @error="setDefaultPic"/>
 						</a>
 					</li>
 				</ul>
@@ -52,6 +52,8 @@
 	import SectionTitle from "components/Common/SectionTitle.vue";
 	import NewsList from "components/News/NewsList.vue";
 	import Copyright from "components/Common/Copyright.vue";
+	// Api方法
+	import Api from "api/api.js"
 
 	// 定时器
 	var noticeScroll;
@@ -61,54 +63,12 @@
 		components: { SectionTitle, NewsList, Copyright },
 		data() {
 			return {
-				newsList: [
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					}
-				],
-				noticeList:[
-					'恭喜SOLO公司成功申请了牛逼轰轰的项目！！',
-					'恭喜xLong成功申请了牛逼轰轰的项目！！',
-					'恭喜Lio.Huang成功申请了牛逼轰轰的项目！！'
-				],
-				caseList: [
+				// 最新资讯
+				declareData: [],
+				// 消息通知
+				report:[],
+				// 成功案例
+				caseDate: [
 					{
 						logo: require('assets/images/pic-logo-hualan.jpg'),
 						companyName: '华蓝集团',
@@ -125,41 +85,40 @@
 						url: null
 					}
 				],
-				cooperList: [
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						url: null
-					}
-				],
+				partner: [],
 				noticeTxt: '',
 			}
 		},
 		created(){
-			this.noticeList = this.noticeList.concat(this.noticeList);
-		},
-		mounted(){
-			this.noticeMove();
+			this.getIndexCont();
 		},
 		methods:{
-			// 设置通知内容
-			setNoticeTxt(){
-				if(this.noticeList.length > 0){
-					for(let i = 0; i < this.noticeList.length; i++){
-						this.noticeTxt += this.noticeList[i] + '  ';
+			// 获取首页内容
+			getIndexCont(){
+				Api.Index({
+					declareNum: 5,
+					caseNum: 6
+				})
+				.then(res => {
+					if(res.code == 200){
+						this.report = res.data.report;
+						this.report = this.report.concat(this.report);
+
+						// 更新结束后再轮播
+						var _this = this;
+						this.$nextTick(() => {
+							_this.noticeMove();
+						})
+
+						this.declareData = res.data.declareData;
+						this.caseDate = res.data.caseData;
+						this.partner = res.data.partner;
 					}
-				}
+				})
+				.catch(err => {
+					this.pageLoading = false; 
+					alert('网络出错，加载失败！');
+				})
 			},
 			// 通知移动
 			noticeMove(){
@@ -251,6 +210,7 @@
 
 			.case_logo{
 				width: 100%;
+				max-height: 80*@rem;
 				border: @border_light;
 			}
 
@@ -269,6 +229,7 @@
 		.cooper_li_item{
 			width: 23%;
 			margin-right: 2.6%;
+			border: @border_light;
 			
 			.ft(12);
 			.mb(10);
@@ -279,7 +240,17 @@
 		}
 
 		.cooper_logo{
-			border: @border_light;
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+			height: 50*@rem;
+
+			img{
+				vertical-align: middle;
+				display: inline-block;
+				max-height: 100%;
+				max-width: 100%;
+			}
 		}
 	}
 
