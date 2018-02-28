@@ -9,7 +9,7 @@ export default {
     /* 公共方法 */
 
     // 时间格式化
-    formatDate: (date) => {
+    FormatDate: (date) => {
         if(!date) return;
         if(typeof date =='string' && date.indexOf('-') != -1) return date;
         else{
@@ -23,7 +23,7 @@ export default {
         }        
     },
     // 页面跳转
-    gotoPage(routeName, params, _this){
+    GotoPage(routeName, params, _this){
         _this.$router.push({ name : routeName, query : params });
     }
 }

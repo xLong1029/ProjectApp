@@ -53,7 +53,7 @@
 			},
 			// 跳转“搜索”页面
 			toSearch(){
-				Common.gotoPage('Search', {}, this);
+				Common.GotoPage('Search', {}, this);
 			}
 		}
 	};

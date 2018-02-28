@@ -64,7 +64,7 @@
 			hideSideBar(routeName) {
 				this.$store.commit('SET_SHOW_SIDE_BAR', false);
 				if(routeName){
-					Common.gotoPage(routeName, {}, this);
+					Common.GotoPage(routeName, {}, this);
 				}
 			}
 		}

@@ -2,7 +2,7 @@ import tools from '@/tools'
 
 export default {
 	// Api方法
-	funtioncName:(obj) => {
+	FuntioncName:(obj) => {
         return new Promise((resolve,reject)=>{
 			tools.HttpPost('/api/url', obj)
 			.then(res => resolve(res))

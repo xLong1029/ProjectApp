@@ -103,7 +103,7 @@
 			// 显示页面
 			showPage(index, routeName){	
 				if(routeName){
-					Common.gotoPage(routeName, {}, this);
+					Common.GotoPage(routeName, {}, this);
 					// 移除菜单样式
 					$(".tabbar_menu").eq(index).addClass('on').siblings().removeClass('on');
 				}
