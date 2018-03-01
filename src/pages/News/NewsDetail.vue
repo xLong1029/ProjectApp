@@ -1,7 +1,7 @@
 <template>
 	<div id="newsDetail">
         <!-- 加载数据 -->
-		<Loading v-if="loading"></Loading>
+		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
             <div class="cont_frame">
@@ -47,7 +47,7 @@
 		data(){
 			return{
                 // 是否加载内容
-                loading: false,
+                pageLoading: false,
                 newsCont: {
                     title: '暂无标题',
                     htmlContext: '暂无内容',
@@ -69,14 +69,14 @@
             // 获取资讯内容
             getNewsCont(newsId){
                 // 开始加载
-				this.loading = true;
+				this.pageLoading = true;
 
 				Api.DeclareDetail(newsId)
 				.then(res => {
 					if(res.code == 200){
                         this.newsCont = res.data;                        
 						// 停止加载
-                        this.loading = false;
+                        this.pageLoading = false;
                         
                         // 更新结束后再轮播
 						this.$nextTick(() => {
@@ -86,14 +86,11 @@
 					}
 					else {
                         // 停止加载
-                        this.loading = false;
+                        this.pageLoading = false;
                         this.newsCont.htmlContext = res.msg;
                     }
 				})
-				.catch(err => {
-					this.pageLoading = false; 
-					alert('网络出错，加载失败！');
-				})
+				.catch(err => console.log(err))
             },
             // 查看上一篇
             readPrev(id){

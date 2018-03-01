@@ -1,7 +1,7 @@
 <template>
 	<div id="contact">
 		<!-- 加载数据 -->
-		<Loading v-if="loading"></Loading>
+		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
 			<!-- 百度地图 -->
@@ -15,9 +15,9 @@
 				<section class="cont_frame c_info_part">
 					<h1>联系方式</h1>
 					<p style="margin-bottom:0">
-						联系人：肖健<br/>
-						电话：0771-5829196<br/>
-						邮箱：xiaojian@zhujia.com
+						联系人：{{ contactInfo.linkMan }}<br/>
+						电话：{{ contactInfo.phone }}<br/>
+						邮箱：{{ contactInfo.email }}
 					</p>
 				</section>
 				<section class="cont_frame c_info_part">
@@ -27,21 +27,19 @@
 						<form>
 							<div class="select_cont">
 								<i class="icon-arrow-down"></i>
-								<input type="text" class="select_btn" v-model="form.serType" readonly="readonly" placeholder="选择服务类型（必选）" @click="popModel"/>
+								<input type="text" class="select_btn" v-model="form.Type" readonly="readonly" placeholder="选择服务类型（必选）" @click="popModel"/>
 							</div>
-							<input type="text" v-model="form.companyName" placeholder="企业名称（必填）"/>
-							<input type="text" v-model="form.linkMan" placeholder="联系人姓名（必填）"/>
-							<input type="text" v-model="form.linkPhone" placeholder="联系人电话（必填）"/>
-							<textarea v-model="form.companyInfo" placeholder="企业简介（选填）"></textarea>
+							<input type="text" v-model="form.Company" placeholder="企业名称（必填）"/>
+							<input type="text" v-model="form.LinkMan" placeholder="联系人姓名（必填）"/>
+							<input type="text" v-model="form.Phone" placeholder="联系人电话（必填）"/>
+							<textarea v-model="form.Synopsis" placeholder="企业简介（选填）"></textarea>
 							<input type="button" class="button" value="提交" @click="onSubmit"/>
 						</form>
 					</div>
 				</section>
 				<!-- 选择窗口 -->
 				<div class="pop_model" v-show="showModel" ref="popModel">
-					<ul class="select_list">
-						<li v-for="(item, index) in serTypeList" :key="index" @click="selectService(index)">{{ item.name }}</li>
-					</ul>
+					<span class="select_list_item" v-for="(item, index) in TypeList" :key="index" @click="selectService(index)">{{ item.name }}</span>
 				</div>
 				<!-- 遮罩层 -->
 				<div :class="['mask', showModel ? 'mask_show' : '']"></div>
@@ -59,14 +57,16 @@
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	import Copyright from "components/Common/Copyright.vue";
+	// Api方法
+	import Api from "api/api.js";
 
 	export default {
 		name: "contactUs",
-		components: { Copyright },
+		components: { Copyright, Loading },
 		data(){
 			return{
 				// 是否加载
-				loading: false,
+				pageLoading: false,
 				// 地图配置
 				map:{
 					// 需要生成地图的容器ID
@@ -107,48 +107,80 @@
 					],
 				},
 				// 服务类型列表
-				serTypeList:[
+				TypeList:[
 					{
 						name: '项目申报',
-						value: '1'
+						value: '项目申报'
 					},
 					{
 						name: '资质申报',
-						value: '2'
+						value: '资质申报'
 					},
 					{
 						name: '计算机软件著作权申请',
-						value: '3'
+						value: '计算机软件著作权申请'
 					}
 				],
 				// 表单信息
 				form:{
 					// 项目申报类型
-					serType: '',
+					Type: '',
 					// 企业名称
-					companyName: '',
+					Company: '',
 					// 联系人
-					linkMan: '',
+					LinkMan: '',
 					// 联系电话
-					linkPhone: '',
+					Phone: '',
 					// 企业简介
-					companyInfo: ''
+					Synopsis: ''
+				},
+				contactInfo:{
+					email: '暂无内容',
+					linkMan: '暂无内容',
+					phone: '暂无内容'
 				},
 				// 是否显示遮罩
 				showModel: false,
 			}
 		},
 		created(){
+			// 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
+			scrollTo(0, 0);
 			this.$store.commit('SET_NAV_TITLE', '联系我们');
 			this.$store.commit('SET_NEED_SCORLL_PAGE', false);
-		},
-		mounted() {
-			initMap(this.map);
+			this.getContactInfo();
 		},
 		methods:{
+			// 获取联系方式
+			getContactInfo(){
+				// 开始加载
+				this.pageLoading = true;
+
+				Api.LinkInfo()
+				.then(res => {
+					if(res.code == 200){
+						this.contactInfo = res.data;
+
+						// 停止加载
+						this.pageLoading = false;
+
+						// 更新结束后再初始化百度地图
+						this.$nextTick(() => {
+							initMap(this.map);
+						})
+					}
+					else alert(res.msg);
+				})
+				.catch(err => console.log(err))
+			},
 			// 提交表单
 			onSubmit(){
-				alert('yeah');
+				Api.PostContact(this.form)
+				.then(res => {
+					if(res.code == 200) alert(res.data); 
+					else alert(res.msg);
+				})
+				.catch(err => console.log(err))
 			},
 			// 显示弹窗
 			popModel(){
@@ -160,7 +192,7 @@
 			},
 			// 选择服务类型
 			selectService(index){
-				this.form.serType = this.serTypeList[index].name;
+				this.form.Type = this.TypeList[index].name;
 				this.showModel = false;
 			}
 		}
@@ -238,7 +270,15 @@
 		}
 
 		.select_btn{
-			outline: none;
+			// 取消输入框自带光标
+			-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+            -webkit-user-select: none;
+            -moz-user-focus: none;
+            -moz-user-select: none;
+            -webkit-appearance:none;
+            outline: none;
+			border: none;
+			
 			width: 100%;
 			height: 70*@half_rem;
 			line-height: 70*@half_rem;
@@ -252,17 +292,16 @@
 		}
 	}
 
-	.select_list{
-		li{
-			padding: 12*@rem;
-			border-bottom: @border_light;
-			text-align: center;
-			cursor: pointer;
+	.select_list_item{
+		display: block;
+		padding: 12*@rem;
+		border-bottom: @border_light;
+		text-align: center;
+		cursor: pointer;
 
-			&:hover{
-				color: @base_color;
-				background: @base_hover_color;
-			}
+		&:hover{
+			color: @base_color;
+			background: @base_hover_color;
 		}
 	}
 </style>

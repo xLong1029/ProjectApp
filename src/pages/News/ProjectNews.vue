@@ -85,10 +85,7 @@
 					}
 					else alert(res.msg);
 				})
-				.catch(err => {
-					this.pageLoading = false; 
-					alert('网络出错，加载失败！');
-				})
+				.catch(err => console.log(err))
 			}
 		}
 	};

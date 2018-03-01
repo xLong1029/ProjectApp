@@ -1,7 +1,7 @@
 <template>
 	<div id="index">
 		<!-- 加载数据 -->
-		<Loading v-if="loading"></Loading>
+		<Loading v-if="pageLoading"></Loading>
 		<div v-else>
 			<!-- 消息通知 -->
 			<section class="notice_part cont_frame">
@@ -69,7 +69,7 @@
 		data() {
 			return {
 				// 是否加载
-				loading: false,
+				pageLoading: false,
 				// 最新资讯
 				declareData: [],
 				// 消息通知
@@ -88,7 +88,7 @@
 			// 获取首页内容
 			getIndexCont(){
 				// 开始加载
-				this.loading = true;
+				this.pageLoading = true;
 
 				Api.Index({
 					declareNum: 5,
@@ -104,7 +104,7 @@
 						this.partner = res.data.partner;
 
 						// 停止加载
-						this.loading = false;
+						this.pageLoading = false;
 
 						// 更新结束后再轮播
 						var _this = this;
@@ -114,10 +114,7 @@
 					}
 					else alert(res.msg);
 				})
-				.catch(err => {
-					this.pageLoading = false; 
-					alert('网络出错，加载失败！');
-				})
+				.catch(err => console.log(err))
 			},
 			// 通知移动
 			noticeMove(){
