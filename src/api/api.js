@@ -26,9 +26,9 @@ export default {
 		})
 	},
 	// 案例列表
-	CaseList: () => {
+	CaseList: (obj) => {
 		return new Promise((resolve,reject)=>{
-			tools.HttpGet(`/api/ProjectDeclare/Information/CaseList`)
+			tools.HttpGet(`/api/ProjectDeclare/Information/CaseList`, obj)
 			.then(res => resolve(res))
 			.catch(err => reject(err))
 		})

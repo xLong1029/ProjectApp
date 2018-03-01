@@ -32,7 +32,6 @@
 </template>
 
 <script>
-	import $ from "jquery";
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	import Copyright from "components/Common/Copyright.vue";
@@ -55,16 +54,18 @@
 			}
 		},
 		created(){
-			this.$store.commit('SET_NEED_SCORLL_PAGE', true);
-			this.scrollPage();
 			this.getListData(this.listNum, false);
+		},
+		mounted(){
+			// 监听滚动事件
+			window.addEventListener('scroll', this.scrollPage);
 		},
 		methods:{
 			// 获取列表内容, num: 获取个数，more:是否加载更多
 			getListData(num, more){
 				// 加载页面
 				if(!more) this.pageLoading = true;
-				else this.loadMore = true;
+				else this.loadMore = true
 
 				Api.DeclareList({
 					pageNum: 1,
@@ -78,15 +79,45 @@
 						this.pageLoading = false;
 												
 						if(more){
-							this.loadMoreNow = false;
+							// 再无数据可添加
+							if(this.listNum >= res.data.dataCount) this.loadMoreNow = true;
+							else this.loadMoreNow = false;
 							// 停止加载更多
 							this.loadMore = false;
 						}
 					}
-					else alert(res.msg);
+					else{
+						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
+					}
 				})
 				.catch(err => console.log(err))
+			},
+			// 页面滚动
+			scrollPage(){
+				let	scrollTop = $(window).scrollTop(),
+					windowH = $(window).height(),
+					documentH = $(document).height();
+
+				if(scrollTop + windowH > documentH - 40){
+					if(!this.loadMoreNow) {
+						this.loadMoreNow = true;
+						// 累加5条记录
+						this.listNum += 5;
+						// 获取更多内容
+						this.getListData(this.listNum, true);
+					}
+				}
+				if(scrollTop > windowH/2){
+					this.showTopBtn = true;
+				}
+				else{
+					this.showTopBtn = false;
+				}
 			}
+		},
+		destroyed(){
+			// 移除滚动事件
+			window.removeEventListener("scroll",this.scrollPage);
 		}
 	};
 </script>

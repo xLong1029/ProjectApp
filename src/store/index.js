@@ -15,7 +15,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
 	// state分模块
 	modules: {
-		common,
+		common
 	},
 	plugins: debug ? [createLogger()] : []
 });

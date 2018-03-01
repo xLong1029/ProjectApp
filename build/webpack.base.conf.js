@@ -1,4 +1,6 @@
 'use strict'
+// 引入webpack，后面的plugins那里需要
+const webpack = require('webpack')
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
@@ -85,5 +87,13 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  // 配置jquery全局使用
+  plugins:[
+    new webpack.ProvidePlugin({
+      $:"jquery",
+      jQuery:"jquery",
+      "window.jQuery":"jquery"
+    })
+  ]
 }

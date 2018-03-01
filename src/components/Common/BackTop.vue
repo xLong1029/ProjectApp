@@ -3,8 +3,6 @@
 </template>
 
 <script>
-    import $ from "jquery";
-
 	export default {
 		name: "backTop",
 		data() {
@@ -31,8 +29,16 @@
         z-index: 99;
         bottom: 50*@rem;
         right: @edge_w;
+        cursor: pointer;
 
         .ft(12);
         .border_radius_4;
+    }
+
+    @media screen and (min-width: 960px) {
+        .back_top{
+            right: 50%;
+            margin-right: -310px;
+        }
     }
 </style>

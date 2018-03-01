@@ -30,7 +30,6 @@
 </template>
 
 <script>
-	import $ from "jquery";
 	// 通用js
 	import Common from 'common/common.js'
 

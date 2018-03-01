@@ -30,10 +30,9 @@
 </template>
 
 <script>
-    import $ from "jquery";
     // 组件
 	import Loading from "components/Common/Loading.vue";
-    import Copyright from "components/Common/Copyright.vue";
+    import Copyright from "components/Common/Copyright.vue";    
     // Api方法
     import Api from "api/api.js";
     // 获取url参数方法
@@ -61,7 +60,6 @@
 			}
 		},
 		created(){
-            this.$store.commit('SET_NEED_SCORLL_PAGE', false);
             this.$store.commit('SET_NAV_TITLE', '资讯详情');
             this.getNewsCont(GetUrlQuery('id'));
         },
@@ -98,7 +96,9 @@
                     Common.GotoPage('NewsDetail', { id : id }, this);
                     this.getNewsCont(id);
                 }
-                else alert('已经是第一篇啦！');
+                else{
+                    this.$store.commit('SET_WARN_MODAL', { show: true, text: '已经是第一篇啦！' });
+                }
             },
             // 查看下一篇
             readNext(id){

@@ -27,22 +27,20 @@
 						<form>
 							<div class="select_cont">
 								<i class="icon-arrow-down"></i>
-								<input type="text" class="select_btn" v-model="form.Type" readonly="readonly" placeholder="选择服务类型（必选）" @click="popModel"/>
+								<input type="text" class="select_btn" v-model="form.Type" readonly="readonly" placeholder="选择服务类型（必选）" @click="popModal"/>
 							</div>
 							<input type="text" v-model="form.Company" placeholder="企业名称（必填）"/>
 							<input type="text" v-model="form.LinkMan" placeholder="联系人姓名（必填）"/>
 							<input type="text" v-model="form.Phone" placeholder="联系人电话（必填）"/>
 							<textarea v-model="form.Synopsis" placeholder="企业简介（选填）"></textarea>
+							<!-- 错误提示 -->
+							<p v-if="errorWarn != ''">{{ errorWarn }}</p>
 							<input type="button" class="button" value="提交" @click="onSubmit"/>
 						</form>
 					</div>
 				</section>
 				<!-- 选择窗口 -->
-				<div class="pop_model" v-show="showModel" ref="popModel">
-					<span class="select_list_item" v-for="(item, index) in TypeList" :key="index" @click="selectService(index)">{{ item.name }}</span>
-				</div>
-				<!-- 遮罩层 -->
-				<div :class="['mask', showModel ? 'mask_show' : '']"></div>
+				<SelectModal :show="showModel" :list-data="TypeList" @getSelectdata="setSelectData" @setShowModal="setModalState"></SelectModal>			
 			</div>
 			<!-- 版权信息 -->
 			<Copyright></Copyright>
@@ -51,18 +49,18 @@
 </template>
 
 <script>
-	import $ from "jquery";
 	// 百度地图
 	import {initMap} from '@/assets/js/map.js'
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	import Copyright from "components/Common/Copyright.vue";
+	import SelectModal from "components/Modal/SelectModal.vue";
 	// Api方法
 	import Api from "api/api.js";
 
 	export default {
 		name: "contactUs",
-		components: { Copyright, Loading },
+		components: { SelectModal, Copyright, Loading },
 		data(){
 			return{
 				// 是否加载
@@ -141,13 +139,14 @@
 				},
 				// 是否显示遮罩
 				showModel: false,
+				// 表单错误提示
+				errorWarn: '',
 			}
 		},
 		created(){
 			// 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
 			scrollTo(0, 0);
 			this.$store.commit('SET_NAV_TITLE', '联系我们');
-			this.$store.commit('SET_NEED_SCORLL_PAGE', false);
 			this.getContactInfo();
 		},
 		methods:{
@@ -160,16 +159,16 @@
 				.then(res => {
 					if(res.code == 200){
 						this.contactInfo = res.data;
-
 						// 停止加载
 						this.pageLoading = false;
-
 						// 更新结束后再初始化百度地图
 						this.$nextTick(() => {
 							initMap(this.map);
 						})
 					}
-					else alert(res.msg);
+					else{
+						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
+					}
 				})
 				.catch(err => console.log(err))
 			},
@@ -177,23 +176,34 @@
 			onSubmit(){
 				Api.PostContact(this.form)
 				.then(res => {
-					if(res.code == 200) alert(res.data); 
-					else alert(res.msg);
+					if(res.code == 200){
+						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.data });
+						// 清空表单
+						this.form = {
+							Type: '',
+							Company: '',
+							LinkMan: '',
+							Phone: '',
+							Synopsis: ''
+						}
+					}
+					else{
+						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
+					}
 				})
 				.catch(err => console.log(err))
 			},
 			// 显示弹窗
-			popModel(){
-				this.showModel = true;
-				this.$nextTick(function () {
-					let model = $(this.$refs.popModel);
-					model.css('margin-top', - model.height()/2 + 'px');
-				})
+			popModal(){
+				this.showModel = true;	
 			},
-			// 选择服务类型
-			selectService(index){
-				this.form.Type = this.TypeList[index].name;
-				this.showModel = false;
+			// 设置弹窗显示状态
+			setModalState(data){
+				this.showModel = data;
+			},
+			// 设置选择的值
+			setSelectData(data){
+				this.form.Type = data;
 			}
 		}
 	};
@@ -289,19 +299,6 @@
 			margin-bottom: 15*@rem;
 
 			.border_radius_4;
-		}
-	}
-
-	.select_list_item{
-		display: block;
-		padding: 12*@rem;
-		border-bottom: @border_light;
-		text-align: center;
-		cursor: pointer;
-
-		&:hover{
-			color: @base_color;
-			background: @base_hover_color;
 		}
 	}
 </style>

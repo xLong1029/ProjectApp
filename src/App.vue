@@ -17,6 +17,8 @@
 			<!-- 标签栏 -->
 			<TabBar v-if="secondPages.indexOf($route.name) === -1"></TabBar>
 		</div>
+		<!-- 提示窗口 -->
+		<WarnModal></WarnModal>
 	</div>
 </template>
 
@@ -25,6 +27,7 @@
 	import NavBar from "components/Common/NavBar.vue";
 	import TabBar from "components/Common/TabBar.vue";
 	import SideBar from "components/Common/SideBar.vue";
+	import WarnModal from "components/Modal/WarnModal.vue";
 	// Vuex
 	import { mapGetters } from 'vuex'
 
@@ -33,7 +36,7 @@
 		computed: {
             ...mapGetters([ 'showTabBar', 'showSideBar' ]),
         },
-		components: { NavBar, TabBar, SideBar },
+		components: { NavBar, TabBar, SideBar, WarnModal },
 		data(){
 			return{
 				// 定义二级页面名称，作为动态props值

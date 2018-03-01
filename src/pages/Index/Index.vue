@@ -51,7 +51,6 @@
 </template>
 
 <script>
-	import $ from "jquery";
 	// 引入组件
 	import Loading from "components/Common/Loading.vue";
 	import SectionTitle from "components/Common/SectionTitle.vue";
@@ -81,7 +80,6 @@
 			}
 		},
 		created(){
-			this.$store.commit('SET_NEED_SCORLL_PAGE', false);
 			this.getIndexCont();
 		},
 		methods:{
@@ -112,7 +110,9 @@
 							_this.noticeMove();
 						})
 					}
-					else alert(res.msg);
+					else{
+						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
+					}
 				})
 				.catch(err => console.log(err))
 			},

@@ -32,7 +32,6 @@
 		},
 		created(){
 			this.$store.commit('SET_NAV_TITLE', '公司简介');
-			this.$store.commit('SET_NEED_SCORLL_PAGE', false);
 			this.getCompnayIntro();
 		},
 		methods:{
@@ -54,10 +53,7 @@
                         this.companyCont= res.msg;
                     }
 				})
-				.catch(err => {
-					this.pageLoading = false; 
-					alert('网络出错，加载失败！');
-				})
+				.catch(err => console.log(err));
 			}
 		}
 	};
