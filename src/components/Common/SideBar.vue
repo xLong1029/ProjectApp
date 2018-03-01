@@ -16,9 +16,10 @@
 </template>
 
 <script>
+	// 通用js
+    import Common from 'common/common.js'
+	//Vuex
 	import { mapGetters } from 'vuex'
-
-	import Common from 'common/common.js'
 
 	export default {
 		name: "sideBar",

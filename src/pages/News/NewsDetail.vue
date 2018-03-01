@@ -18,8 +18,8 @@
                 <section class="article_org_link">原文来自：<a :href="newsCont.url">{{ newsCont.webSite }} (点击查看原文)</a></section>
                 <!-- 文章选择 -->
                 <section class="select_artc">
-                    <a class="fl"><i class="icon-back"></i> 查看上一篇</a>
-                    <a class="fr">查看下一篇 <i class="icon-next"></i></a>
+                    <a class="fl" @click="readPrev(newsCont.prevID)"><i class="icon-back"></i> 查看上一篇</a>
+                    <a class="fr"@click="readNext(newsCont.nextID)">查看下一篇 <i class="icon-next"></i></a>
                     <div class="clearfix"></div>
                 </section>
             </div>
@@ -38,6 +38,8 @@
     import Api from "api/api.js";
     // 获取url参数方法
     import { GetUrlQuery } from "common/important.js";
+    // 通用js
+    import Common from 'common/common.js'
 
 	export default {
         name: "newsDetail",
@@ -52,7 +54,9 @@
                     keyWord: '暂无标签',
                     publishDate: '暂无日期',
                     url: null,
-                    webSite: '暂无来源'
+                    webSite: '暂无来源',
+                    prevID: 0,
+                    nextID: 0
                 },
 			}
 		},
@@ -90,6 +94,23 @@
 					this.pageLoading = false; 
 					alert('网络出错，加载失败！');
 				})
+            },
+            // 查看上一篇
+            readPrev(id){
+                if(id !=0){
+                    Common.GotoPage('NewsDetail', { id : id }, this);
+                    this.getNewsCont(id);
+                }
+                else alert('已经是第一篇啦！');
+            },
+            // 查看下一篇
+            readNext(id){
+                console.log(id);
+                if(id !=0){
+                    Common.GotoPage('NewsDetail', { id : id }, this);
+                    this.getNewsCont(id);
+                }
+                else alert('已经是最后一篇啦！');
             }
         }
 	};
