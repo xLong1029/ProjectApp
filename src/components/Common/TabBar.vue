@@ -128,7 +128,7 @@
 		font-size: 12*@rem;
 		width: 100%;
 		position: fixed;
-		z-index: 66;
+		z-index: 99;
 
 		a, i, span {
 			display: block;

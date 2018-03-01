@@ -9,13 +9,16 @@ const common = {
 		showBackBtn: false,
 		// 导航栏标题
 		navTitle: '华建项目申报',
+		// 是否需要滚动页面功能
+		needScrollPage: false,
 	},
 	// 计算属性
 	getters: {
-		showSideBar: state => state.showSideBar,
+		showSideBar: state => state.showSideBar,		
 		showTabBar: state => state.showTabBar,
 		showBackBtn: state => state.showBackBtn,
 		navTitle: state => state.navTitle,
+		needScrollPage: state => state.needScrollPage
 	},
 	// 用来处理数据的函数，只能同步操作
 	mutations: {
@@ -30,6 +33,9 @@ const common = {
 		},
 		SET_NAV_TITLE: (state, navTitle) => {
 			state.navTitle = navTitle;
+		},
+		SET_NEED_SCORLL_PAGE: (state, needScrollPage) => {
+			state.needScrollPage = needScrollPage;
 		},
 	},
 }

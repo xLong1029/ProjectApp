@@ -140,6 +140,7 @@
 		},
 		created(){
 			this.$store.commit('SET_NAV_TITLE', '联系我们');
+			this.$store.commit('SET_NEED_SCORLL_PAGE', false);
 		},
 		mounted() {
 			initMap(this.map);

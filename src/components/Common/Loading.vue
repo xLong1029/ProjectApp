@@ -54,4 +54,10 @@
             transform: rotate(1turn);
         }   
     }
+
+    @media screen and (min-width: 960px) {
+        .loading {
+            width: @wrapper_max_w;
+        }
+    }
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<div id="succCases">
 		<!-- 加载数据 -->
-		<Loading v-if="loading"></Loading>
+		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
 			<ul class="case_list">
@@ -9,79 +9,87 @@
 					<a>
 						<p class="case_name">
 							<i class="case_icon icon-case"></i>
-							<span class="case_title">项目名称: </span>{{ item.projectName }}
+							<span class="case_title">项目名称: </span>{{ item.caseName }}
 						</p>
 						<p class="case_company">
 							<i class="case_icon icon-company"></i>
 							<span class="case_title">立项单位: </span>{{ item.companyName }}
 						</p>
-						<span class="case_type tag">{{ item.type }}</span>					
+						<span class="case_type tag">{{ item.caseType }}</span>					
 					</a>	
 				</li>
 			</ul>
+			<div class="clearfix"></div>
+			<!-- 加载更多 -->
+			<div v-if="loadMore" class="load_more">
+				<Loading></Loading>
+			</div>
 			<!-- 版权信息 -->
 			<Copyright></Copyright>
+			<!-- 返回顶部 -->
+			<BackTop v-show="showTopBtn"></BackTop>
 		</div>
 	</div>
 </template>
 
 <script>
+	import $ from "jquery";
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	import Copyright from "components/Common/Copyright.vue";
+	import BackTop from "components/Common/BackTop.vue";
+	// Api方法
+	import Api from "api/api.js";
+	// 页面滚动与加载
+    import scrollPage from 'mixins/scrollPage.js'
 
 	export default {
 		name: "succCases",
-		components: { Loading, Copyright },
+		components: { Loading, Copyright, BackTop },
+		mixins: [ scrollPage ],
 		data(){
 			return{
 				// 是否加载
-				loading: false,
+				pageLoading: false,
 				// 案例列表
-				caseList: [
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						companyName: '据说是华蓝集团, 我试试公司名称长度',
-						type: '科技专项',
-						projectName: '这里是六六六，六到不行的项目名称，我就试试可以有多长',
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						companyName: '据说是华蓝集团, 我试试公司名称长度',
-						type: '文化专项',
-						projectName: '这里是六六六，六到不行的项目名称，我就试试可以有多长',
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						companyName: '据说是华蓝集团, 我试试公司名称长度',
-						type: '服务专项',
-						projectName: '这里是六六六，六到不行的项目名称，我就试试可以有多长',
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						companyName: '据说是华蓝集团, 我试试公司名称长度',
-						type: '科技专项',
-						projectName: '这里是六六六，六到不行的项目名称，我就试试可以有多长',
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						companyName: '据说是华蓝集团, 我试试公司名称长度',
-						type: '文化专项',
-						projectName: '这里是六六六，六到不行的项目名称，我就试试可以有多长',
-						url: null
-					},
-					{
-						logo: require('assets/images/pic-logo-hualan.jpg'),
-						companyName: '据说是华蓝集团, 我试试公司名称长度',
-						type: '服务专项',
-						projectName: '这里是六六六，六到不行的项目名称，我就试试可以有多长',
-						url: null
+				caseList: [],
+			}
+		},
+		created(){
+			this.$store.commit('SET_NEED_SCORLL_PAGE', true);
+			this.scrollPage();
+			this.getListData(this.listNum, false);
+		},
+		methods:{
+			// 获取列表内容, num: 获取个数，more:是否加载更多
+			getListData(num, more){
+				// 加载页面
+				if(!more) this.pageLoading = true;
+				else this.loadMore = true;
+
+				Api.CaseList({
+					pageNum: 1,
+					pageSize: num
+				})
+				.then(res => {
+					if(res.code == 200){
+						this.caseList = res.data.result;
+
+						// 停止页面加载
+						this.pageLoading = false;
+												
+						if(more){
+							this.loadMoreNow = false;
+							// 停止加载更多
+							this.loadMore = false;
+						}
 					}
-				]
+					else alert(res.msg);
+				})
+				.catch(err => {
+					this.pageLoading = false; 
+					alert('网络出错，加载失败！');
+				})
 			}
 		}
 	};

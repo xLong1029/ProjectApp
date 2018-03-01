@@ -1,7 +1,7 @@
 /*
  * 功能 : 封装一些重要函数
  * 作者 : 罗永梅（381612175@qq.com）
- * 日期 : 2017-8-31
+ * 日期 : 2018-3-1
  * 版本 : version 1.0
  */
 // 设置cookie
@@ -46,6 +46,12 @@ export function DelLocalS(key){
 // localstorage清空本地储存
 export function ClearLocalS(){
     localStorage.clear();
+}
+// 获取url传值参数
+export function GetUrlQuery(name, thisUrl){
+    let reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i"), url = thisUrl || location.href;
+　　if (reg.test(url)) return decodeURI(RegExp.$2.replace(/\+/g, " "));
+　　else return false;
 }
 // 获取参数值
 export function GetParams(params){

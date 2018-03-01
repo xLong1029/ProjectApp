@@ -1,25 +1,26 @@
 <template>
 	<div id="projectNews">
 		<!-- 加载数据 -->
-		<Loading v-if="loading"></Loading>
+		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
 			<!-- 资讯列表 -->
 			<ul class="news_list">
 				<li v-for="(item, index) in newsList" :key="index" class="news_li_item proj_news">
-					<router-link :to="{ name: 'NewsDetail' }">
+					<router-link :to="{ name : 'NewsDetail', query: { id : item.id } }">
 						<div class="news_li_cont fl">
 							<h2 class="news_li_title">{{ item.title }}</h2>
-							<div class="news_li_tags">
-								<span v-for="(tag, i) in item.tags" :key="i" class="tag fl">{{ tag }}</span>
-								<span class="news_li_time fr">{{ item.time }}</span>	
+							<div class="news_li_tag">
+								<span v-for="(tag, i) in item.keyWords" :key="i" class="tag fl">{{ tag }}</span>
+								<span class="news_li_time fr">{{ item.publishDate }}</span>	
 							</div>
 						</div>
 					</router-link>			
 				</li>
 			</ul>
 			<div class="clearfix"></div>
-			<div v-if="loadmore" class="load_more">
+			<!-- 加载更多 -->
+			<div v-if="loadMore" class="load_more">
 				<Loading></Loading>
 			</div>
 			<!-- 版权信息 -->
@@ -36,113 +37,59 @@
 	import Loading from "components/Common/Loading.vue";
 	import Copyright from "components/Common/Copyright.vue";
 	import BackTop from "components/Common/BackTop.vue";
+	// Api方法
+	import Api from "api/api.js";
+	// 页面滚动与加载
+    import scrollPage from 'mixins/scrollPage.js'
 
 	export default {
 		name: "projectNews",
 		components: { Loading, Copyright, BackTop },
+		mixins: [ scrollPage ],
 		data() {
 			return{
-				// 是否加载
-				loading: false,
-				// 是否加载更多
-				loadmore: false,
-				// 是否显示返回顶部按钮
-				showTopBtn: false,
+				// 是否加载页面
+				pageLoading: false,
 				// 资讯列表
-				newsList: [
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					},
-					{
-						title: '这里是项目申报资讯信息，这里是项目申报资讯信息',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2017/12/4'
-					}
-				]
+				newsList: []
 			}
 		},
 		created(){
-			var self = this;
-			// 监听页面滚动事件
-			$(window).scroll(function(){
-				let scrollTop = $(this).scrollTop(),
-					windowH = $(this).height(),
-					documentH = $(document).height();
-				if(scrollTop + windowH >= documentH - 40){
-					self.loadData();
-				}
-				if(scrollTop >= windowH/2){
-					self.showTopBtn = true;
-					console.log(1);
-				}
-				else{
-					self.showTopBtn = false;
-				}
-			})
+			this.$store.commit('SET_NEED_SCORLL_PAGE', true);
+			this.scrollPage();
+			this.getListData(this.listNum, false);
 		},
 		methods:{
-			// 加载数据
-			loadData(){
-				this.loadmore = true;
-				var self = this;
-				setTimeout(function(){
-					self.newsList.push({
-						title: '这里是新加载的内容',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2018/12/4'
-					},
-					{
-						title: '这里是新加载的内容',
-						tags: [ '申报', '通知', '项目资讯'],
-						time: '2018/12/4'
-					});
+			// 获取列表内容, num: 获取个数，more:是否加载更多
+			getListData(num, more){
+				// 加载页面
+				if(!more) this.pageLoading = true;
+				else this.loadMore = true;
 
-					self.loadmore = false;
-				}, 1000)
+				Api.DeclareList({
+					pageNum: 1,
+					pageSize: num
+				})
+				.then(res => {
+					if(res.code == 200){
+						this.newsList = res.data.result;
+
+						// 停止页面加载
+						this.pageLoading = false;
+												
+						if(more){
+							this.loadMoreNow = false;
+							// 停止加载更多
+							this.loadMore = false;
+						}
+					}
+					else alert(res.msg);
+				})
+				.catch(err => {
+					this.pageLoading = false; 
+					alert('网络出错，加载失败！');
+				})
 			}
-
 		}
 	};
 </script>
@@ -159,7 +106,7 @@
 			.ht(24);
 		}
 
-		.news_li_time{
+		.news_li_publishDate{
 			.mt(5);
 		}
 	}

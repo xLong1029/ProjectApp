@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from "jquery";
 
 	export default {
 		name: "backTop",
@@ -12,8 +13,7 @@
 		methods:{
             // 返回顶部
             goBackTop(){
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
+                $('body,html').animate({ scrollTop: 0 }, 200);
             }
 		}
 	};
