@@ -39,13 +39,14 @@
 	import BackTop from "components/Common/BackTop.vue";
 	// Api方法
 	import Api from "api/api.js";
-	// 页面滚动与加载
-    import scrollPage from 'mixins/scrollPage.js'
+	// 混合
+	import ScrollPage from 'mixins/scrollPage.js'
+	import Modal from "mixins/modal.js"
 
 	export default {
 		name: "succCases",
 		components: { Loading, Copyright, BackTop },
-		mixins: [ scrollPage ],
+		mixins: [ ScrollPage, Modal ],
 		data(){
 			return{
 				// 是否加载
@@ -88,9 +89,7 @@
 							this.loadMore = false;
 						}
 					}
-					else{
-						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
-					}
+					else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
 			},

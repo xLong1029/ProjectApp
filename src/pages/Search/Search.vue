@@ -32,13 +32,14 @@
 	import Copyright from "components/Common/Copyright.vue";
 	// Api方法
 	import Api from "api/api.js";
-	// 页面滚动与加载
-    import scrollPage from 'mixins/scrollPage.js'
+	// 混合
+	import ScrollPage from 'mixins/scrollPage.js'
+	import Modal from "mixins/modal.js"
 
 	export default {
 		name: "search",
 		components: { NewsList, Copyright },
-		mixins: [ scrollPage ],
+		mixins: [ ScrollPage, Modal ],
 		data(){
 			return{
 				// 搜索关键词
@@ -61,6 +62,11 @@
 		methods:{
 			// 获取列表内容, num: 获取个数，more:是否加载更多
 			getListData(num, more){
+				if(this.keyword == ''){
+					this.showWarnModel('请输入关键字', 'warning');
+					return false;
+				}
+
 				// 加载页面
 				if(!more) this.pageLoading = true;
 				else this.loadMore = true
@@ -90,7 +96,7 @@
 					else{
 						this.getResult = true;
 						this.noResult = true;
-						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
+						this.showWarnModel(res.msg, 'warning');
 					}
 				})
 				.catch(err => console.log(err))

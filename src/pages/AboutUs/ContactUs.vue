@@ -16,7 +16,7 @@
 					<h1>联系方式</h1>
 					<p style="margin-bottom:0">
 						联系人：{{ contactInfo.linkMan }}<br/>
-						电话：{{ contactInfo.phone }}<br/>
+						电话：<a :href="'tel:' + contactInfo.phone" style="color:#333;">{{ contactInfo.phone }}</a><br/>
 						邮箱：{{ contactInfo.email }}
 					</p>
 				</section>
@@ -31,11 +31,9 @@
 							</div>
 							<input type="text" v-model="form.Company" placeholder="企业名称（必填）"/>
 							<input type="text" v-model="form.LinkMan" placeholder="联系人姓名（必填）"/>
-							<input type="text" v-model="form.Phone" placeholder="联系人电话（必填）"/>
+							<input type="tel" v-model="form.Phone" placeholder="联系人电话（必填）"/>
 							<textarea v-model="form.Synopsis" placeholder="企业简介（选填）"></textarea>
-							<!-- 错误提示 -->
-							<p v-if="errorWarn != ''">{{ errorWarn }}</p>
-							<input type="button" class="button" value="提交" @click="onSubmit"/>
+							<input type="button" class="button" value="提交" @click="validForm"/>
 						</form>
 					</div>
 				</section>
@@ -50,17 +48,22 @@
 
 <script>
 	// 百度地图
-	import {initMap} from '@/assets/js/map.js'
+	import { initMap } from '@/assets/js/map.js'
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	import Copyright from "components/Common/Copyright.vue";
 	import SelectModal from "components/Modal/SelectModal.vue";
 	// Api方法
 	import Api from "api/api.js";
+	// 通用JS
+	import Common from "common/common.js";
+	// 混合
+	import Modal from "mixins/modal.js"
 
 	export default {
 		name: "contactUs",
 		components: { SelectModal, Copyright, Loading },
+		mixins: [ Modal ],
 		data(){
 			return{
 				// 是否加载
@@ -139,8 +142,6 @@
 				},
 				// 是否显示遮罩
 				showModel: false,
-				// 表单错误提示
-				errorWarn: '',
 			}
 		},
 		created(){
@@ -172,6 +173,32 @@
 				})
 				.catch(err => console.log(err))
 			},
+			// 验证表单
+			validForm(){
+				if(this.form.Type == ''){
+					this.showWarnModel('请选择服务类型', 'warning');
+					return false;
+				}
+				else if(this.form.Company == ''){
+					this.showWarnModel('请输入企业名称', 'warning');
+					return false;
+				}
+				else if(this.form.LinkMan == ''){
+					this.showWarnModel('请输入联系人姓名', 'warning');
+					return false;
+				}
+				else if(this.form.Phone == ''){
+					this.showWarnModel('请输入联系人手机号码', 'warning');
+					return false;
+				}
+				else if(!Common.regMobile.test(this.form.Phone)){
+					this.showWarnModel('手机号码格式不正确', 'warning');
+					return false;
+				}
+				else{
+					this.onSubmit();
+				}
+			},
 			// 提交表单
 			onSubmit(){
 				Api.PostContact(this.form)
@@ -187,15 +214,13 @@
 							Synopsis: ''
 						}
 					}
-					else{
-						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
-					}
+					else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
 			},
 			// 显示弹窗
 			popModal(){
-				this.showModel = true;	
+				this.showModel = true;
 			},
 			// 设置弹窗显示状态
 			setModalState(data){
@@ -261,6 +286,10 @@
 		}
 		p{
 			color:#666;
+
+			&.hint{
+				color: @warn_color;
+			}
 		}
 	}
 

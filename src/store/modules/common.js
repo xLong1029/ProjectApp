@@ -14,7 +14,11 @@ const common = {
             // 是否显示
             show: false,
             // 提示内容
-            text: ''
+			text: '',
+			// 是否显示图标
+			showIcon: false,
+			// 提示类型，warning：警告，success：成功，fail：失败
+			type: 'warning',
         }
 	},
 	// 计算属性

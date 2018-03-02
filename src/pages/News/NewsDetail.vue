@@ -39,10 +39,13 @@
     import { GetUrlQuery } from "common/important.js";
     // 通用js
     import Common from 'common/common.js'
+    // 混合
+	import Modal from "mixins/modal.js"
 
 	export default {
         name: "newsDetail",
         components: { Loading, Copyright },
+        mixins: [ Modal ],
 		data(){
 			return{
                 // 是否加载内容
@@ -96,9 +99,7 @@
                     Common.GotoPage('NewsDetail', { id : id }, this);
                     this.getNewsCont(id);
                 }
-                else{
-                    this.$store.commit('SET_WARN_MODAL', { show: true, text: '已经是第一篇啦！' });
-                }
+                else this.showWarnModel('已经是第一篇啦！', 'warning');
             },
             // 查看下一篇
             readNext(id){
@@ -107,7 +108,7 @@
                     Common.GotoPage('NewsDetail', { id : id }, this);
                     this.getNewsCont(id);
                 }
-                else alert('已经是最后一篇啦！');
+                else this.showWarnModel('已经是最后一篇啦！', 'warning');
             }
         }
 	};

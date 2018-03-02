@@ -39,12 +39,14 @@
 	// Api方法
 	import Api from "api/api.js";
 	// 页面滚动与加载
-    import scrollPage from 'mixins/scrollPage.js'
+	import ScrollPage from 'mixins/scrollPage.js'
+	// 弹窗配置
+	import Modal from "mixins/modal.js"
 
 	export default {
 		name: "projectNews",
 		components: { Loading, Copyright, BackTop },
-		mixins: [ scrollPage ],
+		mixins: [ ScrollPage, Modal ],
 		data() {
 			return{
 				// 是否加载页面
@@ -86,9 +88,7 @@
 							this.loadMore = false;
 						}
 					}
-					else{
-						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
-					}
+					else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
 			},

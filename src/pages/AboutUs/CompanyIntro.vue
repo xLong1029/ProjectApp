@@ -4,6 +4,7 @@
 		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
+			<img :src="companyPic" alt="华建公司坐落于南国弈园"/>
 			<div class="cont_frame" v-html="companyCont">
 				{{ companyCont }}
 			</div>
@@ -27,6 +28,7 @@
 			return{
 				// 是否加载
 				pageLoading: false,
+				companyPic: require('@/assets/images/pic-company.jpg'),
 				companyCont: '暂无内容',
 			}
 		},

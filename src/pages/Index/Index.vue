@@ -58,6 +58,8 @@
 	import Copyright from "components/Common/Copyright.vue";
 	// Api方法
 	import Api from "api/api.js";
+	// 混合
+	import Modal from "mixins/modal.js"
 
 	// 定时器
 	var noticeScroll;
@@ -65,6 +67,7 @@
 	export default {
 		name: "index",
 		components: { Loading, SectionTitle, NewsList, Copyright },
+		mixins: [ Modal ],
 		data() {
 			return {
 				// 是否加载
@@ -110,9 +113,7 @@
 							_this.noticeMove();
 						})
 					}
-					else{
-						this.$store.commit('SET_WARN_MODAL', { show: true, text: res.msg });
-					}
+					else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
 			},

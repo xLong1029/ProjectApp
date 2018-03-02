@@ -59,7 +59,8 @@ function addMarker(markerArr){
             var _iw = createInfoWindow(i, markerArr);
             var _marker = marker;
             _marker.addEventListener("click",function(){
-                this.openInfoWindow(_iw);
+                // 禁止点击弹窗
+                //this.openInfoWindow(_iw);
             });
             _iw.addEventListener("open",function(){
                 _marker.getLabel().hide();
@@ -68,11 +69,13 @@ function addMarker(markerArr){
                 _marker.getLabel().show();
             })
             label.addEventListener("click",function(){
-                _marker.openInfoWindow(_iw);
+                // 禁止点击弹窗
+                // _marker.openInfoWindow(_iw);
             })
             if(!!json.isOpen){
                 label.hide();
-                _marker.openInfoWindow(_iw);
+                // 禁止点击弹窗
+                // _marker.openInfoWindow(_iw);
             }
         })()
     }
