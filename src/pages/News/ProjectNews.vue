@@ -38,9 +38,8 @@
 	import BackTop from "components/Common/BackTop.vue";
 	// Api方法
 	import Api from "api/api.js";
-	// 页面滚动与加载
+	// 混合
 	import ScrollPage from 'mixins/scrollPage.js'
-	// 弹窗配置
 	import Modal from "mixins/modal.js"
 
 	export default {
@@ -56,6 +55,8 @@
 			}
 		},
 		created(){
+			// 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
+			scrollTo(0, 0);
 			this.getListData(this.listNum, false);
 		},
 		mounted(){
