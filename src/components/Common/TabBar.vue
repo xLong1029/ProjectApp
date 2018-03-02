@@ -153,9 +153,9 @@
 
 		.menu_icon {
 			margin: 0 auto;
-			margin-top: 4*@rem;
 			text-align: center;
-			font-size: 18*@rem;
+			.mt(4);
+			.ft(18);
 		}
 
 		.menu_title {
@@ -221,5 +221,15 @@
 		.tabbar {
 			width: @wrapper_max_w;
 		}
+	}
+
+	@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+		.tabbar {
+			height: @tabbar_h + 30*@rem;
+			.menu_icon {
+				.mt(10);
+			}
+		}
+
 	}
 </style>

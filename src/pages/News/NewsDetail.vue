@@ -15,7 +15,7 @@
                 <!-- 提示 -->
                 <section class="article_hint">* 温馨提示：附件类内容建议到源网址下载</section>
                 <!-- 原文链接 -->
-                <section class="article_org_link">原文来自：<a :href="newsCont.url">{{ newsCont.webSite }} (点击查看原文)</a></section>
+                <section class="article_org_link">原文来自：<a :href="newsCont.url" target="_blank">{{ newsCont.webSite }} (点击查看原文)</a></section>
                 <!-- 文章选择 -->
                 <section class="select_artc">
                     <a class="fl" @click="readPrev(newsCont.prevID)"><i class="icon-back"></i> 查看上一篇</a>
