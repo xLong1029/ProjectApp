@@ -74,7 +74,6 @@
 					this.showWarnModel('请输入关键字', 'warning');
 					return false;
 				}
-				console.log(more);
 
 				// 加载页面
 				if(more) this.loadMore = true;
