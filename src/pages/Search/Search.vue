@@ -6,8 +6,8 @@
 				<div class="search_input">
 					<form action="/Search" target="blankFrame">
 						<iframe id="rfFrame" name="blankFrame" src="about:blank" style="display:none;"></iframe> 
-						<i class="icon-search search_btn" @click="getListData(listNum, true)"></i>
-						<input id="keyword" type="search" v-model="keyword" placeholder="请输入搜索关键词" @keyup.enter="getListData(listNum, true)"/>
+						<i class="icon-search search_btn" @click="getListData(listNum, false)"></i>
+						<input id="keyword" type="search" v-model="keyword" placeholder="请输入搜索关键词" @keyup.enter="getListData(listNum, false)"/>
 					</form>
 				</div>
 			</section>
@@ -74,10 +74,11 @@
 					this.showWarnModel('请输入关键字', 'warning');
 					return false;
 				}
+				console.log(more);
 
 				// 加载页面
-				if(!more) this.sLoading = true;
-				else this.loadMore = true
+				if(more) this.loadMore = true;
+				else this.sLoading = true;
 
 				Api.Search({
 					keyword: this.keyword,
@@ -150,7 +151,7 @@
 	};
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
 
@@ -199,6 +200,17 @@
 
 	.search_btn{
 		cursor: pointer;
+	}
+
+	/* 加载更多 */
+	.load_more{
+		position: relative;
+		border-bottom: @border_deep;
+		.ht(80);
+
+		.loading{
+			position: absolute;
+		}
 	}
 
 	.back_top{
