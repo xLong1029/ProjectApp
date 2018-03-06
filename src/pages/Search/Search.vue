@@ -4,13 +4,15 @@
 		<div class="search_cont">
 			<section class="cont_frame">
 				<div class="search_input">
-					<form action="#" @submit="getListData(listNum, false)">
-						<i class="icon-search" @click="getListData(listNum, false)"></i>
-						<input type="search" v-model="keyword" placeholder="请输入搜索关键词"/>
+					<form action="/Search" target="blankFrame">
+						<iframe id="rfFrame" name="blankFrame" src="about:blank" style="display:none;"></iframe> 
+						<i class="icon-search search_btn" @click="getListData(listNum, true)"></i>
+						<input id="keyword" type="search" v-model="keyword" placeholder="请输入搜索关键词" @keyup.enter="getListData(listNum, true)"/>
 					</form>
 				</div>
 			</section>
-			<section class="search_result">				
+			<Loading v-if="sLoading"></Loading>
+			<section v-else class="search_result">				
 				<p v-if="getResult" class="res_title edge_frame">搜索结果：
 					<span v-if="noResult" class="no_result">无信息</span>
 				</p>
@@ -23,13 +25,17 @@
 		</div>
 		<!-- 版权信息 -->
 		<Copyright></Copyright>
+		<!-- 返回顶部 -->
+		<BackTop v-show="showTopBtn" :second-page="true"></BackTop>
 	</div>
 </template>
 
 <script>
 	// 组件
+	import Loading from "components/Common/Loading.vue";
 	import NewsList from "components/News/NewsList.vue";
 	import Copyright from "components/Common/Copyright.vue";
+	import BackTop from "components/Common/BackTop.vue";
 	// Api方法
 	import Api from "api/api.js";
 	// 混合
@@ -38,12 +44,14 @@
 
 	export default {
 		name: "search",
-		components: { NewsList, Copyright },
+		components: { NewsList, Copyright, BackTop, Loading },
 		mixins: [ ScrollPage, Modal ],
 		data(){
 			return{
 				// 搜索关键词
 				keyword: '',
+				// 搜索加载
+				sLoading: false,
 				// 是否有搜索结果
 				getResult: false,
 				// 无搜索结果
@@ -68,7 +76,7 @@
 				}
 
 				// 加载页面
-				if(!more) this.pageLoading = true;
+				if(!more) this.sLoading = true;
 				else this.loadMore = true
 
 				Api.Search({
@@ -83,7 +91,7 @@
 						this.noResult = false;
 
 						// 停止页面加载
-						this.pageLoading = false;
+						this.sLoading = false;
 												
 						if(more){
 							// 再无数据可添加
@@ -96,10 +104,18 @@
 					else{
 						this.getResult = true;
 						this.noResult = true;
+						this.sLoading = false;
+						this.loadMore = false;
 						this.showWarnModel(res.msg, 'warning');
 					}
 				})
-				.catch(err => console.log(err))
+				.catch(err => {
+					this.getResult = true;
+					this.noResult = true;
+					this.sLoading = false;
+					this.loadMore = false;
+					console.log(err);
+				})
 
 				// 禁止表单自动提交跳转页面
 				return false;
@@ -179,5 +195,13 @@
 	.no_result{
 		text-align: center;
 		color: @ft_gray_color;
+	}
+
+	.search_btn{
+		cursor: pointer;
+	}
+
+	.back_top{
+		bottom: 20*@rem;
 	}
 </style>

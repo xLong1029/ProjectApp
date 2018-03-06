@@ -130,6 +130,21 @@ input[type="search"]::-webkit-search-cancel-button {
     display: none;
 }
 
+// 移除表单自动填充黄色背景
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill,
+input[type="text"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, textarea:focus
+{
+    // 去黄
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+    background-color: #fff;
+    background-image: none;
+    // 字体颜色
+    -webkit-text-fill-color: 333;
+    color: #333;
+}
+
 textarea {
     padding: 10*@rem;
 }
