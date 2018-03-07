@@ -6,7 +6,7 @@
 				<i class="icon-list"></i>
 			</a>			
 			<!-- 是否为二级页面，显示返回图标 -->
-			<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="$router.go(-1)">
+			<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="goBack">
 				<i class="icon-back"></i>
 			</a>
 			<!-- 非二级页面，显示搜索图标 -->
@@ -38,7 +38,7 @@
 			},
 		},
 		computed: {
-            ...mapGetters([ 'showTabBar', 'navTitle' ]),
+            ...mapGetters([ 'showTabBar', 'navTitle', 'goBackRoute' ]),
         },
 		data() {
 			return {
@@ -54,6 +54,11 @@
 			// 跳转“搜索”页面
 			toSearch(){
 				Common.GotoPage('Search', {}, this);
+			},
+			// 返回上一页
+			goBack(){
+				if(this.goBackRoute) Common.GotoPage(this.goBackRoute, {}, this);
+				else this.$router.go(-1);
 			}
 		}
 	};

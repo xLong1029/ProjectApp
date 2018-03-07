@@ -4,10 +4,10 @@
 		<div class="search_cont">
 			<section class="cont_frame">
 				<div class="search_input">
-					<form action="/Search" target="blankFrame">
+					<form action="/Search" target="blankFrame" @submit="getListData(listNum, false)">
 						<iframe id="rfFrame" name="blankFrame" src="about:blank" style="display:none;"></iframe> 
 						<i class="icon-search search_btn" @click="getListData(listNum, false)"></i>
-						<input id="keyword" type="search" v-model="keyword" placeholder="请输入搜索关键词" @keyup.enter="getListData(listNum, false)"/>
+						<input id="keyword" type="search" v-model="keyword" placeholder="请输入搜索关键词"/>
 					</form>
 				</div>
 			</section>
@@ -26,7 +26,7 @@
 		<!-- 版权信息 -->
 		<Copyright></Copyright>
 		<!-- 返回顶部 -->
-		<BackTop v-show="showTopBtn" :second-page="true"></BackTop>
+		<BackTop v-show="showTopBtn" :main-page="false"></BackTop>
 	</div>
 </template>
 
@@ -57,7 +57,9 @@
 				// 无搜索结果
 				noResult: false,
 				// 搜索结果列表
-				resList: []
+				resList: [],
+				// 是否开始搜索
+				searchBegin: false
 			}
 		},
 		created(){
@@ -70,6 +72,9 @@
 		methods:{
 			// 获取列表内容, num: 获取个数，more:是否加载更多
 			getListData(num, more){
+				// 开始搜索
+				this.searchBegin = true;
+				
 				if(this.keyword == ''){
 					this.showWarnModel('请输入关键字', 'warning');
 					return false;
@@ -131,8 +136,13 @@
 						this.loadMoreNow = true;
 						// 累加5条记录
 						this.listNum += 5;
-						// 获取更多内容
-						this.getListData(this.listNum, true);
+						// 如果不是开始搜索就返回，因为如果滚动页面触发了获取更多内容会弹出提示框“请输入关键字”，用户体验不好
+						if(!this.searchBegin) return false;
+						else{
+							// 获取更多内容
+							this.getListData(this.listNum, true);
+						}
+						
 					}
 				}
 				if(scrollTop > windowH/2){

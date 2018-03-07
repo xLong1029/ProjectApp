@@ -35,12 +35,12 @@
     import Copyright from "components/Common/Copyright.vue";    
     // Api方法
     import Api from "api/api.js";
+    // 混合
+    import Modal from "mixins/modal.js";
     // 获取url参数方法
     import { GetUrlQuery } from "common/important.js";
     // 通用js
     import Common from 'common/common.js'
-    // 混合
-	import Modal from "mixins/modal.js"
 
 	export default {
         name: "newsDetail",
@@ -59,16 +59,20 @@
                     webSite: '暂无来源',
                     prevID: 0,
                     nextID: 0
-                },
+                }
 			}
 		},
 		created(){
-            // 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
-			scrollTo(0, 0);
-            this.$store.commit('SET_NAV_TITLE', '资讯详情');
-            this.getNewsCont(GetUrlQuery('id'));
+            this.init();
         },
         methods:{
+            init(){
+                // 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
+                scrollTo(0, 0);
+                this.$store.commit('SET_NAV_TITLE', '资讯详情');
+                this.$store.commit('SET_GOBACK_ROUTE', 'ProjectNews');
+                this.getNewsCont(GetUrlQuery('id'));
+            },
             // 获取资讯内容
             getNewsCont(newsId){
                 // 开始加载

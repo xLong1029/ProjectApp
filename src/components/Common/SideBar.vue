@@ -2,7 +2,7 @@
 	<aside id="sideBar">
 		<div ref="sideList" :class="['sidebar_left sidebar', showSideBar ? 'sidebar_open' : '']">
 			<ul class="sidebar_list">
-				<li v-for="(item, index) in sideNav" :key="index" :class="['sidebar_item', item.routeName === $route.name ? 'on' : '']" @click="hideSideBar(item.routeName)">
+				<li v-for="(item, index) in sideNav" :key="index" :class="['sidebar_item', item.rName === $route.name ? 'on' : '']" @click="hideSideBar(item.rName, item.rQuery)">
 					<span>
 						{{ item.title }}
 						<i class="icon-list-next"></i>
@@ -31,27 +31,33 @@
 				// 侧边栏导航
 				sideNav: [
 					{
-						routeName: 'Index',
+						rName: 'Index',
+						rQuery: {},
 						title: "首页"
 					},
 					{
-						routeName: 'CompanyIntro',
+						rName: 'CompanyIntro',
+						rQuery: {},
 						title: "公司简介"
 					},
 					{
-						routeName: 'SuccCases',
+						rName: 'SuccCases',
+						rQuery: {},
 						title: "成功案例"
 					},					
 					{
-						routeName: 'ProjectNews',
+						rName: 'ProjectNews',
+						rQuery: { num: 10 },
 						title: "申报资讯"
 					},
 					{
-						routeName: 'ContactUs',
+						rName: 'ContactUs',
+						rQuery: {},
 						title: "联系我们"
 					},
 					{
-						routeName: 'Search',
+						rName: 'Search',
+						rQuery: {},
 						title: "搜索"
 					}
 				]
@@ -62,10 +68,10 @@
 		// 方法
 		methods: {
 			// 隐藏侧边栏
-			hideSideBar(routeName) {
+			hideSideBar(rName, rQuery) {
 				this.$store.commit('SET_SHOW_SIDE_BAR', false);
-				if(routeName){
-					Common.GotoPage(routeName, {}, this);
+				if(rName){
+					Common.GotoPage(rName, rQuery, this);
 				}
 			}
 		}

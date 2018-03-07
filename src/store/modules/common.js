@@ -9,6 +9,8 @@ const common = {
 		showBackBtn: false,
 		// 导航栏标题
 		navTitle: '华建项目申报',
+		// 返回上一页路由
+		goBackRoute: null,
 		// 提示框
 		warnModal: {
             // 是否显示
@@ -27,6 +29,7 @@ const common = {
 		showTabBar: state => state.showTabBar,
 		showBackBtn: state => state.showBackBtn,
 		navTitle: state => state.navTitle,
+		goBackRoute: state => state.goBackRoute,
 		warnModal: state => state.warnModal
 	},
 	// 用来处理数据的函数，只能同步操作
@@ -42,6 +45,9 @@ const common = {
 		},
 		SET_NAV_TITLE: (state, navTitle) => {
 			state.navTitle = navTitle;
+		},
+		SET_GOBACK_ROUTE: (state, goBackRoute) => {
+			state.goBackRoute = goBackRoute;
 		},
 		SET_WARN_MODAL: (state, warnModal) => {
 			state.warnModal = warnModal;

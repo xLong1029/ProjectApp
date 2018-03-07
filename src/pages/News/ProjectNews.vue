@@ -41,6 +41,9 @@
 	// 混合
 	import ScrollPage from 'mixins/scrollPage.js'
 	import Modal from "mixins/modal.js"
+	// 通用js
+	import Common from 'common/common.js'
+	import { SetCookie, GetCookie } from 'common/important.js'
 
 	export default {
 		name: "projectNews",
@@ -55,15 +58,19 @@
 			}
 		},
 		created(){
-			// 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
-			scrollTo(0, 0);
-			this.getListData(this.listNum, false);
+			this.init();
 		},
 		mounted(){
 			// 监听滚动事件
 			window.addEventListener('scroll', this.scrollPage);
 		},
 		methods:{
+			// 初始化
+			init(){
+				scrollTo(0, 0);
+				this.$store.commit('SET_GOBACK_ROUTE', null);
+				this.getListData(this.listNum, false);
+			},
 			// 获取列表内容, num: 获取个数，more:是否加载更多
 			getListData(num, more){
 				// 加载页面
@@ -104,6 +111,8 @@
 						this.loadMoreNow = true;
 						// 累加5条记录
 						this.listNum += 5;
+						// 跳转当前页，累计新闻条数
+						Common.GotoPage('ProjectNews', { n : this.listNum }, this);
 						// 获取更多内容
 						this.getListData(this.listNum, true);
 					}

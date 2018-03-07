@@ -1,8 +1,8 @@
 <template>
 	<div id="sectionTitle" class="section_title">
-        <span class="decorate fl"></span>
+        <span class="decorate fl" :style="{ backgroud: color }"></span>
         <h2 class="name fl">{{ title }}</h2>
-        <router-link v-if="readMore && routeName" :to="{ name: routeName }" class="more fr">更多<i class="icon-next fr"></i></router-link>
+        <router-link v-if="readMore && routeName" :to="{ name: routeName, query: routeQuery }" class="more fr">更多<i class="icon-next fr"></i></router-link>
     </div>
 </template>
 
@@ -14,23 +14,29 @@
 		name: "sectionTitle",
     	props: {
 			// 标题
-			title:{
+			title: {
 				type: String,
 				default: '模块标题'
             },
             // 颜色
-            color:{
+            color: {
                 type: String,
                 default: '#3B89C0'
             },
             // 显示更多
-            readMore:{
+            readMore: {
                 type: Boolean,
                 default: false
             },
-            routeName:{
+            routeName: {
                 type: String,
                 default: null
+            },
+            routeQuery: {
+                type: Object,
+                default: () => {
+                    return {}
+                }
             }
 		},
 		data() {

@@ -1,18 +1,16 @@
 <template>
-	<a id="backTop" :class="['back_top', seconPage ? '' : 'second']" @click="goBackTop">返回顶部</a>
+	<a id="backTop" :class="['back_top', mainPage ? '' : 'second']" @click="goBackTop">返回顶部</a>
 </template>
 
-<script>
-    // Vuex
-    import { mapGetters } from 'vuex'
-    
+<script>    
 	export default {
         name: "backTop",
         props: {
-			// 是否二级页面
-			seconPage:{
-				type: Boolean,
-				default: false
+			// 是否一级页面
+			mainPage:{
+                type: Boolean,
+                // 默认值只能设置为true
+				default: true
             }
 		},
 		data() {

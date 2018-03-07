@@ -56,16 +56,18 @@
 			}
 		},
 		created(){
-			// 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
-			scrollTo(0, 0);
-			this.scrollPage();
-			this.getListData(this.listNum, false);
+			this.init();
 		},
 		mounted(){
 			// 监听滚动事件
 			window.addEventListener('scroll', this.scrollPage);
 		},
 		methods:{
+			init(){
+				// 从别的滚动页面返回会导致有滚动问题，所以要滚动到顶部;
+				scrollTo(0, 0);
+				this.getListData(this.listNum, false);
+			},
 			// 获取列表内容, num: 获取个数，more:是否加载更多
 			getListData(num, more){
 				// 加载页面

@@ -2,7 +2,7 @@
 	<nav id="tabBar">
 		<ul class="tabbar">
 			<!-- 通过 tab定义的route值 和 路由定义名称 是否一致来判断当前页，是则添加class=on激活当前页样式 -->
-			<li v-for="(item, index) in menu" :key="index" :class="['tabbar_menu', item.routeName === $route.name ? 'on' : '']" :style="{ width:menuItemW }">				
+			<li v-for="(item, index) in menu" :key="index" :class="['tabbar_menu', item.rName === $route.name ? 'on' : '']" :style="{ width:menuItemW }">				
 				<!-- 含二级菜单的一级菜单 -->
 				<div v-if="item.submenu.length > 0" class="menu_item" @click="showSubmenu(index)">
 					<div>
@@ -14,13 +14,13 @@
 						<span class="trangle_down"><em></em></span>
 						<ul>
 							<li class="submenu" v-for="(subitem, i) in item.submenu" :key="i">
-								<router-link :to="{ name: subitem.routeName }" class="submenu_item">{{ subitem.title }}</router-link>
+								<router-link :to="{ name: subitem.rName, query: subitem.rQuery }" class="submenu_item">{{ subitem.title }}</router-link>
 							</li>
 						</ul>						
 					</div>
 				</div>
 				<!-- 一级菜单 -->
-				<div v-else class="menu_item" @click="showPage(index, item.routeName)">
+				<div v-else class="menu_item" @click="showPage(index, item.rName, item.rQuery)">
 					<i :class="['menu_icon', item.class]"></i>
 					<span class="menu_title">{{ item.title }}</span>
 				</div>
@@ -40,34 +40,40 @@
 				// 菜单
 				menu: [
 					{
-						routeName: "Index",
+						rName: "Index",
+						rQuery: {},
 						class: "icon-home",
 						title: "首页",
 						submenu: []
 					},
 					{
-						routeName: "ProjectNews",
+						rName: "ProjectNews",
+						rQuery: {},
 						class: "icon-news",
 						title: "申报资讯",
 						submenu: []
 					},
 					{
-						routeName: "SuccCases",
+						rName: "SuccCases",
+						rQuery: {},
 						class: "icon-case",
 						title: "成功案例",
 						submenu: []
 					},
 					{
-						routeName: "AboutUs",
+						rName: "AboutUs",
+						rQuery: {},
 						class: "icon-group",
 						title: "关于我们",
 						submenu: [
 							{
-								routeName: "CompanyIntro",
+								rName: "CompanyIntro",
+								rQuery: {},
 								title: "公司简介",
 							},
 							{
-								routeName: "ContactUs",
+								rName: "ContactUs",
+								rQuery: {},
 								title: "联系我们",
 							}
 						]
@@ -90,7 +96,7 @@
 				if(tabbarM.hasClass('on')){
 					tabbarM.removeClass('on');
 					for(let i = 0; i < this.menu.length; i++){
-						if(this.$route.name == this.menu[i].routeName){
+						if(this.$route.name == this.menu[i].rName){
 							$(".tabbar_menu").eq(i).addClass('on');
 						}
 					}
@@ -100,9 +106,9 @@
 				}
 			},
 			// 显示页面
-			showPage(index, routeName){	
-				if(routeName){
-					Common.GotoPage(routeName, {}, this);
+			showPage(index, rName, rQuery){
+				if(rName){
+					Common.GotoPage(rName, rQuery, this);					
 					// 移除菜单样式
 					$(".tabbar_menu").eq(index).addClass('on').siblings().removeClass('on');
 				}
