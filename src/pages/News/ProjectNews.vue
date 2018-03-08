@@ -6,16 +6,14 @@
 		<div v-else>
 			<!-- 资讯列表 -->
 			<ul class="news_list">
-				<li v-for="(item, index) in newsList" :key="index" class="news_li_item proj_news">
-					<router-link :to="{ name : 'NewsDetail', query: { id : item.id } }">
-						<div class="news_li_cont fl">
-							<h2 class="news_li_title">{{ item.title }}</h2>
-							<div class="news_li_tag">
-								<span v-for="(tag, i) in item.keyWords" :key="i" class="tag fl">{{ tag }}</span>
-								<span class="news_li_time fr">{{ item.publishDate }}</span>	
-							</div>
+				<li v-for="(item, index) in newsList" :key="index" class="news_li_item proj_news" @click="gotoDetail(item.id)">
+					<div class="news_li_cont fl">
+						<h2 class="news_li_title">{{ item.title }}</h2>
+						<div class="news_li_tag">
+							<span v-for="(tag, i) in item.keyWords" :key="i" class="tag fl">{{ tag }}</span>
+							<span class="news_li_time fr">{{ item.publishDate }}</span>	
 						</div>
-					</router-link>			
+					</div>
 				</li>
 			</ul>
 			<div class="clearfix"></div>
@@ -54,7 +52,9 @@
 				// 是否加载页面
 				pageLoading: false,
 				// 资讯列表
-				newsList: []
+				newsList: [],
+				// 是否显示详情页
+				showDetail: false,
 			}
 		},
 		created(){
@@ -111,8 +111,6 @@
 						this.loadMoreNow = true;
 						// 累加5条记录
 						this.listNum += 5;
-						// 跳转当前页，累计新闻条数
-						Common.GotoPage('ProjectNews', { n : this.listNum }, this);
 						// 获取更多内容
 						this.getListData(this.listNum, true);
 					}
@@ -123,6 +121,10 @@
 				else{
 					this.showTopBtn = false;
 				}
+			},
+			// 跳转资讯详情页
+			gotoDetail(id){
+				Common.GotoPage('NewsDetail', { id: id }, this);
 			}
 		},
 		destroyed(){
