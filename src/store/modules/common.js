@@ -10,7 +10,10 @@ const common = {
 		// 导航栏标题
 		navTitle: '华建项目申报',
 		// 返回上一页路由
-		goBackRoute: null,
+		goBackRoute: {
+			name: null,
+			query: {}
+		},
 		// 提示框
 		warnModal: {
             // 是否显示
