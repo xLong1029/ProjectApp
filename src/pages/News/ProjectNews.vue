@@ -88,7 +88,7 @@
 					console.log('get getListNum:' + getListNum);
 					this.listNum = parseInt(getListNum);
 				}
-				this.getListData(this.listNum);
+				this.getListData(this.listNum, false);
 
 				// 从缓存获取列表滚动高度
 				let getScrollH = GetCookie('scrollH');
@@ -97,10 +97,11 @@
 					this.listScrollH = parseInt(getScrollH);
 				}
 			},
-			// 获取列表内容
-			getListData(num){
+			// 获取列表内容， num: 请求数量，more：是否加载更多
+			getListData(num, more){
 				// 加载页面
-				this.pageLoading = true;
+				if(more) this.loadMore = true;
+				else this.sLoading = true;
 
 				Api.DeclareList({
 					pageNum: 1,
@@ -108,16 +109,27 @@
 				})
 				.then(res => {
 					if(res.code == 200){
-						this.newsList = res.data.result;
-						// 停止页面加载
-						this.pageLoading = false;
+						this.newsList = res.data.result;						
 
-						// 获取到缓存滚动高度
-						if(this.listScrollH > 0){
-							var _this = this;
-							this.$nextTick(() => {
-								scrollTo(0, _this.listScrollH);	
-							})													
+						// 是否加载更多
+						if(more){
+							// 再无数据可添加
+							if(this.listNum >= res.data.dataCount) this.loadMoreNow = true;
+							else this.loadMoreNow = false;
+							// 停止加载更多
+							this.loadMore = false;
+						}
+						else{
+							// 停止页面加载
+							this.pageLoading = false;
+
+							// 获取到缓存滚动高度
+							if(this.listScrollH > 0){
+								var _this = this;
+								this.$nextTick(() => {
+									scrollTo(0, _this.listScrollH);	
+								})													
+							}
 						}
 					}
 					else this.showWarnModel(res.msg, 'warning');
@@ -147,7 +159,7 @@
 						SetCookie('listNum', this.listNum);
 						console.log('set listNum:' + this.listNum);			
 						// 获取更多内容
-						this.loadListData(this.listNum);
+						this.getListData(this.listNum, true);
 					}
 				}
 				if(scrollTop > windowH/2){
@@ -163,27 +175,6 @@
 				SetCookie('scrollH', $(window).scrollTop());
 				console.log('set scrollH:' + $(window).scrollTop());
 				Common.GotoPage('NewsDetail', { id: id }, this);
-			},
-			// 加载列表内容
-			loadListData(num){
-				this.loadMore = true;
-
-				Api.DeclareList({
-					pageNum: 1,
-					pageSize: num
-				})
-				.then(res => {
-					if(res.code == 200){
-						this.newsList = res.data.result;
-						// 再无数据可添加
-						if(this.listNum >= res.data.dataCount) this.loadMoreNow = true;
-						else this.loadMoreNow = false;
-						// 停止加载更多
-						this.loadMore = false;
-					}
-					else this.showWarnModel(res.msg, 'warning');
-				})
-				.catch(err => console.log(err))
 			}
 		},		
 		destroyed(){
