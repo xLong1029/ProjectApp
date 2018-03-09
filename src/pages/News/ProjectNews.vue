@@ -41,7 +41,7 @@
 	import Modal from "mixins/modal.js"
 	// 通用js
 	import Common from 'common/common.js'
-	import { SetCookie, GetCookie } from 'common/important.js'
+	import { GetCookie, SetCookie, DelCookie } from 'common/important.js'
 
 	export default {
 		name: "projectNews",
@@ -55,8 +55,21 @@
 				newsList: [],
 				// 是否显示详情页
 				showDetail: false,
+				// 列表滚动高度
+				listScrollH: 0,
 			}
 		},
+		// 导航离开该组件的对应路由时调用，可以访问组件实例 `this`
+        beforeRouteLeave (to, from, next) {
+			// 进入资讯详情页
+			if(to.name === 'NewsDetail') next();
+			else{
+				// 清除列表数量和滚动高度缓存
+				DelCookie('listNum');
+				DelCookie('scrollH');				
+				next();
+			}
+        },
 		created(){
 			this.init();
 		},
@@ -67,15 +80,27 @@
 		methods:{
 			// 初始化
 			init(){
-				scrollTo(0, 0);
-				this.$store.commit('SET_GOBACK_ROUTE', null);
-				this.getListData(this.listNum, false);
+				// 重置返回路由
+				this.$store.commit('SET_GOBACK_ROUTE', { name: null, query: {} });
+				// 从缓存获取列表数量
+				let getListNum = GetCookie('listNum');
+				if(getListNum){
+					console.log('get getListNum:' + getListNum);
+					this.listNum = parseInt(getListNum);
+				}
+				this.getListData(this.listNum);
+
+				// 从缓存获取列表滚动高度
+				let getScrollH = GetCookie('scrollH');
+				if(getScrollH){
+					console.log('get getScrollH:' + getScrollH);
+					this.listScrollH = parseInt(getScrollH);
+				}
 			},
-			// 获取列表内容, num: 获取个数，more:是否加载更多
-			getListData(num, more){
+			// 获取列表内容
+			getListData(num){
 				// 加载页面
-				if(!more) this.pageLoading = true;
-				else this.loadMore = true
+				this.pageLoading = true;
 
 				Api.DeclareList({
 					pageNum: 1,
@@ -84,16 +109,15 @@
 				.then(res => {
 					if(res.code == 200){
 						this.newsList = res.data.result;
-
 						// 停止页面加载
 						this.pageLoading = false;
-												
-						if(more){
-							// 再无数据可添加
-							if(this.listNum >= res.data.dataCount) this.loadMoreNow = true;
-							else this.loadMoreNow = false;
-							// 停止加载更多
-							this.loadMore = false;
+
+						// 获取到缓存滚动高度
+						if(this.listScrollH > 0){
+							var _this = this;
+							this.$nextTick(() => {
+								scrollTo(0, _this.listScrollH);	
+							})													
 						}
 					}
 					else this.showWarnModel(res.msg, 'warning');
@@ -101,9 +125,17 @@
 				.catch(err => console.log(err))
 			},
 			// 页面滚动
-			scrollPage(){
-				let	scrollTop = $(window).scrollTop(),
-					windowH = $(window).height(),
+			scrollPage(){				
+				let	scrollTop = $(window).scrollTop();
+
+				console.log('get scrollTop:' + scrollTop);
+				
+				// 缓存有滚动高度，未到该高度不触发后面的操作
+				if(this.listScrollH > 0 && scrollTop <= this.listScrollH) return false;
+
+				console.log('scroll start');
+
+				let windowH = $(window).height(),
 					documentH = $(document).height();
 
 				if(scrollTop + windowH > documentH - 40){
@@ -111,8 +143,11 @@
 						this.loadMoreNow = true;
 						// 累加5条记录
 						this.listNum += 5;
+						// 列表数量存缓存
+						SetCookie('listNum', this.listNum);
+						console.log('set listNum:' + this.listNum);			
 						// 获取更多内容
-						this.getListData(this.listNum, true);
+						this.loadListData(this.listNum);
 					}
 				}
 				if(scrollTop > windowH/2){
@@ -124,9 +159,33 @@
 			},
 			// 跳转资讯详情页
 			gotoDetail(id){
+				// 列表滚动高度存缓存
+				SetCookie('scrollH', $(window).scrollTop());
+				console.log('set scrollH:' + $(window).scrollTop());
 				Common.GotoPage('NewsDetail', { id: id }, this);
+			},
+			// 加载列表内容
+			loadListData(num){
+				this.loadMore = true;
+
+				Api.DeclareList({
+					pageNum: 1,
+					pageSize: num
+				})
+				.then(res => {
+					if(res.code == 200){
+						this.newsList = res.data.result;
+						// 再无数据可添加
+						if(this.listNum >= res.data.dataCount) this.loadMoreNow = true;
+						else this.loadMoreNow = false;
+						// 停止加载更多
+						this.loadMore = false;
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
 			}
-		},
+		},		
 		destroyed(){
 			// 移除滚动事件
 			window.removeEventListener("scroll",this.scrollPage);

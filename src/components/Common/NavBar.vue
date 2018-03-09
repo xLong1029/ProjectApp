@@ -57,7 +57,7 @@
 			},
 			// 返回上一页
 			goBack(){
-				if(this.goBackRoute) Common.GotoPage(this.goBackRoute, {}, this);
+				if(this.goBackRoute.name) Common.GotoPage(this.goBackRoute.name, this.goBackRoute.query, this);
 				else this.$router.go(-1);
 			}
 		}

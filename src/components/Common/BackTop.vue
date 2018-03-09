@@ -2,7 +2,9 @@
 	<a id="backTop" :class="['back_top', mainPage ? '' : 'second']" @click="goBackTop">返回顶部</a>
 </template>
 
-<script>    
+<script>
+    import { DelCookie } from 'common/important.js'
+
 	export default {
         name: "backTop",
         props: {
@@ -20,6 +22,9 @@
             // 返回顶部
             goBackTop(){
                 $('body,html').animate({ scrollTop: 0 }, 200);
+                // 清除列表数量和滚动高度缓存
+                DelCookie('listNum');
+                DelCookie('scrollH');
             }
 		}
 	};
