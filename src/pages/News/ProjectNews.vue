@@ -53,8 +53,6 @@
 				pageLoading: false,
 				// 资讯列表
 				newsList: [],
-				// 是否显示详情页
-				showDetail: false,
 				// 列表滚动高度
 				listScrollH: 0,
 			}
