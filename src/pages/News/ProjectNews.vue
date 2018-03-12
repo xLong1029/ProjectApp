@@ -80,20 +80,20 @@
 			init(){
 				// 重置返回路由
 				this.$store.commit('SET_GOBACK_ROUTE', { name: null, query: {} });
+
 				// 从缓存获取列表数量
 				let getListNum = GetCookie('listNum');
 				if(getListNum){
-					console.log('get getListNum:' + getListNum);
 					this.listNum = parseInt(getListNum);
-				}
-				this.getListData(this.listNum, false);
+				}				
 
 				// 从缓存获取列表滚动高度
 				let getScrollH = GetCookie('scrollH');
 				if(getScrollH){
-					console.log('get getScrollH:' + getScrollH);
 					this.listScrollH = parseInt(getScrollH);
 				}
+
+				this.getListData(this.listNum, false);
 			},
 			// 获取列表内容， num: 请求数量，more：是否加载更多
 			getListData(num, more){
@@ -137,13 +137,9 @@
 			// 页面滚动
 			scrollPage(){				
 				let	scrollTop = $(window).scrollTop();
-
-				console.log('get scrollTop:' + scrollTop);
 				
 				// 缓存有滚动高度，未到该高度不触发后面的操作
 				if(this.listScrollH > 0 && scrollTop <= this.listScrollH) return false;
-
-				console.log('scroll start');
 
 				let windowH = $(window).height(),
 					documentH = $(document).height();
@@ -154,8 +150,7 @@
 						// 累加5条记录
 						this.listNum += 5;
 						// 列表数量存缓存
-						SetCookie('listNum', this.listNum);
-						console.log('set listNum:' + this.listNum);			
+						SetCookie('listNum', this.listNum);		
 						// 获取更多内容
 						this.getListData(this.listNum, true);
 					}
@@ -171,7 +166,6 @@
 			gotoDetail(id){
 				// 列表滚动高度存缓存
 				SetCookie('scrollH', $(window).scrollTop());
-				console.log('set scrollH:' + $(window).scrollTop());
 				Common.GotoPage('NewsDetail', { id: id }, this);
 			}
 		},		
