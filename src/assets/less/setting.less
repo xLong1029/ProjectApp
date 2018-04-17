@@ -1,0 +1,113 @@
+@charset "utf-8";
+
+/* 相对缩放设置 */
+
+// 根字体大小(单位px)
+@root_ft_size : 100;
+// 单位px转换rem
+@rem: 1rem/ @root_ft_size;
+// 平时切图,可能要按照比例来,字体大小\行高之类的可能就取设计稿大小的一半,为了节省计算时间设置一个half_rem
+@half_rem: 0.5rem/ @root_ft_size;
+
+/* 字体大小 */
+
+// 默认字体大小
+@base_ft_size : 14*@rem;
+
+/* 颜色 */
+
+// 页面主色
+@base_color : #3B89C0;
+// 侧边栏浮动背景颜色
+@base_hover_color: #f8f8f8;
+// 警告或提示色
+@warn_color: #ed3f14;
+
+// 默认字体颜色
+@ft_base_color : #333;
+// 介绍字体颜色
+@ft_desc_color: #666;
+// 英文小字颜色
+@ft_eng_color : #b5b5b5;
+// 灰色字体颜色
+@ft_gray_color: #888;
+
+/* 间距高宽*/
+
+// 页面边距
+@edge_w : 8*@rem;
+// 导航栏高度
+@navbar_h : 40*@rem;
+// 标签栏高度
+@tabbar_h : 43*@rem;
+// 页面最大宽度
+@wrapper_max_w: 640px;
+
+/* 边框 */
+
+// 深边框
+@border_deep : 1px solid #ddd;
+// 浅边框
+@border_light : 1px solid #eee;
+// 蓝色边框
+@border_blue : 1px solid #9ec5ec;
+
+/* Mixin */
+
+// 圆角设置
+.border_radius(@radius) {
+    -webkit-border-radius: @radius*@rem;
+    -moz-border-radius: @radius*@rem;
+    -o-border-radius: @radius*@rem;
+    border-radius: @radius*@rem;
+}
+
+.border_radius_4 {
+    .border_radius(4);
+}
+
+// 边距设置
+.mt(@edge){ margin-top: @edge*@rem; }
+
+.mb(@edge){ margin-bottom: @edge*@rem; }
+
+.ml(@edge){ margin-left: @edge*@rem; }
+
+.mr(@edge){ margin-right: @edge*@rem; }
+
+.pt(@edge){ padding-top: @edge*@rem; }
+
+.pb(@edge){ padding-bottom: @edge*@rem; }
+
+.pl(@edge){ padding-left: @edge*@rem; }
+
+.pr(@edge){ padding-right: @edge*@rem; }
+
+// 字体大小
+.ft(@font){ font-size: @font*@rem; }
+
+// 高度设置
+.ht(@height){ height: @height*@rem; }
+
+// 宽度设置
+.wd(@width){ width: @width*@rem; }
+
+// 清除浮动
+.clr{
+    clear: both;
+    content: '.';
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    height: 0;
+}
+
+// 超出部分省略
+.ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
