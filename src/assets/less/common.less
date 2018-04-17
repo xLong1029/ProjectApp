@@ -1,0 +1,371 @@
+@charset "utf-8";
+
+/*HTML文档常规设置*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/*100 ÷ 16 × 100% = 625% 谷歌浏览器不兼容最小10px默认为12px，改成100px的相对字体大小可解决*/
+
+html {
+    font-size: 625%;
+}
+
+body {
+    width: 100%;
+    -webkit-text-size-adjust: none;
+    // 抗锯齿渲染可以使字体看起来会更清晰舒服
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    // 适配iPhoneX
+    padding-top: constant(safe-area-inset-top);   //为导航栏+状态栏的高度 88px            
+    padding-left: constant(safe-area-inset-left);   //如果未竖屏时为0                
+    padding-right: constant(safe-area-inset-right); //如果未竖屏时为0                
+    padding-bottom: constant(safe-area-inset-bottom);//为底下圆弧的高度 34px  
+
+    color: @ft_base_color;
+    font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    background: #fff;
+    font-size: @base_ft_size;
+    line-height: 1.5;
+}
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, nav, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+}
+
+article, aside, details,
+figcaption, figure, footer,
+nav, hgroup, menu, nav,
+section {
+    display: block;
+}
+
+p {
+    .mb(15);
+}
+
+
+/*设置列表标签通用样式*/
+
+ul,
+ol {
+    list-style: none;
+    list-style-image: none;
+    li {
+        list-style: none;
+    }
+}
+
+
+/*设置超链接标签通用样式*/
+
+a {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    text-decoration: none;
+    background: transparent;
+    vertical-align: baseline;
+    color: #333;
+    &:hover {
+        color: @base_color;
+    }
+    &.disabled {
+        cursor: default;
+    }
+}
+
+
+/*设置超链接标签通用样式*/
+
+img {
+    border: 0;
+    height: auto;
+    width: 100%;
+    -ms-interpolation-mode: bicubic;
+}
+
+
+/* 设置输入框通用样式 */
+
+input[type="text"], input[type="password"], input[type="search"], input[type="tel"], textarea {
+    border: @border_deep;
+    outline: none;
+    width: 100%;
+    font-size: @base_ft_size;
+    font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    .border_radius_4;
+    .mb(15);
+}
+
+input[type="text"], input[type="password"], input[type="search"], input[type="tel"] {
+    padding: 0 10*@rem;
+}
+
+// 移除搜索框的叉叉图标
+input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+}
+
+// 移除表单自动填充黄色背景
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill,
+input[type="text"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, textarea:focus
+{
+    // 去黄
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+    background-color: #fff;
+    background-image: none;
+    // 字体颜色
+    -webkit-text-fill-color: 333;
+    color: #333;
+}
+
+textarea {
+    padding: 10*@rem;
+}
+
+.button, input {
+    display: block;
+    outline: none;
+    height: 35*@rem;
+    line-height: 35*@rem;
+    font-family: "microsoft yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    .border_radius_4;
+    .ft(14);
+}
+
+
+/* 设置按钮通用样式 */
+
+.button{
+    width: 100%;
+    border: none;
+    background: @base_color;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+
+    .mb(15);
+}
+
+
+/* 设置浮动类型 */
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+
+/* 设置清除浮动类型 */
+
+.clearfix:before, .clearfix:after {
+    .clr;
+}
+
+
+/* page setting */
+
+.fullwidth {
+    width: 100%;
+}
+
+.edge_frame {
+    padding-left: @edge_w;
+    padding-right: @edge_w;
+}
+
+.content {
+    margin-top: @navbar_h;
+    margin-bottom: @tabbar_h;
+}
+
+.cont_frame{
+    padding: @edge_w;
+    border-bottom: @border_light;
+    .mb(12);
+    background: #fff;
+}
+
+
+/* wrapper */
+
+.wrapper {
+    width: 100%;
+    // vh是相对于视口的高度。视口被均分为100单位的vh
+    min-height: 100vh;
+    margin: 0 auto;
+    background: #f8f8f8;
+    position: relative;
+    overflow-x: hidden;
+}
+
+
+/* push_body */
+
+.push_body {
+    overflow-x: hidden;
+    position: relative;
+    left: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.push_body_toright {
+    left: 480*@half_rem;
+}
+
+/* 遮罩层 */
+
+.mask.mask_show {
+    display: block;
+}
+
+.mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 88;
+    background: #101620;
+    display: none;
+    min-width: 768px;
+    opacity: 0.75;
+    min-height: 100vh;
+}
+
+/* 弹出层 */
+
+.pop_modal{
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 50%;
+    background: #fff;
+    width: 100%;
+}
+
+/* 标签 */
+
+.tag{
+    color: @ft_gray_color;
+    padding: 2*@rem 8*@rem;
+    border: @border_deep;
+    background: #fff;
+
+    .mr(5);
+    .ft(12);
+    .border_radius(30);
+}
+
+/* 解决移动端系统自带样式问题 */
+
+* {
+    // 取消移动端浏览器自带样式
+    -webkit-appearance: none;
+    //这一句是用来解决在安卓上的点击出现蓝色背景问题
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+
+// 下面是解决ios上去除微信点击蓝色背景
+input:focus, p:focus, div:focus{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only; 
+}
+
+/* layout */
+
+@media screen and (min-width: 375px) {
+    /* solution */
+    .solution-list {
+        .solution-desc {
+            width: 68%;
+        }
+    }
+}
+
+@media screen and (min-width: 414px) {
+    // 动态修改字体大小
+    html {
+        font-size: 690%; // 414/375*625%
+    }
+    /* solution */
+    .solution-list {
+        p {
+            font-size: @base_ft_size;
+        }
+    }
+}
+
+@media screen and (min-width: 480px) {
+    html {
+        font-size: 800%; // 480/375*625%
+    }
+}
+
+@media screen and (min-width: 640px) {
+    html {
+        font-size: 938%; // 1.5*625%
+    }
+}
+
+@media screen and (min-width: 768px) {
+    /* solution */
+    .solution-list {
+        .solution-desc {
+            width: 70%;
+        }
+    }
+}
+
+@media screen and (min-width: 960px) {
+    body {
+        background: #eee;
+    }
+    .wrapper {
+        width: @wrapper_max_w;
+    }
+    .pop_modal{
+        width: @wrapper_max_w;
+        left: 50%;
+        margin-left: -@wrapper_max_w * 0.5;
+    }
+    .edge_frame {
+        padding: 0 15*@rem;
+    }
+    .push_body_toright {
+        left: 0;
+    }
+}
