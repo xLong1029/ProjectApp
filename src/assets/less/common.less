@@ -130,6 +130,10 @@ input[type="search"]::-webkit-search-cancel-button {
     display: none;
 }
 
+input[type="checkbox"]{
+    .mr(5);
+}
+
 // 移除表单自动填充黄色背景
 input:-webkit-autofill,
 textarea:-webkit-autofill,
@@ -149,7 +153,9 @@ textarea {
     padding: 10*@rem;
 }
 
-.button, input {
+.button, input[type="text"], input[type="password"], input[type="search"], input[type="tel"]{
+    // 取消移动端浏览器自带样式
+    -webkit-appearance: none;
     display: block;
     outline: none;
     height: 35*@rem;
@@ -289,11 +295,16 @@ textarea {
     .border_radius(30);
 }
 
+/* 表单 */
+.form_line{
+    width: 100%;
+    
+    .mb(15);
+}
+
 /* 解决移动端系统自带样式问题 */
 
 * {
-    // 取消移动端浏览器自带样式
-    -webkit-appearance: none;
     //这一句是用来解决在安卓上的点击出现蓝色背景问题
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
