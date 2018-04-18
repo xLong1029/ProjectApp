@@ -40,13 +40,6 @@
 				// 菜单
 				menu: [
 					{
-						rName: "Index",
-						rQuery: {},
-						class: "icon-home",
-						title: "首页",
-						submenu: []
-					},
-					{
 						rName: "ProjectNews",
 						rQuery: {},
 						class: "icon-news",
@@ -54,33 +47,15 @@
 						submenu: []
 					},
 					{
-						rName: "SuccCases",
+						rName: "UserCenter",
 						rQuery: {},
-						class: "icon-case",
-						title: "成功案例",
+						class: "icon-news",
+						title: "个人中心",
 						submenu: []
-					},
-					{
-						rName: "AboutUs",
-						rQuery: {},
-						class: "icon-group",
-						title: "关于我们",
-						submenu: [
-							{
-								rName: "CompanyIntro",
-								rQuery: {},
-								title: "公司简介",
-							},
-							{
-								rName: "ContactUs",
-								rQuery: {},
-								title: "联系我们",
-							}
-						]
 					}
 				],
 				// 菜单项宽度
-				menuItemW: "20%"
+				menuItemW: "50%"
 			};
 		},
 		created() {

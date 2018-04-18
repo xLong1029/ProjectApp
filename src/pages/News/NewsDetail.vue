@@ -36,7 +36,7 @@
 	import Loading from "components/Common/Loading.vue";
     import Copyright from "components/Common/Copyright.vue";    
     // Api方法
-    import Api from "api/api.js";
+    import Api from "api/news.js";
     // 混合
     import Modal from "mixins/modal.js";
     // 获取url参数方法

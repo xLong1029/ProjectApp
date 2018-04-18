@@ -35,7 +35,7 @@
 	import Copyright from "components/Common/Copyright.vue";
 	import BackTop from "components/Common/BackTop.vue";
 	// Api方法
-	import Api from "api/api.js";
+	import Api from "api/news.js";
 	// 混合
 	import ScrollPage from 'mixins/scrollPage.js'
 	import Modal from "mixins/modal.js"

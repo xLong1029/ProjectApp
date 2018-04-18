@@ -29,36 +29,21 @@
 		data() {
 			return {
 				// 侧边栏导航
-				sideNav: [
-					{
-						rName: 'Index',
-						rQuery: {},
-						title: "首页"
-					},
-					{
-						rName: 'CompanyIntro',
-						rQuery: {},
-						title: "公司简介"
-					},
-					{
-						rName: 'SuccCases',
-						rQuery: {},
-						title: "成功案例"
-					},					
+				sideNav: [				
 					{
 						rName: 'ProjectNews',
 						rQuery: { num: 10 },
 						title: "申报资讯"
 					},
 					{
-						rName: 'ContactUs',
+						rName: 'UserCenter',
 						rQuery: {},
-						title: "联系我们"
+						title: "个人中心"
 					},
 					{
-						rName: 'Search',
+						rName: 'Collection',
 						rQuery: {},
-						title: "搜索"
+						title: "收藏夹"
 					}
 				]
 			};
