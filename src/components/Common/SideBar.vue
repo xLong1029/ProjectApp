@@ -171,5 +171,9 @@
 		line-height: 40*@rem;
 
 		.ht(40);
+
+		i{
+			.mr(5);
+		}
 	}
 </style>
