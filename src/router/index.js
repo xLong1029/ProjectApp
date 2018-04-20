@@ -37,10 +37,10 @@ export default new Router({
             { path: '/UserCenter', name: 'UserCenter', component: UserCenter },
             // 收藏夹
             { path: '/Collection', name: 'Collection', component: Collection },
-            // 搜索
-            { path: '/Search', name: 'Search', component: Search },
         ]
     },
+    // 搜索
+    { path: '/Search', name: 'Search', component: Search },
     // 登录
     { path: '/Login', name: 'Login', component: Login },
     // 注册

@@ -1,16 +1,23 @@
 <template>
 	<div id="search">
-		<!-- 搜索 -->
-		<div class="search_cont">
-			<section class="cont_frame">
-				<div class="search_input">
+		<!-- 搜索框 -->
+		<header id="searchBar">
+			<div class="search_bar">
+				<!-- 返回按钮 -->
+				<a class="btn slide_right fl" @click="goBack">
+					<i class="icon-back"></i>
+				</a>
+				<!-- 输入框 -->
+				<div class="search_box fl">
 					<form action="/Search" target="blankFrame" @submit="getListData(listNum, false)">
 						<iframe id="rfFrame" name="blankFrame" src="about:blank" style="display:none;"></iframe> 
-						<i class="icon-search search_btn" @click="getListData(listNum, false)"></i>
-						<input id="keyword" type="search" v-model="keyword" placeholder="请输入搜索关键词"/>
+						<input class="search_input" id="keyword" type="search" v-model="keyword" placeholder="请输入搜索关键词"/>
 					</form>
 				</div>
-			</section>
+			</div>
+		</header>
+		<!-- 搜索 -->
+		<div class="content">			
 			<Loading v-if="sLoading"></Loading>
 			<section v-else class="search_result">				
 				<p v-if="getResult" class="res_title edge_frame">搜索结果：
@@ -24,7 +31,9 @@
 			</section>
 		</div>
 		<!-- 版权信息 -->
-		<Copyright></Copyright>
+		<section class="bottom">
+			<Copyright></Copyright>
+		</section>
 		<!-- 返回顶部 -->
 		<BackTop v-show="showTopBtn" :main-page="false"></BackTop>
 	</div>
@@ -38,6 +47,8 @@
 	import BackTop from "components/Common/BackTop.vue";
 	// Api方法
 	import Api from "api/search.js";
+	// 通用js
+	import Common from 'common/common.js'
 	// 混合
 	import ScrollPage from 'mixins/scrollPage.js'
 	import Modal from "mixins/modal.js"
@@ -151,6 +162,10 @@
 				else{
 					this.showTopBtn = false;
 				}
+			},
+			// 返回上一页
+			goBack(){
+				this.$router.go(-1);
 			}
 		},
 		destroyed(){
@@ -160,30 +175,84 @@
 	};
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
 
-	.search_cont{
-		border-bottom: @border_light;
+	/* search_bar */
+
+	.search_bar {
+	    width: 100%;
+	    position: fixed;
+	    z-index: 66;
+	    height: @navbar_h;
+	    background: @base_color;
+	    top: 0;
+
+	    .btn {
+	        width: 15%;
+	        height: @navbar_h;
+	        text-align: center;
+	        cursor: pointer;
+	    }
+
+	    i {
+	        display: inline-block;
+	        color: #fff;
+	        font-size: 18*@rem;
+	        margin-top: 10*@rem;
+	    }
 	}
 	
-	.search_input{
+	.search_box{
 		position: relative;
+		width: 80%;
+	}
 
-		input{
-			.pr(35);
-			.mb(0);
-		}
+	input[type="search"]{
+		border-radius: 0;
+		outline: none;
+		border: none;
+		border-bottom: 1px solid lighten(@base_color, 30%);
+		background-color: @base_color;
+		color: #fff;
 
-		.icon-search{
-			position: absolute;
-			top: 9*@rem;
-			right: 10*@rem;
-			color: @ft_gray_color;
+		line-height: 32*@rem;
 
-			.ft(16);
-		}
+		.ht(30);
+		.mt(5);
+	}
+
+	input[type="search"]:focus{
+		border-radius: 0;
+		outline: none;
+		border: none;
+		background-color: @base_color;
+		line-height: 32*@rem;
+		color: #333;
+	}
+
+	// 移除搜索框的叉叉图标
+	// input[type="search"]::-webkit-search-cancel-button {
+	//     display: none;
+	// }
+
+	// 修改搜索框占位符字体颜色
+	/* WebKit browsers */
+	input[type="search"]::-webkit-input-placeholder{
+		color: lighten(@base_color, 30%);
+	}
+	/* Mozilla Firefox 19+ */  
+	input[type="search"]:-moz-placeholder{
+		color: lighten(@base_color, 30%);
+	}
+	/* Mozilla Firefox 19+ */  
+	input[type="search"]::-moz-placeholder{
+		color: lighten(@base_color, 30%);
+	}
+	/* Internet Explorer 10+ */ 
+	input[type="search"]:-ms-input-placeholder{
+		color: lighten(@base_color, 30%);
 	}
 
 	.search_result{
@@ -222,7 +291,21 @@
 		}
 	}
 
+	.bottom{
+		position: absolute;
+		width: 100%;
+		bottom: 10*@rem;
+	}
+
 	.back_top{
 		bottom: 20*@rem;
+	}
+
+	/* layout */
+
+	@media screen and (min-width: 960px) {
+	    .search_bar {
+	        width: @wrapper_max_w;
+	    }
 	}
 </style>
