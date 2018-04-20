@@ -151,7 +151,7 @@
 
 		i{
 			.mr(10);
-			color: #888;
+			color: #aaa;
 		}
 	}
 
@@ -174,6 +174,7 @@
 
 		i{
 			.mr(5);
+			color: #aaa;
 		}
 	}
 </style>
