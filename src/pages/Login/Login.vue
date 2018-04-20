@@ -92,11 +92,22 @@
 
 	.reg_btn{
 		background: #ecaa1e;
+
+		&:hover{
+			color: #fff;
+		}
 	}
 
 	.bottom{
 		position: absolute;
 		width: 100%;
 		bottom: 10*@rem;
+	}
+
+	/* layout */
+	@media screen and (min-width: 960px) {
+		.login {
+			width: @wrapper_max_w;
+		}
 	}
 </style>

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'solo';
-  src:  url('fonts/solo.eot?o36wq');
-  src:  url('fonts/solo.eot?o36wq#iefix') format('embedded-opentype'),
-    url('fonts/solo.ttf?o36wq') format('truetype'),
-    url('fonts/solo.woff?o36wq') format('woff'),
-    url('fonts/solo.svg?o36wq#solo') format('svg');
+  src:  url('fonts/solo.eot?cc7h7g');
+  src:  url('fonts/solo.eot?cc7h7g#iefix') format('embedded-opentype'),
+    url('fonts/solo.ttf?cc7h7g') format('truetype'),
+    url('fonts/solo.woff?cc7h7g') format('woff'),
+    url('fonts/solo.svg?cc7h7g#solo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -33,48 +33,57 @@
 .icon-case:before {
   content: "\e902";
 }
-.icon-company:before {
+.icon-collection:before {
   content: "\e903";
 }
-.icon-disable:before {
+.icon-company:before {
   content: "\e904";
 }
-.icon-fail:before {
+.icon-disable:before {
   content: "\e905";
 }
-.icon-group:before {
+.icon-exit:before {
   content: "\e906";
 }
-.icon-home:before {
+.icon-fail:before {
   content: "\e907";
 }
-.icon-horn:before {
+.icon-group:before {
   content: "\e908";
 }
-.icon-list:before {
+.icon-home:before {
   content: "\e909";
 }
-.icon-loading:before {
+.icon-horn:before {
   content: "\e90a";
 }
-.icon-logo:before {
+.icon-list:before {
   content: "\e90b";
 }
-.icon-news:before {
+.icon-loading:before {
   content: "\e90c";
 }
-.icon-next:before {
+.icon-logo:before {
   content: "\e90d";
 }
-.icon-project-list:before {
+.icon-news:before {
   content: "\e90e";
 }
-.icon-search:before {
+.icon-next:before {
   content: "\e90f";
 }
-.icon-success:before {
+.icon-project-list:before {
   content: "\e910";
 }
-.icon-warning:before {
+.icon-search:before {
   content: "\e911";
+}
+.icon-success:before {
+  content: "\e912";
+}
+.icon-user:before {
+  content: "\e913";
+}
+.icon-warning:before {
+  content: "\e914";
 }

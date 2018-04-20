@@ -6,7 +6,7 @@
 				<!-- 含二级菜单的一级菜单 -->
 				<div v-if="item.submenu.length > 0" class="menu_item" @click="showSubmenu(index)">
 					<div>
-						<i :class="['menu_icon',item.class]"></i>
+						<i :class="['menu_icon',item.icon]"></i>
 						<span class="menu_title">{{ item.title }}</span>
 					</div>
 					<!-- 二级菜单 -->
@@ -21,7 +21,7 @@
 				</div>
 				<!-- 一级菜单 -->
 				<div v-else class="menu_item" @click="showPage(index, item.rName, item.rQuery)">
-					<i :class="['menu_icon', item.class]"></i>
+					<i :class="['menu_icon', item.icon]"></i>
 					<span class="menu_title">{{ item.title }}</span>
 				</div>
 			</li>
@@ -42,14 +42,14 @@
 					{
 						rName: "ProjectNews",
 						rQuery: {},
-						class: "icon-news",
+						icon: "icon-news",
 						title: "申报资讯",
 						submenu: []
 					},
 					{
 						rName: "UserCenter",
 						rQuery: {},
-						class: "icon-news",
+						icon: "icon-news",
 						title: "个人中心",
 						submenu: []
 					}

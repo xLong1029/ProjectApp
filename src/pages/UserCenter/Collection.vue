@@ -1,6 +1,8 @@
 <template>
 	<div id="collection">
 		收藏夹
+		<!-- 版权信息 -->
+		<Copyright></Copyright>
 	</div>
 </template>
 

@@ -5,6 +5,8 @@
 		<!-- 加载结束 -->
 		<div v-else>
 			个人中心
+			<!-- 版权信息 -->
+			<Copyright></Copyright>
 		</div>
 	</div>
 </template>

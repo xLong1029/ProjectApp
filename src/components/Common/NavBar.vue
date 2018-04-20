@@ -16,7 +16,7 @@
 			<!-- 二级页面标题 -->
 			<div class="title fl">
 				<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>
-				<span v-else class="icon-logo" href="/Index"></span>
+				<router-link v-else class="icon-logo" :to="{ name: 'ProjectNews' }"></router-link>
 			</div>
 		</div>
 	</header>
@@ -106,6 +106,7 @@
 	.icon-logo {
 	    font-size: 64*@rem;
 	    line-height: 35*@rem;
+	    color: #fff;
 	}
 
 	/* layout */

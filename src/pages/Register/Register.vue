@@ -110,6 +110,10 @@
 
 	.login_btn{
 		background: #ecaa1e;
+
+		&:hover{
+			color: #fff;
+		}
 	}
 
 	.bottom{
@@ -117,4 +121,12 @@
 		width: 100%;
 		bottom: 10*@rem;
 	}
+
+	/* layout */
+	@media screen and (min-width: 960px) {
+		.register {
+			width: @wrapper_max_w;
+		}
+	}
+
 </style>
