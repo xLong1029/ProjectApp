@@ -7,16 +7,19 @@
 					<input type="text" v-model="form.username" placeholder="手机号码"/>
 				</div>
 				<div class="form_line">
-					<input type="text" v-model="form.password" placeholder="密码"/>
+					<input type="password" v-model="form.password" placeholder="密码"/>
 				</div>
 				<div class="form_line">
-					<input type="checkbox" class="checkbox" name="agree" v-model="form.remember" />记住密码
+					<input type="checkbox" id="remember" class="checkbox" name="agree" v-model="form.remember" /><label for="remember">记住密码</label>
 				</div>
 				<div class="form_line">
 					<input type="button" class="button" value="登录" @click="validForm"/>
 				</div>
 				<div class="form_line">
 					<router-link class="button reg_btn" :to="{ name: 'Register' }">注册新用户</router-link>
+				</div>
+				<div class="form_line" style="color:#888;">
+					测试账号：18376686974密码：666666
 				</div>
 			</form>
 		</section>
@@ -30,12 +33,18 @@
 <script>
 	// 组件
 	import Copyright from "components/Common/Copyright.vue";
+	// 通用js
+	import Common from 'common/common.js'
+	import { GetCookie, SetCookie, Encrypt, Decrypt } from 'common/important.js'
 	// Api方法
 	import Api from "api/login.js";
+	// 混合
+	import Modal from "mixins/modal.js"
 
 	export default {
 		name: "login",
 		components: { Copyright },
+		mixins: [ Modal ],
 		data(){
 			return{
 				// 表单信息
@@ -50,6 +59,12 @@
 			}
 		},
 		created(){
+			if(GetCookie('username') && GetCookie('password')){
+				this.form.username = GetCookie('username');
+				//解密
+				this.form.password = Decrypt(GetCookie('password'));
+				this.form.remember = true;
+			}
 		},
 		methods:{
 			// 验证表单
@@ -68,6 +83,21 @@
 			},
 			// 提交表单
 			onSubmit(){
+				if(this.form.username == 18376686974 && this.form.password == 666666){
+					// 记住密码
+					if(this.form.remember){
+						SetCookie('username', this.form.username);
+						//加密
+						SetCookie('password', Encrypt(666666));
+					}
+					// token存cookie
+					SetCookie('project_token', '12345678');
+					this.$store.commit('SET_USER_ACCOUNT', 'xLong1029');
+					Common.GotoPage('ProjectNews', {} , this);
+				}
+				else{
+					this.showWarnModel('用户名密码不正确！', 'fail');
+				}
 			}
 		}
 	};

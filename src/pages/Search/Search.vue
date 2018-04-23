@@ -35,7 +35,7 @@
 			<Copyright></Copyright>
 		</section>
 		<!-- 返回顶部 -->
-		<BackTop v-show="showTopBtn" :main-page="false"></BackTop>
+		<BackTop v-show="showTopBtn"></BackTop>
 	</div>
 </template>
 

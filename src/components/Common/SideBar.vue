@@ -1,7 +1,10 @@
 <template>
 	<div id="sideBar">
 		<aside ref="sideBar" :class="['sidebar_left sidebar', showSideBar ? 'sidebar_open' : '']">
-			<div class="user_info">
+			<div v-if="isLogined" class="user_info is_logined">
+				<p>欢迎回来，{{ userAccount }}</p>
+			</div>
+			<div v-else class="user_info">
 				<p>登录华建项目申报<br/>收藏资讯随时翻阅</p>
 				<router-link class="button login_btn" :to="{ name: 'Login' }">立即登录</router-link>
 			</div>
@@ -12,8 +15,8 @@
 					</li>
 				</ul>
 			</div>
-			<div class="sidebar_bottom edge_frame">
-				<i class="icon-exit"></i>退出登录
+			<div v-if="isLogined" class="sidebar_bottom edge_frame">
+				<a @click="logOut" style="cursor:pointer;"><i class="icon-exit"></i>退出登录</a>
 			</div>
 		</aside>
 		<!-- 遮罩层 -->
@@ -23,17 +26,21 @@
 
 <script>
 	// 通用js
-    import Common from 'common/common.js'
+	import Common from 'common/common.js';
+	import { GetCookie } from 'common/important.js';
+	import { clearAccount } from 'common/account.js';
 	//Vuex
-	import { mapGetters } from 'vuex'
+	import { mapGetters } from 'vuex';
 
 	export default {
 		name: "sideBar",
 		computed: {
-            ...mapGetters([ 'showSideBar' ]),
+            ...mapGetters([ 'showSideBar', 'userAccount' ]),
         },
 		data() {
 			return {
+				// 是否已登录
+				isLogined: false,
 				// 侧边栏导航
 				sideNav: [
 					// 个人设置
@@ -59,11 +66,23 @@
 							rQuery: {},
 							title: "申报资讯"
 						}
+					],
+					// 资讯列表
+					[
+						{
+							rName: 'Search',
+							icon: 'icon-search',
+							rQuery: {},
+							title: "搜索"
+						}
 					]
 				]
 			};
 		},
-		mounted() {
+		created() {
+			if(GetCookie('project_token')){
+				this.isLogined = true;
+			}
 		},
 		// 方法
 		methods: {
@@ -73,6 +92,11 @@
 				if(rName){
 					Common.GotoPage(rName, rQuery, this);
 				}
+			},
+			// 退出登录
+			logOut(){
+				this.isLogined = false;
+				clearAccount(this.$store.commit);
 			}
 		}
 	};
@@ -106,7 +130,8 @@
 	}
 
 	.user_info{
-		background: #2b2b2e;
+		// background-color: #2b2b2e;
+		background-image: url('../../assets/images/user_info_bg.jpg');
 		color: #fff;
 
 		.ht(150);
@@ -125,6 +150,10 @@
 				color: #fff;
 			}
 		}
+	}
+
+	.user_info.is_logined{
+		.ht(80);
 	}
 
 	.sidebar_nav{

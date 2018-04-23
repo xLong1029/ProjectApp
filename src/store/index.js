@@ -2,8 +2,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 // Vuex 内置的日志插件，用于一般的调试
 import createLogger from 'vuex/dist/logger';
-
+// 模块
 import common from './modules/common';
+import user from './modules/user';
 
 const debug = process.env.NODE_ENV !== 'production'
 // env里去获取当前的环境是否需要开启严格模式
@@ -15,7 +16,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
 	// state分模块
 	modules: {
-		common
+		common,
+		user
 	},
 	plugins: debug ? [createLogger()] : []
 });

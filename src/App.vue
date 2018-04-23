@@ -5,13 +5,18 @@
 				<router-view></router-view>
 			</transition>
 		</div>
+		<!-- 提示窗口 -->
+		<WarnModal></WarnModal>
 	</div>
 </template>
 
 <script>
+	// 引入组件
+	import WarnModal from "components/Modal/WarnModal.vue";
 
 	export default {
 		name: "app",
+		components: { WarnModal },
 		data(){
 			return{}
 		}

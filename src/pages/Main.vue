@@ -10,8 +10,6 @@
 				<router-view></router-view>
 			</transition>
 		</div>
-		<!-- 提示窗口 -->
-		<WarnModal></WarnModal>
 	</div>
 </template>
 
@@ -20,15 +18,14 @@
 	import NavBar from "components/Common/NavBar.vue";
 	import TabBar from "components/Common/TabBar.vue";
 	import SideBar from "components/Common/SideBar.vue";
-	import WarnModal from "components/Modal/WarnModal.vue";
 
 	export default {
 		name: "app",
-		components: { NavBar, TabBar, SideBar, WarnModal },
+		components: { NavBar, TabBar, SideBar },
 		data(){
 			return{
 				// 定义二级页面名称，作为动态props值
-       			secondPages:[ 'NewsDetail' ],
+       			secondPages:[ 'NewsDetail', 'UserCenter', 'Collection', 'ChangePassword' ],
 			}
 		}
 	};

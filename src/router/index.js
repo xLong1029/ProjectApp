@@ -13,7 +13,9 @@ import ProjectNews from 'pages/News/ProjectNews'
 import NewsDetail from 'pages/News/NewsDetail'
 // 个人中心
 import UserCenter from 'pages/UserCenter/UserCenter'
-import Collection from 'pages/UserCenter/Collection'
+import ChangePassword from 'pages/UserCenter/ChangePassword'
+// 收藏夹
+import Collection from 'pages/Collection/Collection'
 // 信息搜索
 import Search from 'pages/Search/Search'
 
@@ -35,6 +37,8 @@ export default new Router({
             { path: '/NewsDetail', name: 'NewsDetail', component: NewsDetail },
             // 个人中心
             { path: '/UserCenter', name: 'UserCenter', component: UserCenter },
+            // 修改密码
+            { path: '/ChangePassword', name: 'ChangePassword', component: ChangePassword },
             // 收藏夹
             { path: '/Collection', name: 'Collection', component: Collection },
         ]
