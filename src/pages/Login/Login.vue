@@ -10,7 +10,7 @@
 					<input type="password" v-model="form.password" placeholder="密码"/>
 				</div>
 				<div class="form_line">
-					<input type="checkbox" id="remember" class="checkbox" name="agree" v-model="form.remember" /><label for="remember">记住密码</label>
+					<Checkbox :value="form.password" text="记住密码" @setCheckBoxValue="getCheckBoxValue"></Checkbox>
 				</div>
 				<div class="form_line">
 					<input type="button" class="button" value="登录" @click="validForm"/>
@@ -33,6 +33,7 @@
 <script>
 	// 组件
 	import Copyright from "components/Common/Copyright.vue";
+	import Checkbox from "components/Form/Checkbox.vue";
 	// 通用js
 	import Common from 'common/common.js'
 	import { GetCookie, SetCookie, Encrypt, Decrypt } from 'common/important.js'
@@ -43,7 +44,7 @@
 
 	export default {
 		name: "login",
-		components: { Copyright },
+		components: { Copyright, Checkbox },
 		mixins: [ Modal ],
 		data(){
 			return{
@@ -98,7 +99,11 @@
 				else{
 					this.showWarnModel('用户名密码不正确！', 'fail');
 				}
-			}
+			},
+			// 从子组件获取Checkbox值
+            getCheckBoxValue(value){
+                this.form.remember = value;
+            }
 		}
 	};
 </script>

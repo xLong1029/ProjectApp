@@ -14,7 +14,7 @@
 					<input type="text" v-model="form.password" placeholder="密码"/>
 				</div>
 				<div class="form_line">
-					<input type="checkbox" name="agree" v-model="form.agree" />同意《华建项目申报平台协议》
+					<Checkbox :v-model="form.password" text="同意" @setCheckBoxValue="getCheckBoxValue"></Checkbox><a class="agreement" href="http://www.baidu.com">《华建项目申报平台协议》</a>
 				</div>
 				<div class="form_line">
 					<input type="button" class="button" value="注册" @click="validForm"/>
@@ -34,12 +34,13 @@
 <script>
 	// 组件
 	import Copyright from "components/Common/Copyright.vue";
+	import Checkbox from "components/Form/Checkbox.vue";
 	// Api方法
 	import Api from "api/register.js";
 
 	export default {
 		name: "register",
-		components: { Copyright },
+		components: { Copyright, Checkbox },
 		data(){
 			return{
 				// 表单信息
@@ -86,7 +87,11 @@
 			// 获取验证码
 			getCode(){
 
-			}
+			},
+			// 从子组件获取Checkbox值
+            getCheckBoxValue(value){
+                this.form.agree = value;
+            }
 		}
 	};
 </script>
@@ -101,6 +106,11 @@
 		top: 50%;
 		.mt(-200);
 	}
+
+	.agreement{
+			color: @base_color;
+			text-decoration: underline;
+		}
 
 	.register_title{
 		text-align: center;
