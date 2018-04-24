@@ -131,7 +131,8 @@
 
 	.user_info{
 		// background-color: #2b2b2e;
-		background-image: url('../../assets/images/user_info_bg.jpg');
+		background: url('../../assets/images/user_info_bg.jpg');
+		background-size:cover;
 		color: #fff;
 
 		.ht(150);

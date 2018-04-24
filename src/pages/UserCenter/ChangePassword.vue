@@ -7,7 +7,18 @@
 			<div v-else>
 				<!-- 修改密码表单 -->
 				<form class="cont_frame">
-					修改密码
+					<div class="form_line">
+						<input type="text" v-model="form.oldPassword" placeholder="旧密码"/>
+					</div>
+					<div class="form_line">
+						<input type="password" v-model="form.newPassword" placeholder="新密码"/>
+					</div>
+					<div class="form_line">
+						<input type="password" v-model="form.comfirmPassword" placeholder="确认密码"/>
+					</div>
+					<div class="form_line">
+						<input type="button" class="button" value="确认修改" @click="validForm"/>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -30,9 +41,12 @@
 	import Api from "api/user_center.js";
 	//Vuex
 	import { mapGetters } from 'vuex';
+	// 混合
+	import Modal from "mixins/modal.js"
 
 	export default {
 		name: "userCenter",
+		mixins: [ Modal ],
 		components: { Loading, Copyright },
 		computed: {
             ...mapGetters([ 'userAccount' ]),
@@ -42,18 +56,53 @@
 				// 是否已登录
 				isLogined: false,
 				// 是否加载
-				pageLoading: false
+				pageLoading: false,
+				// 表单信息
+				form:{
+					// 旧密码
+					oldPassword: '',
+					// 新密码
+					newPassword: '',
+					// 确认密码
+					comfirmPassword: ''
+				}
 			}
 		},
 		created(){
 			this.init();
 		},
 		methods:{
+			// 初始化
 			init(){
 				if(GetCookie('project_token')){
 					this.isLogined = true;
 				}
                 this.$store.commit('SET_NAV_TITLE', '修改密码');
+			},
+			// 验证表单
+			validForm(){
+				if(this.form.oldPassword == ''){
+					this.showWarnModel('请输入旧密码', 'warning');
+					return false;
+				}
+				else if(this.form.newPassword == ''){
+					this.showWarnModel('请输入新密码', 'warning');
+					return false;
+				}
+				else if(this.form.newPassword == ''){
+					this.showWarnModel('请输入确认密码', 'warning');
+					return false;
+				}
+				else if(this.form.newPassword != this.form.comfirmPassword){
+					this.showWarnModel('新密码2次数输入不一致', 'error');
+					return false;
+				}
+				else{
+					this.onSubmit();
+				}
+			},
+			// 提交表单
+			onSubmit(){
 			}
 		}
 	};
