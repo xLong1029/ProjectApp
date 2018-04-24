@@ -114,65 +114,6 @@
 			display: block;
 		}
 
-		.tabbar_menu {
-			float: left;
-			height: 86*@half_rem;
-		}
-
-		.tabbar_menu.on .menu_item {
-			color: @base_color;
-		}
-
-		.menu_item {
-			float: left;
-			width: 100%;
-			height: 100%;
-			color: #888;
-			cursor: pointer;
-			position: relative;
-		}
-
-		.menu_icon {
-			margin: 0 auto;
-			text-align: center;
-			.mt(4);
-			.ft(18);
-		}
-
-		.menu_title {
-			text-align: center;
-			margin-top: 1*@rem;
-		}
-
-		.tabbar_submenu {
-			display: none;
-			position: absolute;
-			top: -@tabbar_h - 50*@rem;
-			background: #fff;
-			width: 100%;
-			border: @border_deep;
-			.border_radius_4
-		}
-
-		.submenu{
-			border-bottom: @border_deep;
-
-			&:last-child{
-				border-bottom: none;
-			}
-		}
-
-		.submenu_item {
-			color: @ft_base_color;
-			text-align: center;
-			height: 40*@rem;
-			line-height: 40*@rem;			
-
-			&:hover {
-				color: @base_color;
-			}
-		}
-
 		.trangle_down {
 			position: absolute;
 			left: 50%;
@@ -194,6 +135,65 @@
 				border-color: #fff transparent transparent;/*黄 透明 透明 */
 				top: -7*@rem;
 			}
+		}
+	}
+
+	.tabbar_menu {
+		float: left;
+		height: 86*@half_rem;
+	}
+
+	.tabbar_menu.on .menu_item {
+		color: @base_color;
+	}
+
+	.menu_item {
+		float: left;
+		width: 100%;
+		height: 100%;
+		color: #888;
+		cursor: pointer;
+		position: relative;
+	}
+
+	.menu_icon {
+		margin: 0 auto;
+		text-align: center;
+		.mt(4);
+		.ft(18);
+	}
+
+	.menu_title {
+		text-align: center;
+		margin-top: 1*@rem;
+	}
+
+	.tabbar_submenu {
+		display: none;
+		position: absolute;
+		top: -@tabbar_h - 50*@rem;
+		background: #fff;
+		width: 100%;
+		border: @border_deep;
+		.border_radius_4
+	}
+
+	.submenu{
+		border-bottom: @border_deep;
+
+		&:last-child{
+			border-bottom: none;
+		}
+	}
+
+	.submenu_item {
+		color: @ft_base_color;
+		text-align: center;
+		height: 40*@rem;
+		line-height: 40*@rem;			
+
+		&:hover {
+			color: @base_color;
 		}
 	}
 

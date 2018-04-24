@@ -82,6 +82,8 @@
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
 
+	/* no_login */
+	
 	.no_login{
 		background: #fff;
 		padding: 100*@rem 0;
@@ -99,6 +101,8 @@
 			color: #fff;
 		}
 	}
+
+	/* user_info_list */
 
 	.user_info_list{
 		.list_icon{
