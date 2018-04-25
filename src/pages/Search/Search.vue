@@ -33,7 +33,7 @@
 		<!-- 版权信息 -->
 		<Copyright></Copyright>
 		<!-- 返回顶部 -->
-		<BackTop v-show="showTopBtn"></BackTop>
+		<BackTop v-show="showTopBtn" :hasTabBar="false"></BackTop>
 	</div>
 </template>
 
@@ -68,7 +68,9 @@
 				// 搜索结果列表
 				resList: [],
 				// 是否开始搜索
-				searchBegin: false
+				searchBegin: false,
+				// 资讯数量
+				listNum: 30
 			}
 		},
 		created(){
@@ -85,7 +87,7 @@
 				this.searchBegin = true;
 				
 				if(this.keyword == ''){
-					this.showWarnModel('请输入关键字', 'warning');
+					this.showWarnModel('请输入关键字!', 'warning');
 					return false;
 				}
 
@@ -255,6 +257,8 @@
 
 	.search_result{
 		background: #fff;
+
+		.mb(10);
 
 		.res_title{
 			color: @base_color;

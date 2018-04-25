@@ -22,7 +22,7 @@
 				<Loading></Loading>
 			</div>
 			<!-- 返回顶部 -->
-			<BackTop v-show="showTopBtn"></BackTop>
+			<BackTop v-show="showTopBtn" :hasTabBar="false"></BackTop>
 		</div>
 	</div>
 </template>
@@ -67,6 +67,7 @@
         },
 		created(){
 			this.init();
+			this.scrollHSet();
 		},
 		mounted(){
 			// 监听滚动事件
@@ -77,26 +78,12 @@
 			init(){
 				// 重置返回路由
 				this.$store.commit('SET_GOBACK_ROUTE', { name: null, query: {} });
-
-				// 从缓存获取列表数量
-				let getListNum = GetCookie('listNum');
-				if(getListNum){
-					this.listNum = parseInt(getListNum);
-				}				
-
-				// 从缓存获取列表滚动高度
-				let getScrollH = GetCookie('scrollH');
-				if(getScrollH){
-					this.listScrollH = parseInt(getScrollH);
-				}
-
-				this.getListData(this.listNum, false);
 			},
 			// 获取列表内容， num: 请求数量，more：是否加载更多
 			getListData(num, more){
 				// 加载页面
 				if(more) this.loadMore = true;
-				else this.sLoading = true;
+				else this.pageLoading = true;
 
 				Api.DeclareList({
 					pageNum: 1,
@@ -130,40 +117,6 @@
 					else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
-			},
-			// 页面滚动
-			scrollPage(){				
-				let	scrollTop = $(window).scrollTop();
-				
-				// 缓存有滚动高度，未到该高度不触发后面的操作
-				if(this.listScrollH > 0 && scrollTop <= this.listScrollH) return false;
-
-				let windowH = $(window).height(),
-					documentH = $(document).height();
-
-				if(scrollTop + windowH > documentH - 40){
-					if(!this.loadMoreNow) {
-						this.loadMoreNow = true;
-						// 累加5条记录
-						this.listNum += 5;
-						// 列表数量存缓存
-						SetCookie('listNum', this.listNum);		
-						// 获取更多内容
-						this.getListData(this.listNum, true);
-					}
-				}
-				if(scrollTop > windowH/2){
-					this.showTopBtn = true;
-				}
-				else{
-					this.showTopBtn = false;
-				}
-			},
-			// 跳转资讯详情页
-			gotoDetail(id){
-				// 列表滚动高度存缓存
-				SetCookie('scrollH', $(window).scrollTop());
-				Common.GotoPage('NewsDetail', { id: id, type: 1 }, this);
 			}
 		},		
 		destroyed(){

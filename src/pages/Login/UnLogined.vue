@@ -3,7 +3,6 @@
 		<div class="un_logined">
 			<p>你还未登录</p>
 			<router-link class="button login_btn" :to="{ name: 'Login' }">去登录</router-link>
-			
 		</div>
 		<!-- 版权信息 -->
 		<Copyright></Copyright>

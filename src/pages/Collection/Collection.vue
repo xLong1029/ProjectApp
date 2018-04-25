@@ -31,8 +31,6 @@
 	// 通用JS
 	import Common from 'common/common.js'
 	import { GetCookie } from 'common/important.js';
-	// Api方法
-	import Api from "api/user_center.js";
 
 	export default {
 		name: "collection",
@@ -131,7 +129,7 @@
 		text-align: center;
 		width: 50%;
 		height: 86*@half_rem;
-		color: #666;
+		color: @ft_gray_color;
 		cursor: pointer;
 		position: relative;
 

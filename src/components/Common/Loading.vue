@@ -1,6 +1,6 @@
 <template>
 	<div id="loading" class="loading">
-        <i class="icon-loading"></i>
+        <i class="icon_loading"></i>
         <p>玩命加载中</p>
     </div>
 </template>
@@ -28,7 +28,7 @@
         position: fixed;
         color: #666;
 
-        .icon-loading{
+        .icon_loading{
             display: inline-block;
             animation: rotating 2s linear infinite;
             -webkit-animation: rotating 2s linear infinite;

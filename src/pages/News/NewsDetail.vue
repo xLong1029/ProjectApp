@@ -49,6 +49,9 @@
 			return{
                 // 是否加载内容
                 pageLoading: false,
+                // 上级页面Type
+                pageType: null,
+                // 资讯内容
                 newsCont: {
                     title: '暂无标题',
                     htmlContext: '暂无内容',
@@ -67,9 +70,9 @@
         methods:{
             init(){
                 this.$store.commit('SET_NAV_TITLE', '资讯详情');
-                let type = GetUrlQuery('type');
+                this.pageType = GetUrlQuery('type');
                 // type == 1 说明是从资讯列表过来的
-                if(type == 1){
+                if(this.pageType == 1){
                     // 更新返回路由
                     this.$store.commit('SET_GOBACK_ROUTE', { name: 'ProjectNews', query: {} });
                 }                
@@ -104,7 +107,7 @@
             // 查看上一篇
             readPrev(id){
                 if(id !=0){
-                    Common.GotoPage('NewsDetail', { id : id }, this);
+                    Common.GotoPage('NewsDetail', { id : id, type: this.pageType }, this);
                     this.getNewsCont(id);
                 }
                 else this.showWarnModel('已经是第一篇啦！', 'warning');
@@ -112,7 +115,7 @@
             // 查看下一篇
             readNext(id){
                 if(id !=0){
-                    Common.GotoPage('NewsDetail', { id : id }, this);
+                    Common.GotoPage('NewsDetail', { id : id, type: this.pageType }, this);
                     this.getNewsCont(id);
                 }
                 else this.showWarnModel('已经是最后一篇啦！', 'warning');

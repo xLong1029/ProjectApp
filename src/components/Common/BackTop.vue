@@ -1,5 +1,5 @@
 <template>
-	<a id="backTop" class="back_top" @click="goBackTop">返回顶部</a>
+	<a id="backTop" :class="['back_top', hasTabBar ? 'has_tab_bar' : '']" @click="goBackTop">返回顶部</a>
 </template>
 
 <script>
@@ -7,6 +7,14 @@
 
 	export default {
         name: "backTop",
+        props: {
+			// 是否底部标签栏或者操作栏
+			hasTabBar:{
+                type: Boolean,
+                // 默认值只能设置为true
+				default: true
+            }
+		},
 		data() {
 			return {}
         },
@@ -32,12 +40,16 @@
         padding: 8*@rem;
         color: #fff;
         z-index: 30;
-        bottom: 10*@rem;
+         bottom: 10*@rem;
         right: @edge_w;
         cursor: pointer;
 
         .ft(12);
         .border_radius_4;
+    }
+
+    .back_top.has_tab_bar{       
+        bottom: 50*@rem;
     }
 
     @media screen and (min-width: 960px) {

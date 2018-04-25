@@ -3,10 +3,10 @@
         <div class="pop_modal warning_modal edge_frame" v-show="warnModal.show" ref="popModal">
             <div class="modal_cont">
                 <div>
-                    <i v-if="warnModal.showIcon && warnModal.type == 'warning'" class="modal_icon icon-warning status_warning"></i>
-                    <i v-if="warnModal.showIcon && warnModal.type == 'success'" class="modal_icon icon-success status_success"></i>
-                    <i v-if="warnModal.showIcon && warnModal.type == 'fail'" class="modal_icon icon-fail status_fail"></i>
-                    <i v-if="warnModal.showIcon && warnModal.type == 'disable'" class="modal_icon icon-disable status_disable"></i>
+                    <i v-if="warnModal.showIcon && warnModal.type == 'warning'" class="modal_icon icon_warning status_warning"></i>
+                    <i v-if="warnModal.showIcon && warnModal.type == 'success'" class="modal_icon icon_success status_success"></i>
+                    <i v-if="warnModal.showIcon && warnModal.type == 'fail'" class="modal_icon icon_fail status_fail"></i>
+                    <i v-if="warnModal.showIcon && warnModal.type == 'disable'" class="modal_icon icon_disable status_disable"></i>
                 </div>
                 {{ warnModal.text }}
             </div>
