@@ -25,8 +25,6 @@
                     <div class="clearfix"></div>
                 </section>
             </div>
-            <!-- 版权信息 -->
-            <Copyright></Copyright>
 		</div>
 	</div>
 </template>
@@ -34,7 +32,6 @@
 <script>
     // 组件
 	import Loading from "components/Common/Loading.vue";
-    import Copyright from "components/Common/Copyright.vue";    
     // Api方法
     import Api from "api/news.js";
     // 混合
@@ -46,7 +43,7 @@
 
 	export default {
         name: "newsDetail",
-        components: { Loading, Copyright },
+        components: { Loading },
         mixins: [ Modal ],
 		data(){
 			return{

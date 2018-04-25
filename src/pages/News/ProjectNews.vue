@@ -21,8 +21,6 @@
 			<div v-if="loadMore" class="load_more">
 				<Loading></Loading>
 			</div>
-			<!-- 版权信息 -->
-			<Copyright></Copyright>
 			<!-- 返回顶部 -->
 			<BackTop v-show="showTopBtn"></BackTop>
 		</div>
@@ -32,7 +30,6 @@
 <script>
 	// 组件
 	import Loading from "components/Common/Loading.vue";
-	import Copyright from "components/Common/Copyright.vue";
 	import BackTop from "components/Common/BackTop.vue";
 	// Api方法
 	import Api from "api/news.js";
@@ -45,7 +42,7 @@
 
 	export default {
 		name: "projectNews",
-		components: { Loading, Copyright, BackTop },
+		components: { Loading, BackTop },
 		mixins: [ ScrollPage, Modal ],
 		data() {
 			return{
