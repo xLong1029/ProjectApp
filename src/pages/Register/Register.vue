@@ -25,9 +25,7 @@
 			</form>
 		</section>
 		<!-- 版权信息 -->
-		<section class="bottom">
-			<Copyright></Copyright>
-		</section>
+		<Copyright></Copyright>
 	</div>
 </template>
 
@@ -124,12 +122,6 @@
 		&:hover{
 			color: #fff;
 		}
-	}
-
-	.bottom{
-		position: absolute;
-		width: 100%;
-		bottom: 10*@rem;
 	}
 
 	/* layout */

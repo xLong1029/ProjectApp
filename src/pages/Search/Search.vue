@@ -5,7 +5,7 @@
 			<div class="search_bar">
 				<!-- 返回按钮 -->
 				<a class="btn slide_right fl" @click="goBack">
-					<i class="icon-back"></i>
+					<i class="icon_back"></i>
 				</a>
 				<!-- 输入框 -->
 				<div class="search_box fl">
@@ -31,9 +31,7 @@
 			</section>
 		</div>
 		<!-- 版权信息 -->
-		<section class="bottom">
-			<Copyright></Copyright>
-		</section>
+		<Copyright></Copyright>
 		<!-- 返回顶部 -->
 		<BackTop v-show="showTopBtn"></BackTop>
 	</div>
@@ -289,12 +287,6 @@
 		.loading{
 			position: absolute;
 		}
-	}
-
-	.bottom{
-		position: absolute;
-		width: 100%;
-		bottom: 10*@rem;
 	}
 
 	.back_top{

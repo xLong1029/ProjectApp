@@ -1,15 +1,15 @@
 @font-face {
   font-family: 'solo';
-  src:  url('fonts/solo.eot?cc7h7g');
-  src:  url('fonts/solo.eot?cc7h7g#iefix') format('embedded-opentype'),
-    url('fonts/solo.ttf?cc7h7g') format('truetype'),
-    url('fonts/solo.woff?cc7h7g') format('woff'),
-    url('fonts/solo.svg?cc7h7g#solo') format('svg');
+  src:  url('fonts/solo.eot?bhum3j');
+  src:  url('fonts/solo.eot?bhum3j#iefix') format('embedded-opentype'),
+    url('fonts/solo.ttf?bhum3j') format('truetype'),
+    url('fonts/solo.woff?bhum3j') format('woff'),
+    url('fonts/solo.svg?bhum3j#solo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon_"], [class*=" icon_"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'solo' !important;
   speak: none;
@@ -24,66 +24,84 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-arrow-down:before {
+.icon_arrow_down:before {
   content: "\e900";
 }
-.icon-back:before {
+.icon_back:before {
   content: "\e901";
 }
-.icon-case:before {
+.icon_case:before {
   content: "\e902";
 }
-.icon-collection:before {
+.icon_collection:before {
   content: "\e903";
 }
-.icon-company:before {
+.icon_company:before {
   content: "\e904";
 }
-.icon-disable:before {
+.icon_delete_line:before {
   content: "\e905";
 }
-.icon-exit:before {
+.icon_disable:before {
   content: "\e906";
 }
-.icon-fail:before {
+.icon_edit:before {
   content: "\e907";
 }
-.icon-group:before {
+.icon_edit_line:before {
   content: "\e908";
 }
-.icon-home:before {
+.icon_exit:before {
   content: "\e909";
 }
-.icon-horn:before {
+.icon_fail:before {
   content: "\e90a";
 }
-.icon-list:before {
+.icon_file:before {
   content: "\e90b";
 }
-.icon-loading:before {
+.icon_file_add_line:before {
   content: "\e90c";
 }
-.icon-logo:before {
+.icon_group:before {
   content: "\e90d";
 }
-.icon-news:before {
+.icon_home:before {
   content: "\e90e";
 }
-.icon-next:before {
+.icon_horn:before {
   content: "\e90f";
 }
-.icon-project-list:before {
+.icon_list:before {
   content: "\e910";
 }
-.icon-search:before {
+.icon_loading:before {
   content: "\e911";
 }
-.icon-success:before {
+.icon_logo:before {
   content: "\e912";
 }
-.icon-user:before {
+.icon_news:before {
   content: "\e913";
 }
-.icon-warning:before {
+.icon_next:before {
   content: "\e914";
+}
+.icon_password:before {
+  content: "\e915";
+}
+.icon_project_list:before {
+  content: "\e916";
+}
+.icon_search:before {
+  content: "\e917";
+}
+.icon_success:before {
+  content: "\e918";
+}
+.icon_user:before {
+  content: "\e919";
+}
+.icon_warning:before {
+  content: "\e91a";
 }

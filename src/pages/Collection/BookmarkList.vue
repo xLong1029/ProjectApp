@@ -4,22 +4,22 @@
 		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
-			<!-- 分组列表 -->
-			<ul class="collect_group_list">
-				<li v-for="(item, index) in collectList" :key="index" class="cont_frame collect_list_item" @click="gotoPage(item)">
-					<i class="list_icon icon_file"></i>{{ item.name }}<i class="icon_next"></i>
+			<!-- 书签列表 -->
+			<ul class="bookmark_list">
+				<li v-for="(item, index) in collectList" :key="index" class="book_list_item" @click="gotoPage(item)">
+					{{ item.name }}<i class="icon_next"></i>
 				</li>
 			</ul>
 			<!-- 操作栏 -->
 			<div id="operateBar">
 				<ul class="operate_bar">
 					<li class="operate_item">
-						<i class="operate_icon icon_file_add_line"></i>
-						<span class="operate_title">添加分组</span>
+						<i class="operate_icon icon_edit_line"></i>
+						<span class="operate_title">更改组名</span>
 					</li>
 					<li class="operate_item">
 						<i class="operate_icon icon_delete_line"></i>
-						<span class="operate_title">删除分组</span>
+						<span class="operate_title">删除文章</span>
 					</li>
 				</ul>
 			</div>
@@ -30,7 +30,7 @@
 <script>
 	// 通用JS
 	import Common from 'common/common.js'
-	import { GetCookie } from 'common/important.js';
+	import { GetCookie, GetUrlQuery } from 'common/important.js';
 	// Api方法
 	import Api from "api/user_center.js";
 
@@ -43,23 +43,28 @@
 				collectList:[
 					{
 						id: 1,
-						name: '分组一'
+						name: '文章一',
+						url: ''
 					},
 					{
 						id: 2,
-						name: '分组二'
+						name: '文章二',
+						url: ''
 					},
 					{
 						id: 3,
-						name: '分组三'
+						name: '文章三',
+						url: ''
 					},
 					{
 						id: 4,
-						name: '分组四'
+						name: '文章四',
+						url: ''
 					},
 					{
 						id: 5,
-						name: '分组五'
+						name: '文章五',
+						url: ''
 					}
 				]
 			}
@@ -75,11 +80,13 @@
 		methods:{
 			// 初始化
 			init(){
-                this.$store.commit('SET_NAV_TITLE', '收藏夹');
+				let title = GetUrlQuery('name');
+				if(title) this.$store.commit('SET_NAV_TITLE', title);
+                else this.$store.commit('SET_NAV_TITLE', '书签列表');
 			},
 			// 跳转页面
 			gotoPage(item){
-				Common.GotoPage('BookmarkList', { id: item.id, name: item.name }, this);
+				Common.GotoPage('NewsDetail', { id: item.id, type: 2 }, this);
 			}
 		}
 	};
@@ -89,9 +96,12 @@
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
 
-	/* collect_group_list */
+	/* bookmark_list */
 	
-	.collect_list_item{
+	.book_list_item{
+		background: #fff;
+		padding: 10*@rem;
+		border-bottom: @border_light;
 		cursor: pointer;
 
 		.list_icon{			

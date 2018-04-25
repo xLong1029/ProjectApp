@@ -3,20 +3,20 @@
 		<div class="navbar">
 			<!-- 判断：如果是二级页面，则添加fr样式，反之添加fl样式 -->
 			<a :class="['btn slide_right', secondPages.indexOf($route.name) !== -1 ? 'fr' : 'fl']" @click="pushRight">
-				<i class="icon-list"></i>
+				<i class="icon_list"></i>
 			</a>			
 			<!-- 是否为二级页面，显示返回图标 -->
 			<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="goBack">
-				<i class="icon-back"></i>
+				<i class="icon_back"></i>
 			</a>
 			<!-- 非二级页面，显示搜索图标 -->
 			<a v-else class="btn fr" @click="toSearch">
-				<i class="icon-search"></i>
+				<i class="icon_search"></i>
 			</a>
 			<!-- 二级页面标题 -->
 			<div class="title fl">
 				<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>
-				<router-link v-else class="icon-logo" :to="{ name: 'ProjectNews' }"></router-link>
+				<router-link v-else class="icon_logo" :to="{ name: 'ProjectNews' }"></router-link>
 			</div>
 		</div>
 	</header>
@@ -103,7 +103,7 @@
 	    }
 	}
 
-	.icon-logo {
+	.icon_logo {
 	    font-size: 64*@rem;
 	    line-height: 35*@rem;
 	    color: #fff;

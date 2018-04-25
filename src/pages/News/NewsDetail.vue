@@ -20,8 +20,8 @@
                 </section>
                 <!-- 文章选择 -->
                 <section class="select_artc">
-                    <a class="fl" @click="readPrev(newsCont.prevID)"><i class="icon-back"></i> 查看上一篇</a>
-                    <a class="fr"@click="readNext(newsCont.nextID)">查看下一篇 <i class="icon-next"></i></a>
+                    <a class="fl" @click="readPrev(newsCont.prevID)"><i class="icon_back"></i> 查看上一篇</a>
+                    <a class="fr"@click="readNext(newsCont.nextID)">查看下一篇 <i class="icon_next"></i></a>
                     <div class="clearfix"></div>
                 </section>
             </div>
@@ -70,8 +70,12 @@
         methods:{
             init(){
                 this.$store.commit('SET_NAV_TITLE', '资讯详情');
-                // 更新返回路由
-                this.$store.commit('SET_GOBACK_ROUTE', { name: 'ProjectNews', query: {} });
+                let type = GetUrlQuery('type');
+                // type == 1 说明是从资讯列表过来的
+                if(type == 1){
+                    // 更新返回路由
+                    this.$store.commit('SET_GOBACK_ROUTE', { name: 'ProjectNews', query: {} });
+                }                
                 this.getNewsCont(GetUrlQuery('id'));
             },
             // 获取资讯内容

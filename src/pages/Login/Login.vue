@@ -10,7 +10,7 @@
 					<input type="password" v-model="form.password" placeholder="密码"/>
 				</div>
 				<div class="form_line">
-					<Checkbox :v-model="form.password" text="记住密码" @setCheckBoxValue="getCheckBoxValue"></Checkbox>
+					<Checkbox :v-model="form.remember" text="记住密码" @setCheckBoxValue="getCheckBoxValue"></Checkbox>
 				</div>
 				<div class="form_line">
 					<input type="button" class="button" value="登录" @click="validForm"/>
@@ -24,9 +24,7 @@
 			</form>
 		</section>
 		<!-- 版权信息 -->
-		<section class="bottom">
-			<Copyright></Copyright>
-		</section>
+		<Copyright></Copyright>
 	</div>
 </template>
 
@@ -132,13 +130,7 @@
 			color: #fff;
 		}
 	}
-
-	.bottom{
-		position: absolute;
-		width: 100%;
-		bottom: 10*@rem;
-	}
-
+	
 	/* layout */
 	@media screen and (min-width: 960px) {
 		.login {

@@ -19,8 +19,11 @@
     // 引入通用设置文件
     @import "../../assets/less/setting";
     
-    .copyright {
-		// border-top: @border_deep;
+    .copyright {		
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+
 		.ft(12);
 		.mt(15);
 		.pb(10);

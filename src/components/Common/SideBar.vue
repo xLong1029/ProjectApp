@@ -16,7 +16,7 @@
 				</ul>
 			</div>
 			<div v-if="isLogined" class="sidebar_bottom edge_frame">
-				<a @click="logOut" style="cursor:pointer;"><i class="icon-exit"></i>退出登录</a>
+				<a @click="logOut" style="cursor:pointer;"><i class="icon_exit"></i>退出登录</a>
 			</div>
 		</aside>
 		<!-- 遮罩层 -->
@@ -47,13 +47,13 @@
 					[
 						{
 							rName: 'UserCenter',
-							icon: 'icon-user',
+							icon: 'icon_user',
 							rQuery: {},
 							title: "个人中心"
 						},
 						{
 							rName: 'Collection',
-							icon: 'icon-collection',
+							icon: 'icon_collection',
 							rQuery: {},
 							title: "收藏夹"
 						},
@@ -62,7 +62,7 @@
 					[
 						{
 							rName: 'ProjectNews',
-							icon: 'icon-news',
+							icon: 'icon_news',
 							rQuery: {},
 							title: "申报资讯"
 						}
@@ -71,7 +71,7 @@
 					[
 						{
 							rName: 'Search',
-							icon: 'icon-search',
+							icon: 'icon_search',
 							rQuery: {},
 							title: "搜索"
 						}
@@ -181,22 +181,15 @@
 
 		i{
 			.mr(10);
-			color: #aaa;
+			color: @ic_gray_color;
 		}
 	}
-
-	// .sidebar_li_item.on{
-	// 	color: @base_color;
-	// 	background: #fff;
-	// }
 
 	.sidebar_bottom{
 		width: 480*@half_rem;
 		position:absolute;
 		bottom: 0;
 		left: 0;
-		// border-top: @border_deep;
-		// background: #fff;
 
 		line-height: 40*@rem;
 
@@ -204,7 +197,7 @@
 
 		i{
 			.mr(5);
-			color: #aaa;
+			color: @ic_gray_color;
 		}
 	}
 </style>

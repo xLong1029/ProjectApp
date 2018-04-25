@@ -1,40 +1,31 @@
 <template>
 	<div id="userCenter">
-		<div v-if="isLogined">
-			<!-- 加载数据 -->
-			<Loading v-if="pageLoading"></Loading>
-			<!-- 加载结束 -->
-			<div v-else>
-				<!-- 修改密码表单 -->
-				<form class="cont_frame">
-					<div class="form_line">
-						<input type="text" v-model="form.oldPassword" placeholder="旧密码"/>
-					</div>
-					<div class="form_line">
-						<input type="password" v-model="form.newPassword" placeholder="新密码"/>
-					</div>
-					<div class="form_line">
-						<input type="password" v-model="form.comfirmPassword" placeholder="确认密码"/>
-					</div>
-					<div class="form_line">
-						<input type="button" class="button" value="确认修改" @click="validForm"/>
-					</div>
-				</form>
-			</div>
+		<!-- 加载数据 -->
+		<Loading v-if="pageLoading"></Loading>
+		<!-- 加载结束 -->
+		<div v-else>
+			<!-- 修改密码表单 -->
+			<form class="cont_frame">
+				<div class="form_line">
+					<input type="text" v-model="form.oldPassword" placeholder="旧密码"/>
+				</div>
+				<div class="form_line">
+					<input type="password" v-model="form.newPassword" placeholder="新密码"/>
+				</div>
+				<div class="form_line">
+					<input type="password" v-model="form.comfirmPassword" placeholder="确认密码"/>
+				</div>
+				<div class="form_line">
+					<input type="button" class="button" value="确认修改" @click="validForm"/>
+				</div>
+			</form>
 		</div>
-		<div v-else class="no_login">
-			<p>你还未登录</p>
-			<router-link class="button login_btn" :to="{ name: 'Login' }">去登录</router-link>
-		</div>
-		<!-- 版权信息 -->
-		<Copyright></Copyright>
 	</div>
 </template>
 
 <script>
 	// 组件
 	import Loading from "components/Common/Loading.vue";
-	import Copyright from "components/Common/Copyright.vue";
 	// 通用JS
 	import { GetCookie } from 'common/important.js';
 	// Api方法
@@ -47,14 +38,12 @@
 	export default {
 		name: "userCenter",
 		mixins: [ Modal ],
-		components: { Loading, Copyright },
+		components: { Loading },
 		computed: {
             ...mapGetters([ 'userAccount' ]),
         },
 		data(){
 			return{
-				// 是否已登录
-				isLogined: false,
 				// 是否加载
 				pageLoading: false,
 				// 表单信息
@@ -68,15 +57,17 @@
 				}
 			}
 		},
+		// 进入路由前导航钩子
+        beforeRouteEnter (to, from, next) {
+            if(GetCookie('project_token')) next();
+			else next({ name : 'UnLogined' });
+        },
 		created(){
 			this.init();
 		},
 		methods:{
 			// 初始化
 			init(){
-				if(GetCookie('project_token')){
-					this.isLogined = true;
-				}
                 this.$store.commit('SET_NAV_TITLE', '修改密码');
 			},
 			// 验证表单
@@ -111,22 +102,4 @@
 <style lang="less" scoped>
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
-
-	.no_login{
-		background: #fff;
-		padding: 100*@rem 0;
-
-		p{
-			text-align: center;
-		}
-	}
-
-	.login_btn{
-		margin: auto;
-		.wd(150);
-
-		&:hover{
-			color: #fff;
-		}
-	}
 </style>

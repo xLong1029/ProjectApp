@@ -166,7 +166,7 @@
 			gotoDetail(id){
 				// 列表滚动高度存缓存
 				SetCookie('scrollH', $(window).scrollTop());
-				Common.GotoPage('NewsDetail', { id: id }, this);
+				Common.GotoPage('NewsDetail', { id: id, type: 1 }, this);
 			}
 		},		
 		destroyed(){

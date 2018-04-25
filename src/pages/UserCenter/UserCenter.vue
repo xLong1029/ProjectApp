@@ -1,37 +1,28 @@
 <template>
 	<div id="userCenter">
-		<div v-if="isLogined">
-			<!-- 加载数据 -->
-			<Loading v-if="pageLoading"></Loading>
-			<!-- 加载结束 -->
-			<div v-else>
-				<!-- 账号信息 -->
-				<div class="cont_frame user_info_list">
-					欢迎你，{{ userAccount }}
-				</div>
-				<ul>
-					<li class="cont_frame user_info_list" @click="gotoChangePwd">
-						<i class="list_icon icon-news"></i>修改密码<i class="icon-next"></i>
-					</li>
-					<li class="cont_frame user_info_list" @click="logOut">
-						<i class="list_icon icon-exit"></i>退出登录<i class="icon-next"></i>
-					</li>
-				</ul>
+		<!-- 加载数据 -->
+		<Loading v-if="pageLoading"></Loading>
+		<!-- 加载结束 -->
+		<div v-else>
+			<!-- 账号信息 -->
+			<div class="cont_frame user_info_list">
+				欢迎你，{{ userAccount }}
 			</div>
+			<ul>
+				<li class="cont_frame user_info_list" @click="gotoChangePwd">
+					<i class="list_icon icon_password"></i>修改密码<i class="icon-next"></i>
+				</li>
+				<li class="cont_frame user_info_list" @click="logOut">
+					<i class="list_icon icon_exit"></i>退出登录<i class="icon-next"></i>
+				</li>
+			</ul>
 		</div>
-		<div v-else class="no_login">
-			<p>你还未登录</p>
-			<router-link class="button login_btn" :to="{ name: 'Login' }">去登录</router-link>
-		</div>
-		<!-- 版权信息 -->
-		<Copyright></Copyright>
 	</div>
 </template>
 
 <script>
 	// 组件
 	import Loading from "components/Common/Loading.vue";
-	import Copyright from "components/Common/Copyright.vue";
 	// 通用js
 	import Common from 'common/common.js';
 	import { GetCookie } from 'common/important.js';
@@ -43,7 +34,7 @@
 
 	export default {
 		name: "userCenter",
-		components: { Loading, Copyright },
+		components: { Loading },
 		computed: {
             ...mapGetters([ 'userAccount' ]),
         },
@@ -55,14 +46,16 @@
 				pageLoading: false
 			}
 		},
+		// 进入路由前导航钩子
+        beforeRouteEnter (to, from, next) {
+            if(GetCookie('project_token')) next();
+			else next({ name : 'UnLogined' });
+        },
 		created(){
 			this.init();
 		},
 		methods:{
 			init(){
-				if(GetCookie('project_token')){
-					this.isLogined = true;
-				}
                 this.$store.commit('SET_NAV_TITLE', '个人中心');
 			},
 			// 跳转修改密码
@@ -82,30 +75,14 @@
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
 
-	/* no_login */
-	
-	.no_login{
-		background: #fff;
-		padding: 100*@rem 0;
-
-		p{
-			text-align: center;
-		}
-	}
-
-	.login_btn{
-		margin: auto;
-		.wd(150);
-
-		&:hover{
-			color: #fff;
-		}
-	}
-
 	/* user_info_list */
 
 	.user_info_list{
-		.list_icon{
+		cursor: pointer;
+
+		.list_icon{			
+			color: @ic_gray_color;
+
 			.mr(5);
 		}
 

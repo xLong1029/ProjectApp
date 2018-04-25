@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// 登录
+// 主页
 import Main from 'pages/Main'
 // 登录
 import Login from 'pages/Login/Login'
+// 未登录提示页
+import UnLogined from 'pages/Login/UnLogined'
 // 注册
 import Register from 'pages/Register/Register'
 // 申报资讯
@@ -16,6 +18,8 @@ import UserCenter from 'pages/UserCenter/UserCenter'
 import ChangePassword from 'pages/UserCenter/ChangePassword'
 // 收藏夹
 import Collection from 'pages/Collection/Collection'
+// 书签列表
+import BookmarkList from 'pages/Collection/BookmarkList'
 // 信息搜索
 import Search from 'pages/Search/Search'
 
@@ -41,6 +45,10 @@ export default new Router({
             { path: '/ChangePassword', name: 'ChangePassword', component: ChangePassword },
             // 收藏夹
             { path: '/Collection', name: 'Collection', component: Collection },
+            // 书签列表
+            { path: '/BookmarkList', name: 'BookmarkList', component: BookmarkList },
+            // 未登录提示页
+            { path: '/UnLogined', name: 'UnLogined', component: UnLogined },
         ]
     },
     // 搜索
