@@ -22,6 +22,7 @@ import CollectStore from 'pages/Collection/CollectList/CollectStore'
 import CollectManage from 'pages/Collection/CollectList/CollectManage'
 // 书签
 import BookmarkList from 'pages/Collection/BookmarkList/BookmarkList'
+import BookmarkManage from 'pages/Collection/BookmarkList/BookmarkManage'
 // 信息搜索
 import Search from 'pages/Search/Search'
 
@@ -57,6 +58,8 @@ export default new Router({
     { path: '/CollectStore', name: 'CollectStore', component: CollectStore },
     // 收藏夹-管理页
     { path: '/CollectManage', name: 'CollectManage', component: CollectManage },
+    // 书签-管理页
+    { path: '/BookmarkManage', name: 'BookmarkManage', component: BookmarkManage },
     // 搜索
     { path: '/Search', name: 'Search', component: Search },
     // 登录

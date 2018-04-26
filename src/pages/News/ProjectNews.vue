@@ -6,7 +6,7 @@
 		<div v-else>
 			<!-- 资讯列表 -->
 			<ul class="news_list">
-				<li v-for="(item, index) in newsList" :key="index" class="news_li_item proj_news" @click="gotoDetail(item.id)">
+				<li v-for="(item, index) in newsList" :key="index" class="news_li_item proj_news" @click="toDetail(item.id)">
 					<div class="news_li_cont fl">
 						<h2 class="news_li_title">{{ item.title }}</h2>
 						<div class="news_li_tag">
@@ -110,7 +110,7 @@
 								var _this = this;
 								this.$nextTick(() => {
 									scrollTo(0, _this.listScrollH);	
-								})													
+								})
 							}
 						}
 					}

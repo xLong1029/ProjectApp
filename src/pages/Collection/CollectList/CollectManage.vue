@@ -33,16 +33,16 @@
 						<i class="icon_edit fr" @click="toStore(item.id)"></i>
 					</li>
 				</ul>
-				<!-- 操作栏 -->
-				<div id="operateBar">
-					<ul class="operate_bar">
-						<li class="operate_item" @click="deleteGroup">
-							<i class="operate_icon icon_delete_line"></i>
-							<span class="operate_title">删除分组</span>
-						</li>
-					</ul>
-				</div>
 			</div>
+		</div>
+		<!-- 操作栏 -->
+		<div id="operateBar">
+			<ul class="operate_bar">
+				<li class="operate_item" @click="deleteGroup">
+					<i class="operate_icon icon_delete_line"></i>
+					<span class="operate_title">删除分组</span>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>

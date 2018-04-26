@@ -17,9 +17,9 @@
 						<i class="operate_icon icon_file_add_line" @click="toStore"></i>
 						<span class="operate_title">添加分组</span>
 					</li>
-					<li class="operate_item" @click="toEdit">
+					<li class="operate_item" @click="toManage">
 						<i class="operate_icon icon_edit_line"></i>
-						<span class="operate_title">编辑分组</span>
+						<span class="operate_title">管理分组</span>
 					</li>
 				</ul>
 			</div>
@@ -87,7 +87,7 @@
 				Common.GotoPage('CollectStore', { type: 'add' }, this);
 			},
 			// 跳转到管理页
-			toEdit(){
+			toManage(){
 				Common.GotoPage('CollectManage', {}, this);
 			}
 		}

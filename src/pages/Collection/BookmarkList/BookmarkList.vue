@@ -6,7 +6,7 @@
 		<div v-else>
 			<!-- 书签列表 -->
 			<ul v-if="!noList" class="news_list">
-				<li v-for="(item, index) in newsList" v-if="index < listNum" :key="index" class="news_li_item"  @click="gotoDetail(item.id)">
+				<li v-for="(item, index) in newsList" v-if="index < listNum" :key="index" class="news_li_item"  @click="toDetail(item.id)">
 					<div class="news_li_cont">
 						<h2 class="news_li_title fl">{{ item.title }}</h2>
 						<span class="news_li_time fr">{{ item.publishDate }}</span>	
@@ -20,12 +20,12 @@
 			<div id="operateBar">
 				<ul class="operate_bar">
 					<li class="operate_item">
-						<i class="operate_icon icon_edit_line"></i>
+						<i class="operate_icon icon_edit_line" @click="toStore"></i>
 						<span class="operate_title">更改组名</span>
 					</li>
 					<li class="operate_item">
-						<i class="operate_icon icon_delete_line"></i>
-						<span class="operate_title">删除文章</span>
+						<i class="operate_icon icon_edit_line" @click="toManage"></i>
+						<span class="operate_title">管理文章</span>
 					</li>
 				</ul>
 			</div>
@@ -64,7 +64,7 @@
 				// 资讯列表
 				newsList: [],
 				// 资讯数量
-				listNum: 20
+				listNum: 50
 			}
 		},
 		// 进入路由前导航钩子
@@ -119,7 +119,7 @@
 								var _this = this;
 								this.$nextTick(() => {
 									scrollTo(0, _this.listScrollH);	
-								})													
+								})
 							}
 						}
 					}
@@ -137,17 +137,6 @@
 				let windowH = $(window).height(),
 					documentH = $(document).height();
 
-				if(scrollTop + windowH > documentH - 40){
-					if(!this.loadMoreNow) {
-						this.loadMoreNow = true;
-						// 累加5条记录
-						this.listNum += 5;
-						// 列表数量存缓存
-						SetCookie('listNum', this.listNum);		
-						// 获取更多内容
-						this.getListData(this.listNum, true);
-					}
-				}
 				if(scrollTop > windowH/2){
 					this.showTopBtn = true;
 				}
@@ -156,10 +145,18 @@
 				}
 			},
 			// 跳转资讯详情页
-			gotoDetail(id){
+			toDetail(id){
 				// 列表滚动高度存缓存
 				SetCookie('scrollH', $(window).scrollTop());
 				Common.GotoPage('NewsDetail', { id: id, type: 2 }, this);
+			},
+			// 跳转到新增/编辑页
+			toStore(){
+				Common.GotoPage('CollectStore', { type: 'edit' }, this);
+			},
+			// 跳转到管理页
+			toManage(){
+				Common.GotoPage('BookmarkManage', {}, this);
 			}
 		},
 		destroyed(){

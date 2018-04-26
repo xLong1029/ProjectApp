@@ -32,12 +32,9 @@
 			return{
                 value: false,
             }
-		},
-		updated(){
-            let this_ = this;
-            this.$nextTick(() => {
-                this_.value = this_.vModel;
-            })
+        },
+        created(){
+            this.value = this.vModel;
         },
 		methods:{
             // 设置值

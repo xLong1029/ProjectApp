@@ -7,6 +7,7 @@
  */
 
  // 通用JS
+ import Common from 'common/common.js'
  import { SetCookie, GetCookie } from 'common/important.js';
 
 export default {
@@ -68,7 +69,7 @@ export default {
             }
         },
         // 跳转资讯详情页
-        gotoDetail(id){
+        toDetail(id){
             // 列表滚动高度存缓存
             SetCookie('scrollH', $(window).scrollTop());
             Common.GotoPage('NewsDetail', { id: id, type: 1 }, this);

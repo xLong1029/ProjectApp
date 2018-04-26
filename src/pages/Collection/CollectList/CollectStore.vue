@@ -5,7 +5,7 @@
 			<div class="navbar">		
 				<!-- 取消按钮-->
 				<a class="btn fl">
-					<button class="button cancel_btn" @click="toCollectList">取消</button>
+					<button class="button cancel_btn" @click="cancel">取消</button>
 				</a>
 				<!-- 标题 -->
 				<div class="title fl">{{ navTitle }}</div>
@@ -78,8 +78,8 @@
 				}
 			},
 			// 跳转到收藏夹
-			toCollectList(){
-				Common.GotoPage('CollectList', {}, this);
+			cancel(){
+				this.$router.go(-1);
 			},
 			// 选中文本
 			selectInput(e){
