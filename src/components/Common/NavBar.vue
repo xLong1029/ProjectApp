@@ -67,53 +67,5 @@
 <style lang="less" scoped>
 	//引入通用设置文件
 	@import "../../assets/less/setting";
-	
-	/* navbar */
-
-	.navbar {
-	    width: 100%;
-	    position: fixed;
-	    z-index: 66;
-	    height: @navbar_h;
-	    background: @base_color;
-	    // border-bottom: 1px solid #d5d5d5;
-	    top: 0;
-
-	    .btn {
-	        width: 15%;
-	        height: @navbar_h;
-	        text-align: center;
-	        cursor: pointer;
-	    }
-	    .title {
-	        width: 70%;
-	        height: @navbar_h;
-	        text-align: center;
-	        font-size: 16*@rem;
-	        line-height: @navbar_h;
-	        color: #fff;
-	        font-weight: bold;
-	    }
-
-	    i {
-	        display: inline-block;
-	        color: #fff;
-	        font-size: 18*@rem;
-	        margin-top: 10*@rem;
-	    }
-	}
-
-	.icon_logo {
-	    font-size: 64*@rem;
-	    line-height: 35*@rem;
-	    color: #fff;
-	}
-
-	/* layout */
-
-	@media screen and (min-width: 960px) {
-	    .navbar {
-	        width: @wrapper_max_w;
-	    }
-	}
+	@import "../../assets/less/navbar";
 </style>

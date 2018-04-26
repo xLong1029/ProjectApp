@@ -17,9 +17,9 @@ import NewsDetail from 'pages/News/NewsDetail'
 import UserCenter from 'pages/UserCenter/UserCenter'
 import ChangePassword from 'pages/UserCenter/ChangePassword'
 // 收藏夹
-import CollectionList from 'pages/Collection/CollectionList/CollectionList'
-import CollectStore from 'pages/Collection/CollectionList/CollectStore'
-import CollectManage from 'pages/Collection/CollectionList/CollectManage'
+import CollectList from 'pages/Collection/CollectList/CollectList'
+import CollectStore from 'pages/Collection/CollectList/CollectStore'
+import CollectManage from 'pages/Collection/CollectList/CollectManage'
 // 书签
 import BookmarkList from 'pages/Collection/BookmarkList/BookmarkList'
 // 信息搜索
@@ -46,7 +46,7 @@ export default new Router({
             // 修改密码
             { path: '/ChangePassword', name: 'ChangePassword', component: ChangePassword },
             // 收藏夹
-            { path: '/CollectionList', name: 'CollectionList', component: CollectionList },
+            { path: '/CollectList', name: 'CollectList', component: CollectList },
             // 书签列表
             { path: '/BookmarkList', name: 'BookmarkList', component: BookmarkList },
             // 未登录提示页

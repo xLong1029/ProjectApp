@@ -1,7 +1,7 @@
 <template>
-	<label for="checkbox" class="form_checkbox_item">
-        <span class="form_checkbox_icon"></span>
-        <input type="checkbox" id="checkbox" class="form_checkbox" name="agree" v-model="value" @change="setChecked"/>
+	<label class="form_checkbox_item">
+        <span :class="['form_checkbox_icon', value ? 'checkbox_checked' : '']"></span>
+        <input type="checkbox" class="form_checkbox" v-model="value" @change="changeChecked"/>
         {{ text }}
     </label>
 </template>
@@ -12,12 +12,16 @@
 		/* 获取父级传值
         * 显示文本text
         * 选取值vModel
+        * 当前索引index
         */
         props: {
-            // 设置默认值
             text:{
                 type: String,
                 default: ''
+            },
+            index: {
+                type: Number,
+                default: -1
             },
             vModel:{
                 type: Boolean,
@@ -29,19 +33,21 @@
                 value: false,
             }
 		},
-		created(){
-            this.value = this.vModel;
+		updated(){
+            let this_ = this;
+            this.$nextTick(() => {
+                this_.value = this_.vModel;
+            })
         },
 		methods:{
-			setChecked(){
-                if(this.value){
-                    $('.form_checkbox_icon').addClass('checkbox_checked');
-                }
-                else{
-                    $('.form_checkbox_icon').removeClass('checkbox_checked');
-                }
+            // 设置值
+            setChecked(e){
+                this.value = e;
+            },
+            // 改变值
+			changeChecked(){
 				// 将值传给父组件
-                this.$emit('setCheckBoxValue', this.value);
+                this.$emit('change', [this.value, this.index]);
 			}
 		}
 	};

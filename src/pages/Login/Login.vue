@@ -10,7 +10,7 @@
 					<input type="password" v-model="form.password" placeholder="密码"/>
 				</div>
 				<div class="form_line">
-					<Checkbox :v-model="form.remember" text="记住密码" @setCheckBoxValue="getCheckBoxValue"></Checkbox>
+					<Checkbox :v-model="form.remember" text="记住密码" @change="getCheckBoxValue"></Checkbox>
 				</div>
 				<div class="form_line">
 					<input type="button" class="button" value="登录" @click="validForm"/>
@@ -99,8 +99,8 @@
 				}
 			},
 			// 从子组件获取Checkbox值
-            getCheckBoxValue(value){
-                this.form.remember = value;
+            getCheckBoxValue(e){
+                this.form.remember = e[0];
             }
 		}
 	};

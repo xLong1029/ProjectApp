@@ -173,6 +173,7 @@
 	// 引入通用设置文件
 	@import "../../../assets/less/setting";
 	@import "../../../assets/less/news_list";
+	@import "../../../assets/less/operate_bar";
 
 	/* no_collect_list */
 
@@ -206,49 +207,6 @@
 			.mt(5);
 			.ft(12);
 		}
-	}
-
-	/* operate_bar */
-
-	.operate_bar {
-		height: @tabbar_h;
-		background: #fff;
-		bottom: 0;
-		border-top: @border_deep;
-		font-size: 12*@rem;
-		width: 100%;
-		position: fixed;
-		z-index: 50;
-
-		a, i, span {
-			display: block;
-		}
-	}
-
-	.operate_item {
-		float: left;
-		text-align: center;
-		width: 50%;
-		height: 86*@half_rem;
-		color: @ft_gray_color;
-		cursor: pointer;
-		position: relative;
-
-		&:hover{
-			color: @base_color;
-		}
-	}
-
-	.operate_icon {
-		margin: 0 auto;
-		text-align: center;
-		.mt(4);
-		.ft(18);
-	}
-
-	.operate_title {
-		text-align: center;
-		margin-top: 1*@rem;
 	}
 
 	/* 加载更多 */

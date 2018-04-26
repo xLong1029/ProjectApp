@@ -14,7 +14,7 @@
 					<input type="text" v-model="form.password" placeholder="密码"/>
 				</div>
 				<div class="form_line">
-					<Checkbox :v-model="form.password" text="同意" @setCheckBoxValue="getCheckBoxValue"></Checkbox><a class="agreement" href="http://www.baidu.com">《华建项目申报平台协议》</a>
+					<Checkbox :v-model="form.password" text="同意" @change="getCheckBoxValue"></Checkbox><a class="agreement" href="http://www.baidu.com">《华建项目申报平台协议》</a>
 				</div>
 				<div class="form_line">
 					<input type="button" class="button" value="注册" @click="validForm"/>
@@ -87,8 +87,8 @@
 
 			},
 			// 从子组件获取Checkbox值
-            getCheckBoxValue(value){
-                this.form.agree = value;
+            getCheckBoxValue(e){
+                this.form.agree = e[0];
             }
 		}
 	};
