@@ -52,7 +52,7 @@
 							title: "个人中心"
 						},
 						{
-							rName: 'Collection',
+							rName: 'CollectionList',
 							icon: 'icon_collection',
 							rQuery: {},
 							title: "收藏夹"

@@ -17,9 +17,11 @@ import NewsDetail from 'pages/News/NewsDetail'
 import UserCenter from 'pages/UserCenter/UserCenter'
 import ChangePassword from 'pages/UserCenter/ChangePassword'
 // 收藏夹
-import Collection from 'pages/Collection/Collection'
-// 书签列表
-import BookmarkList from 'pages/Collection/BookmarkList'
+import CollectionList from 'pages/Collection/CollectionList/CollectionList'
+import CollectStore from 'pages/Collection/CollectionList/CollectStore'
+import CollectManage from 'pages/Collection/CollectionList/CollectManage'
+// 书签
+import BookmarkList from 'pages/Collection/BookmarkList/BookmarkList'
 // 信息搜索
 import Search from 'pages/Search/Search'
 
@@ -44,13 +46,17 @@ export default new Router({
             // 修改密码
             { path: '/ChangePassword', name: 'ChangePassword', component: ChangePassword },
             // 收藏夹
-            { path: '/Collection', name: 'Collection', component: Collection },
+            { path: '/CollectionList', name: 'CollectionList', component: CollectionList },
             // 书签列表
             { path: '/BookmarkList', name: 'BookmarkList', component: BookmarkList },
             // 未登录提示页
             { path: '/UnLogined', name: 'UnLogined', component: UnLogined },
         ]
     },
+    // 收藏夹-编辑页
+    { path: '/CollectStore', name: 'CollectStore', component: CollectStore },
+    // 收藏夹-管理页
+    { path: '/CollectManage', name: 'CollectManage', component: CollectManage },
     // 搜索
     { path: '/Search', name: 'Search', component: Search },
     // 登录

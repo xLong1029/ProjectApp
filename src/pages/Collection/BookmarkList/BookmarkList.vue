@@ -171,8 +171,8 @@
 
 <style lang="less" scoped>
 	// 引入通用设置文件
-	@import "../../assets/less/setting";
-	@import "../../assets/less/news_list";
+	@import "../../../assets/less/setting";
+	@import "../../../assets/less/news_list";
 
 	/* no_collect_list */
 

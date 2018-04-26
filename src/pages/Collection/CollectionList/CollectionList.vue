@@ -6,7 +6,7 @@
 		<div v-else>
 			<!-- 分组列表 -->
 			<ul class="collect_group_list">
-				<li v-for="(item, index) in collectList" :key="index" class="cont_frame collect_list_item" @click="gotoPage(item)">
+				<li v-for="(item, index) in collectList" :key="index" class="cont_frame collect_list_item" @click="toBookmark(item)">
 					<i class="list_icon icon_file"></i>{{ item.name }}<i class="icon_next"></i>
 				</li>
 			</ul>
@@ -14,12 +14,12 @@
 			<div id="operateBar">
 				<ul class="operate_bar">
 					<li class="operate_item">
-						<i class="operate_icon icon_file_add_line"></i>
+						<i class="operate_icon icon_file_add_line" @click="toStore"></i>
 						<span class="operate_title">添加分组</span>
 					</li>
-					<li class="operate_item">
-						<i class="operate_icon icon_delete_line"></i>
-						<span class="operate_title">删除分组</span>
+					<li class="operate_item" @click="toEdit">
+						<i class="operate_icon icon_edit_line"></i>
+						<span class="operate_title">编辑分组</span>
 					</li>
 				</ul>
 			</div>
@@ -75,9 +75,17 @@
 			init(){
                 this.$store.commit('SET_NAV_TITLE', '收藏夹');
 			},
-			// 跳转页面
-			gotoPage(item){
+			// 跳转到书签页
+			toBookmark(item){
 				Common.GotoPage('BookmarkList', { id: item.id, name: item.name }, this);
+			},
+			// 跳转到新增/编辑页
+			toStore(){
+				Common.GotoPage('CollectStore', {}, this);
+			},
+			// 跳转到管理页
+			toEdit(){
+				Common.GotoPage('CollectManage', {}, this);
 			}
 		}
 	};
@@ -85,7 +93,7 @@
 
 <style lang="less" scoped>
 	// 引入通用设置文件
-	@import "../../assets/less/setting";
+	@import "../../../assets/less/setting";
 
 	/* collect_group_list */
 	
