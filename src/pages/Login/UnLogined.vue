@@ -4,17 +4,12 @@
 			<p>你还未登录</p>
 			<router-link class="button login_btn" :to="{ name: 'Login' }">去登录</router-link>
 		</div>
-		<!-- 版权信息 -->
-		<Copyright></Copyright>
 	</div>
 </template>
 
 <script>
-	// 组件
-	import Copyright from "components/Common/Copyright.vue";
 	export default {
 		name: "unLogined",
-		components: { Copyright },
 		data(){
 			return{}
 		},
