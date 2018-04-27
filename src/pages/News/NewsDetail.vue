@@ -25,6 +25,21 @@
                     <div class="clearfix"></div>
                 </section>
             </div>
+            <!-- 操作栏 -->
+            <div id="operateBar">
+                <ul class="operate_bar">
+                    <li class="operate_item" @click="collect">                  
+                        <div v-if="isCollected">
+                            <i class="operate_icon icon_collection is_collected"></i>
+                            <span class="operate_title is_collected">已收藏</span>
+                        </div>
+                        <div v-else>
+                            <i class="operate_icon icon_collection_line"></i>
+                            <span class="operate_title">收藏文章</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 		</div>
 	</div>
 </template>
@@ -37,7 +52,7 @@
     // 混合
     import Modal from "mixins/modal.js";
     // 获取url参数方法
-    import { GetUrlQuery } from "common/important.js";
+    import { GetCookie, GetUrlQuery } from "common/important.js";
     // 通用js
     import Common from 'common/common.js'
 
@@ -51,6 +66,8 @@
                 pageLoading: false,
                 // 上级页面Type
                 pageType: null,
+                // 是否已收藏
+                isCollected: false,
                 // 资讯内容
                 newsCont: {
                     title: '暂无标题',
@@ -60,7 +77,7 @@
                     url: null,
                     webSite: '暂无来源',
                     prevID: 0,
-                    nextID: 0
+                    nextID: 0,
                 }
 			}
 		},
@@ -86,7 +103,7 @@
 				Api.DeclareDetail(newsId)
 				.then(res => {
 					if(res.code == 200){
-                        this.newsCont = res.data;                        
+                        this.newsCont = res.data;                   
 						// 停止加载
                         this.pageLoading = false;
                         
@@ -119,6 +136,13 @@
                     this.getNewsCont(id);
                 }
                 else this.showWarnModel('已经是最后一篇啦！', 'warning');
+            },
+            // 收藏文章
+            collect(){
+                if(GetCookie('project_token')) {
+                    this.isCollected = true;
+                }
+			    else this.showWarnModel('登录账户才可以收藏！', 'warning');
             }
         }
 	};
@@ -127,4 +151,13 @@
 <style lang="less" scoped>
     @import "../../assets/less/setting";
     @import "../../assets/less/article";
+    @import "../../assets/less/operate_bar";
+
+    .operate_item {
+		width: 100%;
+    }
+    
+    .is_collected{
+        color: @base_color;
+    }
 </style>

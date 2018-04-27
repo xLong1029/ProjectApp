@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'solo';
-  src:  url('fonts/solo.eot?4z1bbh');
-  src:  url('fonts/solo.eot?4z1bbh#iefix') format('embedded-opentype'),
-    url('fonts/solo.ttf?4z1bbh') format('truetype'),
-    url('fonts/solo.woff?4z1bbh') format('woff'),
-    url('fonts/solo.svg?4z1bbh#solo') format('svg');
+  src:  url('fonts/solo.eot?qz24db');
+  src:  url('fonts/solo.eot?qz24db#iefix') format('embedded-opentype'),
+    url('fonts/solo.ttf?qz24db') format('truetype'),
+    url('fonts/solo.woff?qz24db') format('woff'),
+    url('fonts/solo.svg?qz24db#solo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon_collection_line:before {
+  content: "\e920";
+}
 .icon_arrow_down:before {
   content: "\e900";
 }

@@ -189,6 +189,7 @@
 					}
 				}
 				console.log('选中的ids:', this.selectList);
+				
 			}
 		},
 		destroyed(){
