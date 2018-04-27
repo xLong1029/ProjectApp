@@ -64,8 +64,8 @@
 			},
 			// 退出登录
 			logOut(){
-				this.isLogined = false;
 				clearAccount(this.$store.commit);
+				Common.GotoPage('UnLogined', {}, this);
 			}
 		}
 	};

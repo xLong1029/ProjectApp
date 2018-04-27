@@ -28,7 +28,7 @@
 		data(){
 			return{
 				// 定义二级页面名称，作为动态props值
-       			secondPages:[ 'NewsDetail', 'UserCenter', 'CollectionList', 'ChangePassword', 'BookmarkList' ],
+       			secondPages:[ 'NewsDetail', 'UserCenter', 'CollectList', 'ChangePassword', 'BookmarkList' ],
 			}
 		}
 	};

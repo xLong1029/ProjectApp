@@ -16,23 +16,19 @@
 			<div v-else class="no_collect_list">
 				<p>暂无收藏内容</p>
 			</div>
-			<!-- 操作栏 -->
-			<div id="operateBar">
-				<ul class="operate_bar">
-					<li class="operate_item">
-						<i class="operate_icon icon_edit_line" @click="toStore"></i>
-						<span class="operate_title">更改组名</span>
-					</li>
-					<li class="operate_item">
-						<i class="operate_icon icon_edit_line" @click="toManage"></i>
-						<span class="operate_title">管理文章</span>
-					</li>
-				</ul>
-			</div>
-			<!-- 加载更多 -->
-			<div v-if="loadMore" class="load_more">
-				<Loading></Loading>
-			</div>
+		</div>
+		<!-- 操作栏 -->
+		<div id="operateBar">
+			<ul class="operate_bar">
+				<li class="operate_item">
+					<i class="operate_icon icon_edit_line" @click="toStore"></i>
+					<span class="operate_title">更改组名</span>
+				</li>
+				<li class="operate_item">
+					<i class="operate_icon icon_article_setting_line" @click="toManage"></i>
+					<span class="operate_title">管理文章</span>
+				</li>
+			</ul>
 		</div>
 		<!-- 返回顶部 -->
 		<BackTop v-show="showTopBtn"></BackTop>

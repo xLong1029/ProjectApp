@@ -18,7 +18,7 @@
 						<span class="operate_title">添加分组</span>
 					</li>
 					<li class="operate_item" @click="toManage">
-						<i class="operate_icon icon_edit_line"></i>
+						<i class="operate_icon icon_file_setting_line"></i>
 						<span class="operate_title">管理分组</span>
 					</li>
 				</ul>

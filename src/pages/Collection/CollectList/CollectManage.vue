@@ -5,7 +5,7 @@
 			<div class="navbar">		
 				<!-- 取消按钮-->
 				<a class="btn fl">
-					<button class="button cancel_btn" @click="toCollectList">取消</button>
+					<button class="button cancel_btn" @click="$router.go(-1)">取消</button>
 				</a>
 				<!-- 标题 -->
 				<div class="title fl">分组管理</div>
@@ -135,7 +135,7 @@
 					}
 				}
 				console.log('选中的ids:', this.selectList);
-				this.toCollectList();
+				this.$router.go(-1);
 			}
 		}
 	};
