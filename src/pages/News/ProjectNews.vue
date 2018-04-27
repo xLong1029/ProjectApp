@@ -24,6 +24,7 @@
 			<!-- 返回顶部 -->
 			<BackTop v-show="showTopBtn" :hasTabBar="false"></BackTop>
 		</div>
+		<div style="height:20px"></div>
 	</div>
 </template>
 
@@ -54,8 +55,9 @@
 				listScrollH: 0,
 			}
 		},
-		// 导航离开该组件的对应路由时调用，可以访问组件实例 `this`
+		// 离开路由前导航钩子
         beforeRouteLeave (to, from, next) {
+			// alert('资讯列表下一个路由：'+to.name);
 			// 进入资讯详情页
 			if(to.name === 'NewsDetail') next();
 			else{

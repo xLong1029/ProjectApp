@@ -45,7 +45,7 @@
 	import BackTop from "components/Common/BackTop.vue"
 	// 通用JS
 	import Common from 'common/common.js'
-	import { SetCookie, GetCookie, GetUrlQuery } from 'common/important.js';
+	import { DelCookie, SetCookie, GetCookie, GetUrlQuery } from 'common/important.js';
 	// 混合
 	import ScrollPage from 'mixins/scrollPage.js'
 	// Api方法
@@ -71,6 +71,18 @@
         beforeRouteEnter (to, from, next) {
             if(GetCookie('project_token')) next();
 			else next({ name : 'UnLogined' });
+        },
+		// 离开路由前导航钩子
+        beforeRouteLeave (to, from, next) {
+			// alert('书签下一个路由：'+to.name);
+			// 进入资讯详情页
+			if(to.name === 'NewsDetail') next();
+			else{
+				// 清除列表数量和滚动高度缓存
+				DelCookie('listNum');
+				DelCookie('scrollH');				
+				next();
+			}
         },
 		created(){
 			this.init();
