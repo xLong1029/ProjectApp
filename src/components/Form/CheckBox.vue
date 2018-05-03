@@ -2,7 +2,7 @@
 	<label class="form_checkbox_item">
         <span :class="['form_checkbox_icon', value ? 'checkbox_checked' : '']"></span>
         <input type="checkbox" class="form_checkbox" v-model="value" @change="changeChecked"/>
-        {{ text }}
+        <slot></slot>
     </label>
 </template>
 
@@ -10,15 +10,10 @@
 	export default {
 		name: "login",
 		/* 获取父级传值
-        * 显示文本text
         * 选取值vModel
         * 当前索引index
         */
         props: {
-            text:{
-                type: String,
-                default: ''
-            },
             index: {
                 type: Number,
                 default: -1
@@ -56,7 +51,6 @@
     
     .form_checkbox_item{
         position: relative;
-        .mr(8);
     }
 
     .form_checkbox_icon{
@@ -70,6 +64,7 @@
         background: #fff;
         border: @border_deep;
         border-radius: 2*@rem;
+        .mr(5);
     }
 
     .form_checkbox_icon.checkbox_checked{

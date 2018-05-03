@@ -10,7 +10,7 @@
 					<input type="password" v-model="form.password" placeholder="密码"/>
 				</div>
 				<div class="form_line">
-					<Checkbox :v-model="form.remember" text="记住密码" @change="getCheckBoxValue"></Checkbox>
+					<Checkbox :v-model="form.remember" @change="getCheckBoxValue">记住密码</Checkbox>
 				</div>
 				<div class="form_line">
 					<input type="button" class="button" value="登录" @click="validForm"/>
