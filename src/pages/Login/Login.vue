@@ -15,9 +15,9 @@
 				<div class="form_line">
 					<input type="button" class="button" value="登录" @click="validForm"/>
 				</div>
-				<div class="form_line">
+				<!-- <div class="form_line">
 					<router-link class="button reg_btn" :to="{ name: 'Register' }">注册新用户</router-link>
-				</div>
+				</div> -->
 				<div class="form_line" style="color:#888;">
 					测试账号：18376686974密码：666666
 				</div>
@@ -34,7 +34,7 @@
 	import Checkbox from "components/Form/Checkbox.vue";
 	// 通用js
 	import Common from 'common/common.js'
-	import { GetCookie, SetCookie, Encrypt, Decrypt } from 'common/important.js'
+	import { GetCookie, SetCookie, Encrypt, Decrypt, SetLocalS } from 'common/important.js'
 	// Api方法
 	import Api from "api/login.js";
 	// 混合
@@ -91,7 +91,8 @@
 					}
 					// token存cookie
 					SetCookie('project_token', '12345678');
-					this.$store.commit('SET_USER_ACCOUNT', 'xLong1029');
+					// 记录用户资料
+					SetLocalS('userAccount', { 'name': 'xLong1029' });
 					Common.GotoPage('ProjectNews', {} , this);
 				}
 				else{

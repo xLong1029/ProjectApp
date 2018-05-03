@@ -6,7 +6,7 @@
 			</div>
 			<div v-else class="user_info">
 				<p>登录华建项目申报<br/>收藏资讯随时翻阅</p>
-				<router-link class="button login_btn" :to="{ name: 'Login' }">立即登录</router-link>
+				<button class="button login_btn" @click="toLogin">立即登录</button>
 			</div>
 			<div class="sidebar_list">
 				<ul v-for="(navItem, index) in sideNav" :key="index" class="sidebar_nav">
@@ -27,7 +27,7 @@
 <script>
 	// 通用js
 	import Common from 'common/common.js';
-	import { GetCookie } from 'common/important.js';
+	import { GetCookie, DelLocalS } from 'common/important.js';
 	import { clearAccount } from 'common/account.js';
 	//Vuex
 	import { mapGetters } from 'vuex';
@@ -92,6 +92,11 @@
 				if(rName){
 					Common.GotoPage(rName, rQuery, this);
 				}
+			},
+			// 跳转登录页面
+			toLogin(){
+				this.$store.commit('SET_SHOW_SIDE_BAR', true);
+				Common.GotoPage('Login', {}, this);
 			},
 			// 退出登录
 			logOut(){

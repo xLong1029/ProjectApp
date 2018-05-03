@@ -5,9 +5,9 @@
  * 版本 : version 1.0
  */
 
-import { DelCookie } from 'common/important.js'
+import { DelCookie, DelLocalS } from 'common/important.js'
 
-// 清空账户信息
+// 设置账户信息
 export function setAccount(_commit, info){
     // 设置用户信息
     _commit('SET_USER_ACCOUNT', info.account);
@@ -19,6 +19,8 @@ export function setAccount(_commit, info){
 export function clearAccount(_commit){
     // 清除token
     DelCookie('project_token');
+    // 清楚用户资料
+    DelLocalS('userAccount');
     _commit('SET_USER_TOKEN', null);
     _commit('SET_USER_ACCOUNT', '');
     _commit('SET_USER_ID', '');

@@ -32,12 +32,12 @@ export function DelCookie(cname){
 }
 // localstorage写入本地缓存
 export function SetLocalS(key,value){
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, JSON.stringify(value)); // 转化为JSON字符串
 }
 // localstorage获取本地缓存
 export function GetLocalS(key,value){
     let res = localStorage.getItem(key);
-    if(res && res!='null') return res;
+    if(res && res!='null') return JSON.parse(res); // 将之前存储的JSON字符串先转成JSON对象
     else return false;
 }
 // localstorage删除本地储存

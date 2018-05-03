@@ -1,4 +1,4 @@
-import { GetCookie } from 'common/important.js'
+import { GetCookie, GetLocalS } from 'common/important.js'
 
 // 用户信息
 const user = {
@@ -7,7 +7,7 @@ const user = {
 	  	// 登录凭证
         token: GetCookie('project_token'),
         // 用户账号
-		userAccount: '',
+		userAccount: GetLocalS('userAccount')['name'],
 	  	// 用户ID
 	  	userId: '',
 	},
