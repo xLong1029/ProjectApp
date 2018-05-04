@@ -6,12 +6,7 @@
 		<div v-else>
 			<!-- 书签列表 -->
 			<ul v-if="!noList" class="news_list">
-				<li v-for="(item, index) in newsList" v-if="index < listNum" :key="index" class="news_li_item"  @click="toDetail(item.id)">
-					<div class="news_li_cont">
-						<h2 class="news_li_title fl">{{ item.title }}</h2>
-						<span class="news_li_time fr">{{ item.publishDate }}</span>	
-					</div>
-				</li>
+				<NewsList :data="newsList" :num="listNum" :show-tag="false"></NewsList>
 			</ul>
 			<div v-else class="no_collect_list">
 				<p>暂无收藏内容</p>
@@ -38,7 +33,8 @@
 <script>
 	// 组件
 	import Loading from "components/Common/Loading.vue";
-	import BackTop from "components/Common/BackTop.vue"
+	import BackTop from "components/Common/BackTop.vue";
+	import NewsList from "components/News/NewsList.vue";
 	// 通用JS
 	import Common from 'common/common.js'
 	import { DelCookie, SetCookie, GetCookie, GetUrlQuery } from 'common/important.js';
@@ -49,7 +45,7 @@
 
 	export default {
 		name: "bookmark",
-		components: { Loading, BackTop },
+		components: { Loading, BackTop, NewsList },
 		mixins: [ ScrollPage ],
 		data(){
 			return{
