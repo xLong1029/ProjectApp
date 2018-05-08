@@ -7,7 +7,7 @@ const user = {
 	  	// 登录凭证
         token: GetCookie('project_token'),
         // 用户账号
-		userAccount: GetLocalS('userAccount')['name'],
+		userAccount: GetLocalS('userAccount').name,
 	  	// 用户ID
 	  	userId: '',
 	},

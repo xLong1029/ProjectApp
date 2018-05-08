@@ -40,6 +40,10 @@
                     </li>
                 </ul>
             </div>
+            <!-- 选择框 -->
+            <SelectModal :show="showModal" :list-data="groupList" @setShowModal="getShowModal" @getSelectData="getselectData">
+                <div slot="title">请选择收藏夹分组</div>
+            </SelectModal>
 		</div>
 	</div>
 </template>
@@ -47,6 +51,7 @@
 <script>
     // 组件
 	import Loading from "components/Common/Loading.vue";
+    import SelectModal from "components/Modal/SelectModal.vue"
     // Api方法
     import Api from "api/news.js";
     // 混合
@@ -58,7 +63,7 @@
 
 	export default {
         name: "newsDetail",
-        components: { Loading },
+        components: { Loading, SelectModal },
         mixins: [ Modal ],
 		data(){
 			return{
@@ -78,7 +83,32 @@
                     webSite: '暂无来源',
                     prevID: 0,
                     nextID: 0,
-                }
+                },
+                // 显示弹窗
+                showModal: false,
+                // 分组列表
+                groupList: [
+					{
+						id: 1,
+						name: '分组一'
+					},
+					{
+						id: 2,
+						name: '分组二'
+					},
+					{
+						id: 3,
+						name: '分组三'
+					},
+					{
+						id: 4,
+						name: '分组四'
+					},
+					{
+						id: 5,
+						name: '分组五'
+					}
+				]
 			}
 		},
 		created(){
@@ -139,11 +169,23 @@
             },
             // 收藏文章
             collect(){
+                // 若已收藏则不做任何操作
+                if(this.isCollected) return true;
+                // 判断是否已登录
                 if(GetCookie('project_token')) {
-                    this.isCollected = true;
+                    this.showModal = true;
                 }
 			    else this.showWarnModel('登录账户才可以收藏！', 'warning');
-            }
+            },
+            // 获取弹窗显示值
+            getShowModal(value){
+                this.showModal = value;
+            },
+            // 获取selectModel选择值
+            getselectData(index){
+                console.log('选中值索引：', index);
+                this.isCollected = true;
+            },
         }
 	};
 </script>

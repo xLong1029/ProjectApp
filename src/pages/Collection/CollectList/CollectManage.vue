@@ -1,19 +1,17 @@
 <template>
 	<div id="collection">
 		<!-- 导航栏 -->
-		<header id="navBar">
-			<div class="navbar">		
-				<!-- 取消按钮-->
-				<a class="btn fl">
-					<button class="button cancel_btn" @click="$router.go(-1)">取消</button>
-				</a>
-				<!-- 标题 -->
-				<div class="title fl">分组管理</div>
-				<!-- 全选按钮 -->
-				<a class="btn fr">
-					<input type="button" class="button select_btn" @click="selectAll" value="全选"/>
-				</a>				
-			</div>
+		<header class="navbar">	
+			<!-- 取消按钮-->
+			<a class="btn fl">
+				<button class="button cancel_btn" @click="$router.go(-1)">取消</button>
+			</a>
+			<!-- 标题 -->
+			<div class="title fl">分组管理</div>
+			<!-- 全选按钮 -->
+			<a class="btn fr">
+				<input type="button" class="button select_btn" @click="selectAll" value="全选"/>
+			</a>				
 		</header>
 		<!-- 页面内容 -->
 		<div class="content">
@@ -178,17 +176,5 @@
 		.ft(15);
 		.mr(30);
 		.mt(2);
-	}
-
-	.select_btn, .cancel_btn{
-		border: @border_light;
-		margin: 7*@rem auto;
-		width: 80%;
-		height: 25*@rem;
-		line-height: 25*@rem;
-		background: #fff;
-		color: #666;
-
-		.ft(12);
 	}
 </style>

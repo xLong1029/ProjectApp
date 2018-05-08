@@ -1,23 +1,21 @@
 <template>
-	<header id="navBar">
-		<div class="navbar">
-			<!-- 判断：如果是二级页面，则添加fr样式，反之添加fl样式 -->
-			<a :class="['btn slide_right', secondPages.indexOf($route.name) !== -1 ? 'fr' : 'fl']" @click="pushRight">
-				<i class="icon_list"></i>
-			</a>			
-			<!-- 是否为二级页面，显示返回图标 -->
-			<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="goBack">
-				<i class="icon_back"></i>
-			</a>
-			<!-- 非二级页面，显示搜索图标 -->
-			<a v-else class="btn fr" @click="toSearch">
-				<i class="icon_search"></i>
-			</a>
-			<!-- 二级页面标题 -->
-			<div class="title fl">
-				<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>
-				<router-link v-else class="icon_logo" :to="{ name: 'ProjectNews' }"></router-link>
-			</div>
+	<header id="navBar" class="navbar">
+		<!-- 判断：如果是二级页面，则添加fr样式，反之添加fl样式 -->
+		<a :class="['btn slide_right', secondPages.indexOf($route.name) !== -1 ? 'fr' : 'fl']" @click="pushRight">
+			<i class="icon_list"></i>
+		</a>			
+		<!-- 是否为二级页面，显示返回图标 -->
+		<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="goBack">
+			<i class="icon_back"></i>
+		</a>
+		<!-- 非二级页面，显示搜索图标 -->
+		<a v-else class="btn fr" @click="toSearch">
+			<i class="icon_search"></i>
+		</a>
+		<!-- 二级页面标题 -->
+		<div class="title fl">
+			<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>
+			<router-link v-else class="icon_logo" :to="{ name: 'ProjectNews' }"></router-link>
 		</div>
 	</header>
 </template>

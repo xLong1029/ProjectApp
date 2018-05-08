@@ -1,19 +1,17 @@
 <template>
 	<div id="collection">
 		<!-- 导航栏 -->
-		<header id="navBar">
-			<div class="navbar">		
-				<!-- 取消按钮-->
-				<a class="btn fl">
-					<button class="button cancel_btn" @click="cancel">取消</button>
-				</a>
-				<!-- 标题 -->
-				<div class="title fl">{{ navTitle }}</div>
-				<!-- 全选按钮 -->
-				<a class="btn fr">
-					<button class="button select_btn" @click="validForm">保存</button>
-				</a>
-			</div>
+		<header class="navbar">
+			<!-- 取消按钮-->
+			<a class="btn fl">
+				<button class="button cancel_btn" @click="cancel">取消</button>
+			</a>
+			<!-- 标题 -->
+			<div class="title fl">{{ navTitle }}</div>
+			<!-- 全选按钮 -->
+			<a class="btn fr">
+				<button class="button select_btn" @click="validForm">保存</button>
+			</a>
 		</header>
 		<!-- 页面内容 -->
 		<div class="content">
@@ -135,17 +133,5 @@
 
 	.operate_item {
 		width: 100%;
-	}
-
-	.select_btn, .cancel_btn{
-		border: @border_light;
-		margin: 7*@rem auto;
-		width: 80%;
-		height: 25*@rem;
-		line-height: 25*@rem;
-		background: #fff;
-		color: #666;
-
-		.ft(12);
 	}
 </style>
