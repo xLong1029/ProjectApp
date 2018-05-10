@@ -91,11 +91,6 @@
 				selectList:[]
 			}
 		},
-		// 进入路由前导航钩子
-        beforeRouteEnter (to, from, next) {
-            if(GetCookie('project_token')) next();
-			else next({ name : 'UnLogined' });
-        },
 		methods:{
 			// 跳转到收藏夹
 			toCollectList(){

@@ -59,11 +59,6 @@
 				listNum: 50
 			}
 		},
-		// 进入路由前导航钩子
-        beforeRouteEnter (to, from, next) {
-            if(GetCookie('project_token')) next();
-			else next({ name : 'UnLogined' });
-        },
 		// 离开路由前导航钩子
         beforeRouteLeave (to, from, next) {
 			// alert('书签下一个路由：'+to.name);

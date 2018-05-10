@@ -7,15 +7,12 @@ const user = {
 	  	// 登录凭证
         token: GetCookie('project_token'),
         // 用户账号
-		userAccount: GetLocalS('userAccount').name,
-	  	// 用户ID
-	  	userId: '',
+		userAccount: GetLocalS('userAccount'),
 	},
 	// 计算属性
 	getters: {
         token: state => state.token,
-		userAccount: state => state.userAccount,		
-		userId: state => state.userId,
+		userAccount: state => state.userAccount,
 	},
 	// 用来处理数据的函数，只能同步操作
 	mutations: {
@@ -24,9 +21,6 @@ const user = {
         },
 		SET_USER_ACCOUNT: (state, userAccount) => {
 	      state.userAccount = userAccount;
-	    },	    
-	    SET_USER_ID: (state, userId) => {
-	      state.userId = userId;
 	    }
 	}
 }

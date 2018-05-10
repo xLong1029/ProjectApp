@@ -2,7 +2,7 @@
 	<div id="sideBar">
 		<aside ref="sideBar" :class="['sidebar_left sidebar', showSideBar ? 'sidebar_open' : '']">
 			<div v-if="isLogined" class="user_info is_logined">
-				<p>欢迎回来，{{ userAccount }}</p>
+				<p>欢迎回来，{{ userAccount.userName }}</p>
 			</div>
 			<div v-else class="user_info">
 				<p>登录华建项目申报<br/>收藏资讯随时翻阅</p>
@@ -28,7 +28,7 @@
 	// 通用js
 	import Common from 'common/common.js';
 	import { GetCookie, DelLocalS } from 'common/important.js';
-	import { clearAccount } from 'common/account.js';
+	import { ClearAccount } from 'common/account.js';
 	//Vuex
 	import { mapGetters } from 'vuex';
 
@@ -101,7 +101,7 @@
 			// 退出登录
 			logOut(){
 				this.isLogined = false;
-				clearAccount(this.$store.commit);
+				ClearAccount(this.$store.commit);
 			}
 		}
 	};

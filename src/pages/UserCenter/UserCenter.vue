@@ -6,7 +6,7 @@
 		<div v-else>
 			<!-- 账号信息 -->
 			<div class="cont_frame user_info_list">
-				欢迎你，{{ userAccount }}
+				欢迎你，{{ userAccount.userName }}
 			</div>
 			<ul>
 				<li class="cont_frame user_info_list" @click="gotoChangePwd">
@@ -26,7 +26,7 @@
 	// 通用js
 	import Common from 'common/common.js';
 	import { GetCookie } from 'common/important.js';
-	import { clearAccount } from 'common/account.js';
+	import { ClearAccount } from 'common/account.js';
 	// Api方法
 	import Api from "api/user_center.js";
 	//Vuex
@@ -64,7 +64,7 @@
 			},
 			// 退出登录
 			logOut(){
-				clearAccount(this.$store.commit);
+				ClearAccount(this.$store.commit);
 				Common.GotoPage('UnLogined', {}, this);
 			}
 		}
