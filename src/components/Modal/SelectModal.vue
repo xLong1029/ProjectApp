@@ -72,6 +72,10 @@
     // 引入通用设置文件
     @import "../../assets/less/setting";
     @import "../../assets/less/navbar";
+    
+    .navbar{
+        border-bottom: 1px solid lighten(@base_color, 10%);
+    }
 
     .select_modal{
         position: fixed;
