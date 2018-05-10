@@ -7,14 +7,14 @@
 			<!-- 修改密码表单 -->
 			<form class="cont_frame">
 				<div class="form_line">
-					<input type="text" v-model="form.oldPassword" placeholder="旧密码"/>
+					<input type="password" v-model="form.oldPassword" placeholder="旧密码"/>
 				</div>
 				<div class="form_line">
 					<input type="password" v-model="form.newPassword" placeholder="新密码"/>
 				</div>
-				<div class="form_line">
+				<!-- <div class="form_line">
 					<input type="password" v-model="form.comfirmPassword" placeholder="确认密码"/>
-				</div>
+				</div> -->
 				<div class="form_line">
 					<input type="button" class="button" value="确认修改" @click="validForm"/>
 				</div>
@@ -27,6 +27,7 @@
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	// 通用JS
+	import Common from 'common/common.js';
 	import { GetCookie } from 'common/important.js';
 	// Api方法
 	import Api from "api/user_center.js";
@@ -52,8 +53,8 @@
 					oldPassword: '',
 					// 新密码
 					newPassword: '',
-					// 确认密码
-					comfirmPassword: ''
+					// // 确认密码
+					// comfirmPassword: ''
 				}
 			}
 		},
@@ -80,20 +81,29 @@
 					this.showWarnModel('请输入新密码', 'warning');
 					return false;
 				}
-				else if(this.form.newPassword == ''){
-					this.showWarnModel('请输入确认密码', 'warning');
-					return false;
-				}
-				else if(this.form.newPassword != this.form.comfirmPassword){
-					this.showWarnModel('新密码2次数输入不一致', 'error');
-					return false;
-				}
+				// else if(this.form.newPassword == ''){
+				// 	this.showWarnModel('请输入确认密码', 'warning');
+				// 	return false;
+				// }
+				// else if(this.form.newPassword != this.form.comfirmPassword){
+				// 	this.showWarnModel('新密码2次数输入不一致', 'error');
+				// 	return false;
+				// }
 				else{
 					this.onSubmit();
 				}
 			},
 			// 提交表单
 			onSubmit(){
+				Api.ChangePassword(this.form)
+				.then(res => {
+					if(res.code == 200){
+						this.showWarnModel('密码修改成功', 'success');
+						Common.GotoPage('UserCenter', {} , this);
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
 			}
 		}
 	};

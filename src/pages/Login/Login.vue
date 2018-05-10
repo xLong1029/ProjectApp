@@ -16,7 +16,7 @@
 					<input type="button" class="button" value="登录" @click="validForm"/>
 				</div>
 				<div class="form_line">
-					<input type="button" class="button reg_btn" value="放弃登录，返回" @click="$router.go(-1)"/>
+					<input type="button" class="button reg_btn" value="放弃登录，返回" @click="goBack"/>
 				</div>
 				<!-- <div class="form_line">
 					<router-link class="button reg_btn" :to="{ name: 'Register' }">注册新用户</router-link>
@@ -110,7 +110,13 @@
 			// 从子组件获取Checkbox值
             getCheckBoxValue(e){
                 this.remember = e[0];
-            }
+			},
+			// 返回上一页
+			goBack(){
+				this.$router.go(-1);
+				// 隐藏侧边栏
+				this.$store.commit('SET_SHOW_SIDE_BAR', false);
+			}
 		}
 	};
 </script>

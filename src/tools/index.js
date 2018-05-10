@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import { GetCookie } from 'common/important.js';
 
 export default {
 	/*
@@ -14,7 +15,8 @@ export default {
 				params,
 				headers:{
 					'Cache-Control': 'no-cache',
-          			Pragma: 'no-cache'
+					Pragma: 'no-cache',
+					token: GetCookie('project_token')
 				}
 			};
 		}
@@ -26,7 +28,8 @@ export default {
 		let conf = {
 			headers:{
 				'Cache-Control': 'no-cache',
-				Pragma: 'no-cache'
+				Pragma: 'no-cache',
+				token: GetCookie('project_token')
 			}
 		};
 		return axios.post(url, data, conf)

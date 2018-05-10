@@ -1,4 +1,7 @@
-import { GetCookie, GetLocalS } from 'common/important.js'
+import { GetCookie, GetLocalS } from 'common/important.js';
+import { SetAccount, ClearAccount } from 'common/account.js';
+// Api方法
+import Api from "api/login.js";
 
 // 用户信息
 const user = {
@@ -22,7 +25,25 @@ const user = {
 		SET_USER_ACCOUNT: (state, userAccount) => {
 	      state.userAccount = userAccount;
 	    }
-	}
+	},
+	// 异步操作
+	actions: {
+        // 验证token
+        CheckToken ({ commit , state }) {
+			Api.CheckToken(GetCookie('project_token'))
+			.then(res => {
+				const result = res.data;
+				// 登录认证成功
+				if(res.code == 200)
+					SetAccount(commit, result);
+				// 登录认证失败
+				else ClearAccount(commit);
+			})
+			.catch(err => {
+				ClearAccount(commit);
+			});
+        }
+    }
 }
 
 export default user;

@@ -8,7 +8,8 @@ export default {
 			.then(res => resolve(res))
 			.catch(err => reject(err))
 		})
-    },
+	},
+	// 检查token
     CheckToken: (token) => {
         return new Promise((resolve,reject)=>{
 			tools.HttpGet(`/api/ProjectDeclare/Passport/CheckToken?token=${token}`)

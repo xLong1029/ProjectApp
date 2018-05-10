@@ -32,7 +32,10 @@ router.beforeEach((to, from, next) => {
 	else{
 		let isLogined = Boolean(GetCookie('project_token'));
 		// 判断是否已登录
-		if(isLogined) next();
+		if(isLogined){
+			// token验证
+			store.dispatch('CheckToken').then(res => next()).catch(err => next({ name : 'UnLogined'}))
+		}
 		else next({ name : 'UnLogined'});
 	}
 });
