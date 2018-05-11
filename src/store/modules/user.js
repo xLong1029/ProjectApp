@@ -11,11 +11,14 @@ const user = {
         token: GetCookie('project_token'),
         // 用户账号
 		userAccount: GetLocalS('userAccount'),
+		// 是否已登录
+		isLogined: false,
 	},
 	// 计算属性
 	getters: {
         token: state => state.token,
 		userAccount: state => state.userAccount,
+		isLogined: state => state.isLogined
 	},
 	// 用来处理数据的函数，只能同步操作
 	mutations: {
@@ -24,7 +27,10 @@ const user = {
         },
 		SET_USER_ACCOUNT: (state, userAccount) => {
 	      state.userAccount = userAccount;
-	    }
+		},
+		SET_IS_LOGINED: (state, isLogined) => {
+			state.isLogined = isLogined;
+		},
 	},
 	// 异步操作
 	actions: {

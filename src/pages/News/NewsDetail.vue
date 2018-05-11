@@ -21,7 +21,7 @@
                 <!-- 文章选择 -->
                 <section class="select_artc">
                     <a class="fl" @click="readPrev(newsCont.prevID)"><i class="icon_back"></i> 查看上一篇</a>
-                    <a class="fr"@click="readNext(newsCont.nextID)">查看下一篇 <i class="icon_next"></i></a>
+                    <a class="fr" @click="readNext(newsCont.nextID)">查看下一篇 <i class="icon_next"></i></a>
                     <div class="clearfix"></div>
                 </section>
             </div>

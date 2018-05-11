@@ -35,12 +35,10 @@
 	export default {
 		name: "sideBar",
 		computed: {
-            ...mapGetters([ 'showSideBar', 'userAccount' ]),
+            ...mapGetters([ 'showSideBar', 'userAccount', 'isLogined' ]),
         },
 		data() {
 			return {
-				// 是否已登录
-				isLogined: false,
 				// 侧边栏导航
 				sideNav: [
 					// 个人设置
@@ -79,11 +77,6 @@
 				]
 			};
 		},
-		created() {
-			if(GetCookie('project_token')){
-				this.isLogined = true;
-			}
-		},
 		// 方法
 		methods: {
 			// 隐藏侧边栏
@@ -100,7 +93,6 @@
 			},
 			// 退出登录
 			logOut(){
-				this.isLogined = false;
 				ClearAccount(this.$store.commit);
 			}
 		}

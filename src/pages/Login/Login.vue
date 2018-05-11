@@ -66,7 +66,7 @@
 				this.form.userName = GetCookie('username');
 				//解密
 				this.form.password = Decrypt(GetCookie('password'));
-				this.form.remember = true;
+				this.remember = true;
 			}
 		},
 		methods:{
@@ -96,7 +96,7 @@
 						if(this.remember){
 							SetCookie('username', this.form.userName);
 							//加密
-							SetCookie('password', this.form.password);
+							SetCookie('password', Encrypt(this.form.password));
 						}
 
 						Common.GotoPage('ProjectNews', {} , this);
