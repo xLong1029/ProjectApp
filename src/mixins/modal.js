@@ -8,16 +8,7 @@
 
 export default {
 	data() {
-		return {
-			// 是否加载更多
-            loadMore: false,
-            // 是否显示返回顶部按钮
-            showTopBtn: false,
-            // 显示新闻数量
-            listNum: 10,
-            // 用来监听是否在加载，如果正在加载不再多请求接口
-			loadMoreNow: false,
-		}
+		return {}
     },
     methods:{
         // 显示提示框，txt：文本， type: 弹窗类型

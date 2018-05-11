@@ -20,18 +20,21 @@
 <script>
 	export default {
         name: "newsList",
+        /* 
+        * 获取父级传值
+        * 资讯列表 data
+        * 显示数量 num
+        * 是否显示标签 showTag
+        */
         props: {
-			// 资讯列表
 			data:{
 				type: Array,
 				default: []
             },
-            // 显示数量
             num:{
                 type: Number,
                 default: 5
             },
-            // 是否显示标签
             showTag:{
                 type: Boolean,
                 default: true

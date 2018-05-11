@@ -28,8 +28,11 @@
 
 	export default {
 		name: "navBar",
+		/* 
+        * 获取父级传值
+        * 二级页面路由列表 secondPages
+        */
     	props: {
-			// 二级页面路由列表
 			secondPages:{
 				type: Array,
 				default: []

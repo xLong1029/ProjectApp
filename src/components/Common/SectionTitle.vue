@@ -11,19 +11,24 @@
 	import Common from 'common/common.js'
 
 	export default {
-		name: "sectionTitle",
+        name: "sectionTitle",
+        /* 
+        * 获取父级传值
+        * 标题 title
+        * 左边装饰颜色 color
+        * 右边“更多”按钮 readMore
+        * “更多按钮”跳转路由 routeName
+        * 跳转页面携带参数 routeQuery
+        */
     	props: {
-			// 标题
 			title: {
 				type: String,
 				default: '模块标题'
             },
-            // 颜色
             color: {
                 type: String,
                 default: '#3B89C0'
             },
-            // 显示更多
             readMore: {
                 type: Boolean,
                 default: false

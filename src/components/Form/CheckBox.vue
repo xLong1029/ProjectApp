@@ -9,7 +9,8 @@
 <script>
 	export default {
 		name: "login",
-		/* 获取父级传值
+        /* 
+        * 获取父级传值
         * 选取值vModel
         * 当前索引index
         */

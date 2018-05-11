@@ -6,7 +6,7 @@
 		<div v-else>
 			<!-- 分组列表 -->
 			<ul class="collect_group_list">
-				<li v-for="(item, index) in collectList" :key="index" class="cont_frame collect_list_item" @click="toBookmark(item)">
+				<li v-for="(item, index) in groupList" :key="index" class="cont_frame collect_list_item" @click="toBookmark(item)">
 					<i class="list_icon icon_file"></i>{{ item.name }}<i class="icon_next"></i>
 				</li>
 			</ul>
@@ -43,7 +43,7 @@
 			return{
 				// 是否加载
 				pageLoading: false,
-				collectList:[]
+				groupList:[]
 			}
 		},
 		created(){
@@ -62,7 +62,7 @@
 				.then(res => {
 					this.pageLoading = false;
 					if(res.code == 200){
-						this.collectList = res.data;
+						this.groupList = res.data;
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})

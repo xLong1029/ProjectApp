@@ -7,8 +7,11 @@
 
 	export default {
         name: "backTop",
+        /* 
+        * 获取父级传值
+        * 是否底部标签栏或者操作栏 hasTabBar
+        */
         props: {
-			// 是否底部标签栏或者操作栏
 			hasTabBar:{
                 type: Boolean,
                 // 默认值只能设置为true

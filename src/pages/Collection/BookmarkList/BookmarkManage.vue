@@ -1,18 +1,11 @@
 <template>
 	<div id="bookmark">
-        <!-- 导航栏 -->
-		<header class="navbar">	
-			<!-- 取消按钮-->
-			<a class="btn fl">
-				<button class="button cancel_btn" @click="$router.go(-1)">取消</button>
-			</a>
-			<!-- 标题 -->
-			<div class="title fl">分组管理</div>
-			<!-- 全选按钮 -->
-			<a class="btn fr">
-				<input type="button" class="button select_btn" @click="selectAll" value="全选"/>
-			</a>
-		</header>
+		<!-- 导航栏 -->
+		<Header>
+			<button slot="left" class="button cancel_btn" @click="$router.go(-1)">取消</button>
+			<span slot="center">文章管理</span>
+			<input slot="right" type="button" class="button select_btn" @click="selectAll" value="全选"/>
+		</Header>
         <!-- 页面内容 -->
 		<div class="content">
             <!-- 加载数据 -->
@@ -58,7 +51,8 @@
 	// 组件
 	import Loading from "components/Common/Loading.vue";
     import BackTop from "components/Common/BackTop.vue";
-    import Checkbox from "components/Form/Checkbox.vue";
+	import Checkbox from "components/Form/Checkbox.vue";
+	import Header from "components/Common/Header.vue";
 	// 通用JS
 	import Common from 'common/common.js'
 	import { GetCookie, GetUrlQuery } from 'common/important.js';
@@ -69,7 +63,7 @@
 
 	export default {
 		name: "bookmark",
-		components: { Loading, BackTop, Checkbox },
+		components: { Loading, BackTop, Checkbox, Header },
 		mixins: [ ScrollPage ],
 		data(){
 			return{

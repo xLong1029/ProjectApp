@@ -1,18 +1,11 @@
 <template>
 	<div id="collection">
 		<!-- 导航栏 -->
-		<header class="navbar">	
-			<!-- 取消按钮-->
-			<a class="btn fl">
-				<button class="button cancel_btn" @click="$router.go(-1)">取消</button>
-			</a>
-			<!-- 标题 -->
-			<div class="title fl">分组管理</div>
-			<!-- 全选按钮 -->
-			<a class="btn fr">
-				<input type="button" class="button select_btn" @click="selectAll" value="全选"/>
-			</a>				
-		</header>
+		<Header>
+			<button slot="left" class="button cancel_btn" @click="$router.go(-1)">取消</button>
+			<span slot="center">分组管理</span>
+			<input slot="right" type="button" class="button select_btn" @click="selectAll" value="全选"/>
+		</Header>
 		<!-- 页面内容 -->
 		<div class="content">
 			<!-- 加载数据 -->
@@ -21,7 +14,7 @@
 			<div v-else>
 				<!-- 分组列表 -->
 				<ul class="collect_group_list">
-					<li v-for="(item, index) in collectList" :key="index" class="cont_frame collect_list_item">
+					<li v-for="(item, index) in groupList" :key="index" class="cont_frame collect_list_item">
 						<span>{{ item.name }}</span>
 						<!-- 选择 -->
 						<span class="fr">
@@ -42,6 +35,14 @@
 				</li>
 			</ul>
 		</div>
+		<!-- 删除提示窗口 -->
+		<PopModel :show="showDelComfir" @close="hideModel">
+			<div slot="content"> 确认删除这些分组吗？ </div>
+			<div slot="footer">				
+				<button class="button" @click="deleteComfir">确定</button>
+				<button class="button cancel_btn" @click="deleteCancel">取消</button>
+			</div>
+		</PopModel>
 	</div>
 </template>
 
@@ -49,6 +50,8 @@
 	// 组件
 	import Checkbox from "components/Form/Checkbox.vue";
 	import Loading from "components/Common/Loading.vue";
+	import Header from "components/Common/Header.vue";
+	import PopModel from "components/Modal/PopModal.vue";
 	// 通用JS
 	import Common from 'common/common.js';
 	import { GetCookie } from 'common/important.js';
@@ -59,13 +62,16 @@
 
 	export default {
 		name: "collection",
-		components: { Checkbox, Loading },
+		components: { Checkbox, Loading, PopModel, Header },
 		mixins: [ Modal ],
 		data(){
 			return{
 				// 是否加载
 				pageLoading: false,
-				collectList:[
+				// 是否显示弹窗
+				showDelComfir: false,
+				// 分组列表
+				groupList:[
 					{
 						id: 1,
 						name: '分组一',
@@ -107,7 +113,7 @@
 				.then(res => {
 					this.pageLoading = false;
 					if(res.code == 200){
-						this.collectList = res.data;
+						this.groupList = res.data;
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})
@@ -123,7 +129,7 @@
 			},
 			// 从子组件获取Checkbox值
             getCheckBoxValue(e){
-                this.collectList[e[1]].checked = e[0];
+                this.groupList[e[1]].checked = e[0];
 			},
 			// 全选
 			selectAll(e){
@@ -136,25 +142,44 @@
 					value = false;
 				}
 
-				for(let i = 0 ; i < this.collectList.length; i++){
-					this.collectList[i].checked = value;
+				for(let i = 0 ; i < this.groupList.length; i++){
+					this.groupList[i].checked = value;
 					this.$refs.checkbox[i].setChecked(value);
 				}
 			},
 			// 删除分组
 			deleteGroup(){
-				for(let i = 0; i < this.collectList.length; i++){
-					if(this.collectList[i].checked){
-						this.selectList.push(this.collectList[i].id);
+				for(let i = 0; i < this.groupList.length; i++){
+					if(this.groupList[i].checked){
+						this.selectList.push(this.groupList[i].id);
 					}
 				}
-				console.log('选中的ids:', this.selectList);
 
 				if(this.selectList.length <= 0){
 					this.showWarnModel('请选择要删除的分组', 'warning');
 					return false;
 				}
-				this.$router.go(-1);
+				else this.showDelComfir = true;
+			},
+			// 取消删除
+			deleteCancel(){
+				this.showDelComfir = false;
+			},
+			// 确认删除分组
+			deleteComfir(){
+				Api.DeleteGroup(this.selectList)
+				.then(res => {
+					this.pageLoading = false;
+					if(res.code == 200){
+						this.$router.go(-1);
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
+			},
+			// 关闭弹窗
+			hideModel(value){
+				this.showDelComfir = value;
 			}
 		}
 	};
@@ -197,5 +222,9 @@
 		.ft(15);
 		.mr(30);
 		.mt(2);
+	}
+
+	.cancel_btn{
+		background: #ecaa1e;
 	}
 </style>

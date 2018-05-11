@@ -26,13 +26,16 @@
     
 	export default {
         name: "selectModal",
+        /* 
+        * 获取父级传值
+        * 是否显示弹窗 show
+        * 数据 listData
+        */
         props: {
-            // 是否显示弹窗
             show:{
                 type: Boolean,
                 default: false,
             },
-			// 数据
 			listData:{
 				type: Array,
 				default: []

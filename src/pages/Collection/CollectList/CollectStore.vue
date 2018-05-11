@@ -1,18 +1,11 @@
 <template>
 	<div id="collection">
 		<!-- 导航栏 -->
-		<header class="navbar">
-			<!-- 取消按钮-->
-			<a class="btn fl">
-				<button class="button cancel_btn" @click="cancel">取消</button>
-			</a>
-			<!-- 标题 -->
-			<div class="title fl">{{ navTitle }}</div>
-			<!-- 全选按钮 -->
-			<a class="btn fr">
-				<button class="button select_btn" @click="validForm">保存</button>
-			</a>
-		</header>
+		<Header>
+			<button slot="left" class="button cancel_btn" @click="cancel">取消</button>
+			<span slot="center">{{ navTitle }}</span>
+			<button slot="right" class="button select_btn" @click="validForm">保存</button>
+		</Header>
 		<!-- 页面内容 -->
 		<div class="content">
 			<!-- 加载数据 -->
@@ -35,6 +28,7 @@
 	// 组件
 	import Copyright from "components/Common/Copyright.vue";
 	import Loading from "components/Common/Loading.vue";
+	import Header from "components/Common/Header.vue";
 	// 通用JS
 	import Common from 'common/common.js';
 	import { GetCookie, GetUrlQuery } from 'common/important.js';
@@ -45,7 +39,7 @@
 
 	export default {
 		name: "collection",
-		components: { Copyright, Loading },
+		components: { Copyright, Loading, Header },
 		mixins: [ Modal ],
 		data(){
 			return{
