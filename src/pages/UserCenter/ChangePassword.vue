@@ -58,11 +58,6 @@
 				}
 			}
 		},
-		// 进入路由前导航钩子
-        beforeRouteEnter (to, from, next) {
-            if(GetCookie('project_token')) next();
-			else next({ name : 'UnLogined' });
-        },
 		created(){
 			this.init();
 		},

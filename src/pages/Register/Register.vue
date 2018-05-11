@@ -34,7 +34,7 @@
 	import Copyright from "components/Common/Copyright.vue";
 	import Checkbox from "components/Form/Checkbox.vue";
 	// Api方法
-	import Api from "api/register.js";
+	// import Api from "api/register.js";
 
 	export default {
 		name: "register",

@@ -31,8 +31,10 @@
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	// 通用JS
-	import Common from 'common/common.js'
+	import Common from 'common/common.js';
 	import { GetCookie } from 'common/important.js';
+	// Api方法
+	import Api from "api/collection.js";
 
 	export default {
 		name: "collection",
@@ -41,28 +43,7 @@
 			return{
 				// 是否加载
 				pageLoading: false,
-				collectList:[
-					{
-						id: 1,
-						name: '分组一'
-					},
-					{
-						id: 2,
-						name: '分组二'
-					},
-					{
-						id: 3,
-						name: '分组三'
-					},
-					{
-						id: 4,
-						name: '分组四'
-					},
-					{
-						id: 5,
-						name: '分组五'
-					}
-				]
+				collectList:[]
 			}
 		},
 		created(){
@@ -71,7 +52,21 @@
 		methods:{
 			// 初始化
 			init(){
-                this.$store.commit('SET_NAV_TITLE', '收藏夹');
+				this.$store.commit('SET_NAV_TITLE', '收藏夹');
+				this.getPageData();
+			},
+			// 获取分组数据
+			getPageData(){
+				this.pageLoading = true;
+				Api.GetGroups()
+				.then(res => {
+					this.pageLoading = false;
+					if(res.code == 200){
+						this.collectList = res.data;
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
 			},
 			// 跳转到书签页
 			toBookmark(item){

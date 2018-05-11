@@ -16,5 +16,13 @@ export default {
 			.then(res => resolve(res))
 			.catch(err => reject(err))
 		})
-	}
+	},
+	// 收藏文章
+	AddArticle: (obj) => {
+        return new Promise((resolve,reject)=>{
+			tools.HttpPost(`/api/Projectdeclare/Collect/Add`, obj)
+			.then(res => resolve(res))
+			.catch(err => reject(err))
+		})
+	},
 }

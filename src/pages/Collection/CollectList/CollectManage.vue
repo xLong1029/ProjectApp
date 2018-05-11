@@ -28,7 +28,7 @@
 							<Checkbox ref="checkbox" :v-model="item.checked" :index="index" @change="getCheckBoxValue"></Checkbox>
 						</span>
 						<!-- 编辑 -->
-						<i class="icon_edit fr" @click="toStore(item.id)"></i>
+						<i class="icon_edit fr" @click="toStore(item)"></i>
 					</li>
 				</ul>
 			</div>
@@ -50,12 +50,17 @@
 	import Checkbox from "components/Form/Checkbox.vue";
 	import Loading from "components/Common/Loading.vue";
 	// 通用JS
-	import Common from 'common/common.js'
+	import Common from 'common/common.js';
 	import { GetCookie } from 'common/important.js';
+	// Api方法
+	import Api from "api/collection.js";
+	// 混合
+	import Modal from "mixins/modal.js";
 
 	export default {
 		name: "collection",
 		components: { Checkbox, Loading },
+		mixins: [ Modal ],
 		data(){
 			return{
 				// 是否加载
@@ -91,14 +96,30 @@
 				selectList:[]
 			}
 		},
+		created(){
+			this.getPageData();
+		},
 		methods:{
+			// 获取分组数据
+			getPageData(){
+				this.pageLoading = true;
+				Api.GetGroups()
+				.then(res => {
+					this.pageLoading = false;
+					if(res.code == 200){
+						this.collectList = res.data;
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
+			},
 			// 跳转到收藏夹
 			toCollectList(){
 				Common.GotoPage('CollectList', {}, this);
 			},
 			// 跳转到新增/编辑页
-			toStore(id){
-				Common.GotoPage('CollectStore', { id, type: 'edit' }, this);
+			toStore(item){
+				Common.GotoPage('CollectStore', { id: item.id, type: 'edit', name: item.name }, this);
 			},
 			// 从子组件获取Checkbox值
             getCheckBoxValue(e){
@@ -128,6 +149,11 @@
 					}
 				}
 				console.log('选中的ids:', this.selectList);
+
+				if(this.selectList.length <= 0){
+					this.showWarnModel('请选择要删除的分组', 'warning');
+					return false;
+				}
 				this.$router.go(-1);
 			}
 		}

@@ -36,10 +36,12 @@
 	import Copyright from "components/Common/Copyright.vue";
 	import Loading from "components/Common/Loading.vue";
 	// 通用JS
-	import Common from 'common/common.js'
+	import Common from 'common/common.js';
 	import { GetCookie, GetUrlQuery } from 'common/important.js';
 	// 混合
-	import Modal from "mixins/modal.js"
+	import Modal from "mixins/modal.js";
+	// Api方法
+	import Api from "api/collection.js";
 
 	export default {
 		name: "collection",
@@ -49,10 +51,14 @@
 			return{
 				// 是否加载
 				pageLoading: false,
+				// 页面操作类型
+				pageType: 'add',
 				// 导航标题
 				navTitle: '新建分组',
 				// 表单信息
 				form:{
+					// 分组ID
+					id: 0,
 					// 分组名称
 					name: '',
 				},
@@ -64,10 +70,11 @@
 		methods:{
 			// 初始化
 			init(){
-				if(GetUrlQuery('type') == 'edit'){
+				this.pageType = GetUrlQuery('type');
+				if(this.pageType == 'edit'){
 					this.navTitle = '更改组名';
-					// this.pageLoading = true;
-					this.form.name = 'XXXXXXXXXXX分组';
+					this.form.id = GetUrlQuery('id');
+					this.form.name = GetUrlQuery('name');
 				}
 			},
 			// 跳转到收藏夹
@@ -94,7 +101,27 @@
 			},
 			// 保存操作
 			onSubmit(){
-				Common.GotoPage('CollectList', {}, this);
+				// 新增
+				if(this.pageType == 'add'){
+					Api.AddGroup(this.form.name)
+					.then(res => {
+						this.pageLoading = false;
+						if(res.code == 200) Common.GotoPage('CollectList', {}, this);
+						else this.showWarnModel(res.msg, 'warning');
+					})
+					.catch(err => console.log(err))
+				}
+				// 修改
+				else if(this.pageType == 'edit'){
+					Api.EditGroup(this.form)
+					.then(res => {
+						this.pageLoading = false;
+						if(res.code == 200) Common.GotoPage('CollectList', {}, this);
+						else this.showWarnModel(res.msg, 'warning');
+					})
+					.catch(err => console.log(err))
+				}
+				else this.showWarnModel('页面出错，请返回上一页重新操作', 'warning');
 			}
 		}
 	};
