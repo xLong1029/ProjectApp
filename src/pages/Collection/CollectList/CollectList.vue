@@ -5,11 +5,14 @@
 		<!-- 加载结束 -->
 		<div v-else>
 			<!-- 分组列表 -->
-			<ul class="collect_group_list">
+			<ul v-if="!noList"  class="collect_group_list">
 				<li v-for="(item, index) in groupList" :key="index" class="cont_frame collect_list_item" @click="toBookmark(item)">
 					<i class="list_icon icon_file"></i>{{ item.name }}<i class="icon_next"></i>
 				</li>
 			</ul>
+			<div v-else class="no_collect_list">
+				<p>暂无分组内容</p>
+			</div>			
 			<!-- 操作栏 -->
 			<div id="operateBar">
 				<ul class="operate_bar">
@@ -35,14 +38,20 @@
 	import { GetCookie } from 'common/important.js';
 	// Api方法
 	import Api from "api/collection.js";
+	// 混合
+	import Modal from "mixins/modal.js";
 
 	export default {
 		name: "collection",
 		components: { Loading },
+		mixins: [ Modal ],
 		data(){
 			return{
 				// 是否加载
 				pageLoading: false,
+				// 无内容
+				noList: true,
+				// 分组列表
 				groupList:[]
 			}
 		},
@@ -63,6 +72,7 @@
 					this.pageLoading = false;
 					if(res.code == 200){
 						this.groupList = res.data;
+						if(this.groupList.length > 0) this.noList = false;
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})
@@ -88,6 +98,17 @@
 	// 引入通用设置文件
 	@import "../../../assets/less/setting";
 	@import "../../../assets/less/operate_bar";
+
+	/* no_collect_list */
+
+	.no_collect_list{
+		background: #fff;
+		padding: 100*@rem 0;
+
+		p{
+			text-align: center;
+		}
+	}
 
 	/* collect_group_list */
 	

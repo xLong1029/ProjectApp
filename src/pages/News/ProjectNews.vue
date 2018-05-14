@@ -5,17 +5,7 @@
 		<!-- 加载结束 -->
 		<div v-else>
 			<!-- 资讯列表 -->
-			<ul class="news_list">
-				<li v-for="(item, index) in newsList" :key="index" class="news_li_item proj_news" @click="toDetail(item.id)">
-					<div class="news_li_cont fl">
-						<h2 class="news_li_title">{{ item.title }}</h2>
-						<div class="news_li_tag">
-							<span v-for="(tag, i) in item.keyWords" :key="i" class="tag fl">{{ tag }}</span>
-							<span class="news_li_time fr">{{ item.publishDate }}</span>	
-						</div>
-					</div>
-				</li>
-			</ul>
+			<NewsList :data="newsList" :num="listNum" :show-tag="true"></NewsList>
 			<div class="clearfix"></div>
 			<!-- 加载更多 -->
 			<div v-if="loadMore" class="load_more">
@@ -32,6 +22,7 @@
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	import BackTop from "components/Common/BackTop.vue";
+	import NewsList from "components/News/NewsList.vue";
 	// Api方法
 	import Api from "api/news.js";
 	// 混合
@@ -43,7 +34,7 @@
 
 	export default {
 		name: "projectNews",
-		components: { Loading, BackTop },
+		components: { Loading, BackTop, NewsList },
 		mixins: [ ScrollPage, Modal ],
 		data() {
 			return{
@@ -92,8 +83,16 @@
 					pageSize: num
 				})
 				.then(res => {
-					if(res.code == 200){
-						this.newsList = res.data.result;						
+					if(res.code == 200){						
+						// 调整数据内容
+						this.newsList = res.data.result.map((item, index)=>{
+							return {
+								id: item.id,
+								keyWords: item.keyWords,
+								title: item.title,
+								time: item.publishDate
+							}
+						})
 
 						// 是否加载更多
 						if(more){

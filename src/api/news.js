@@ -25,4 +25,12 @@ export default {
 			.catch(err => reject(err))
 		})
 	},
+	// 获取分组
+	GetGroups: (keyoword) => {
+		return new Promise((resolve,reject)=>{
+			tools.HttpGet(`/api/Projectdeclare/Collect/GetGroups`)
+			.then(res => resolve(res))
+			.catch(err => reject(err))
+		})
+    },
 }

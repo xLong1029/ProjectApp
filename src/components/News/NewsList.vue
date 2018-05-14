@@ -7,9 +7,9 @@
                         <h2 :class="['news_li_title', showTag ? '' : 'fl']">{{ item.title }}</h2>
                         <div v-if="showTag" class="news_li_tag">
                             <span v-for="(tag, i) in item.keyWords" :key="i" class="tag fl">{{ tag }}</span>
-                            <span class="news_li_time fr">{{ item.publishDate }}</span>	
+                            <span class="news_li_time fr">{{ item.time }}</span>	
                         </div>
-                        <span v-else class="news_li_time fr">{{ item.publishDate }}</span>	
+                        <span v-else class="news_li_time fr">{{ item.time }}</span>	
                     </div>
                 </router-link>
             </li>
@@ -42,7 +42,7 @@
 		},
 		data(){
 			return{}
-		}
+        }
 	};
 </script>
 

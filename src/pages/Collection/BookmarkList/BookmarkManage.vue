@@ -38,12 +38,20 @@
         <!-- 操作栏 -->
 		<div id="operateBar">
 			<ul class="operate_bar">
-				<li class="operate_item" @click="deleteGroup">
+				<li class="operate_item" @click="deleteArticle">
 					<i class="operate_icon icon_delete_line"></i>
 					<span class="operate_title">删除文章</span>
 				</li>
 			</ul>
 		</div>
+		<!-- 删除提示窗口 -->
+		<PopModel :show="showDelComfir" @close="hideModel">
+			<div slot="content"> 确认删除这些文章吗？ </div>
+			<div slot="footer">				
+				<button class="button" @click="deleteComfir">确定</button>
+				<button class="button cancel_btn" @click="deleteCancel">取消</button>
+			</div>
+		</PopModel>
 	</div>
 </template>
 
@@ -53,35 +61,42 @@
     import BackTop from "components/Common/BackTop.vue";
 	import Checkbox from "components/Form/Checkbox.vue";
 	import Header from "components/Common/Header.vue";
+	import PopModel from "components/Modal/PopModal.vue";
 	// 通用JS
 	import Common from 'common/common.js'
 	import { GetCookie, GetUrlQuery } from 'common/important.js';
 	// 混合
-	import ScrollPage from 'mixins/scrollPage.js'
+	import ScrollPage from 'mixins/scrollPage.js';
+	import Modal from "mixins/modal.js";
 	// Api方法
-	import Api from "api/news.js";
+	import Api from "api/collection.js";
 
 	export default {
 		name: "bookmark",
-		components: { Loading, BackTop, Checkbox, Header },
-		mixins: [ ScrollPage ],
+		components: { Loading, BackTop, Checkbox, Header, PopModel },
+		mixins: [ Modal, ScrollPage ],
 		data(){
 			return{
 				// 是否加载
 				pageLoading: false,
+				// 是否显示弹窗
+				showDelComfir: false,
 				// 无内容
 				noList: true,
 				// 资讯列表
 				newsList: [],
-				// 资讯数量
-				listNum: 50,
                 // 选值列表
-				selectList:[]
+				selectList:[],
+				// 分组信息
+				group:{
+					id: 0,
+					name: ''
+				}
 			}
 		},
 		created(){
             this.init();
-            this.getListData(this.listNum);
+            this.getListData();
 		},
 		mounted(){
 			// 监听滚动事件
@@ -91,37 +106,31 @@
 			// 初始化
 			init(){
 				let title = GetUrlQuery('name');
+				this.group.id = GetUrlQuery('id');
+				this.group.name = GetUrlQuery('name');
 				if(title) this.$store.commit('SET_NAV_TITLE', title);
                 else this.$store.commit('SET_NAV_TITLE', '书签列表');
 			},
-			// 获取列表内容， num: 请求数量，more：是否加载更多
-			getListData(num, more){
+			// 获取书签数据
+			getListData(){
 				// 加载页面
-				if(more) this.loadMore = true;
-				else this.pageLoading = true;
+				this.pageLoading = true;
 
-				Api.DeclareList({
-					pageNum: 1,
-					pageSize: num
-				})
+				Api.GetArticles(this.group.id)
 				.then(res => {
-					if(res.code == 200){
-                        this.newsList = res.data.result;
-                        // 初始化选择值
-                        for(let i = 0; i < this.newsList.length; i++){
-                            this.newsList[i].checked = false;
-                        }
-						this.noList = false;						
-                        // 停止页面加载
-                        this.pageLoading = false;
+					this.pageLoading = false;
+					if(res.code == 200){						
+						// 调整数据内容
+						this.newsList = res.data.map((item, index)=>{
+							return {
+								id: item.id,
+								title: item.title,
+								keyWords: [],
+								time: item.strCollectTime
+							}
+						})
 
-                        // 获取到缓存滚动高度
-                        if(this.listScrollH > 0){
-                            var _this = this;
-                            this.$nextTick(() => {
-                                scrollTo(0, _this.listScrollH);	
-                            })													
-                        }
+						if(this.newsList.length > 0) this.noList = false;
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})
@@ -168,15 +177,38 @@
 					this.$refs.checkbox[i].setChecked(value);
 				}
 			},
-			// 删除分组
-			deleteGroup(){
+			// 删除文章
+			deleteArticle(){
 				for(let i = 0; i < this.newsList.length; i++){
 					if(this.newsList[i].checked){
 						this.selectList.push(this.newsList[i].id);
 					}
 				}
-				console.log('选中的ids:', this.selectList);
-				
+				if(this.selectList.length <= 0){
+					this.showWarnModel('请选择要删除的文章', 'warning');
+					return false;
+				}
+				else this.showDelComfir = true;
+			},
+			// 取消删除
+			deleteCancel(){
+				this.showDelComfir = false;
+			},
+			// 确认删除文章
+			deleteComfir(){
+				Api.DeleteArticle(this.selectList)
+				.then(res => {
+					this.pageLoading = false;
+					if(res.code == 200){
+						this.$router.go(-1);
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
+			},
+			// 关闭弹窗
+			hideModel(value){
+				this.showDelComfir = value;
 			}
 		},
 		destroyed(){
@@ -240,6 +272,10 @@
     
     .operate_item {
 		width: 100%;
+	}
+
+	.cancel_btn{
+		background: #ecaa1e;
 	}
 
 	/* layout */

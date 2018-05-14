@@ -4,12 +4,20 @@
 		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
-			<!-- 书签列表 -->
-			<ul v-if="!noList" class="news_list">
-				<NewsList :data="newsList" :num="listNum" :show-tag="false"></NewsList>
-			</ul>
-			<div v-else class="no_collect_list">
-				<p>暂无收藏内容</p>
+			<!-- 表格标题 -->
+			<div class="table_title">
+				<span class="title fl">文章名称</span>
+				<span class="time fr">收藏日期</span>
+			</div>
+			<!-- 表格列表内容 -->
+			<div class="table_list_cont">
+				<!-- 书签列表 -->
+				<div v-if="!noList">
+					<NewsList :data="newsList" :num="listNum" :show-tag="false"></NewsList>
+				</div>
+				<div v-else class="no_collect_list">
+					<p>暂无收藏内容</p>
+				</div>
 			</div>
 		</div>
 		<!-- 操作栏 -->
@@ -36,17 +44,18 @@
 	import BackTop from "components/Common/BackTop.vue";
 	import NewsList from "components/News/NewsList.vue";
 	// 通用JS
-	import Common from 'common/common.js'
+	import Common from 'common/common.js';
 	import { DelCookie, SetCookie, GetCookie, GetUrlQuery } from 'common/important.js';
 	// 混合
-	import ScrollPage from 'mixins/scrollPage.js'
+	import ScrollPage from 'mixins/scrollPage.js';
+	import Modal from "mixins/modal.js";
 	// Api方法
-	import Api from "api/news.js";
+	import Api from "api/collection.js";
 
 	export default {
 		name: "bookmark",
 		components: { Loading, BackTop, NewsList },
-		mixins: [ ScrollPage ],
+		mixins: [ Modal, ScrollPage ],
 		data(){
 			return{
 				// 是否加载
@@ -55,8 +64,11 @@
 				noList: true,
 				// 资讯列表
 				newsList: [],
-				// 资讯数量
-				listNum: 50
+				// 分组信息
+				group:{
+					id: 0,
+					name: ''
+				}
 			}
 		},
 		// 离开路由前导航钩子
@@ -83,43 +95,38 @@
 			// 初始化
 			init(){
 				let title = GetUrlQuery('name');
+				this.group.id = GetUrlQuery('id');
+				this.group.name = GetUrlQuery('name');
 				if(title) this.$store.commit('SET_NAV_TITLE', title);
                 else this.$store.commit('SET_NAV_TITLE', '书签列表');
 			},
-			// 获取列表内容， num: 请求数量，more：是否加载更多
-			getListData(num, more){
+			// 获取书签数据
+			getListData(){
 				// 加载页面
-				if(more) this.loadMore = true;
-				else this.pageLoading = true;
+				this.pageLoading = true;
 
-				Api.DeclareList({
-					pageNum: 1,
-					pageSize: num
-				})
+				Api.GetArticles(this.group.id)
 				.then(res => {
-					if(res.code == 200){
-						this.newsList = res.data.result;
-						this.noList = false;						
-
-						// 是否加载更多
-						if(more){
-							// 再无数据可添加
-							if(this.listNum >= res.data.dataCount) this.loadMoreNow = true;
-							else this.loadMoreNow = false;
-							// 停止加载更多
-							this.loadMore = false;
-						}
-						else{
-							// 停止页面加载
-							this.pageLoading = false;
-
-							// 获取到缓存滚动高度
-							if(this.listScrollH > 0){
-								var _this = this;
-								this.$nextTick(() => {
-									scrollTo(0, _this.listScrollH);	
-								})
+					this.pageLoading = false;
+					if(res.code == 200){						
+						// 调整数据内容
+						this.newsList = res.data.map((item, index)=>{
+							return {
+								id: item.id,
+								title: item.title,
+								keyWords: [],
+								time: item.strCollectTime
 							}
+						})
+
+						if(this.newsList.length > 0) this.noList = false;
+
+						// 获取到缓存滚动高度
+						if(this.listScrollH > 0){
+							var _this = this;
+							this.$nextTick(() => {
+								scrollTo(0, _this.listScrollH);	
+							})
 						}
 					}
 					else this.showWarnModel(res.msg, 'warning');
@@ -151,11 +158,11 @@
 			},
 			// 跳转到新增/编辑页
 			toStore(){
-				Common.GotoPage('CollectStore', { type: 'edit' }, this);
+				Common.GotoPage('CollectStore', { id: this.group.id, type: 'edit', name: this.group.name }, this);
 			},
 			// 跳转到管理页
 			toManage(){
-				Common.GotoPage('BookmarkManage', {}, this);
+				Common.GotoPage('BookmarkManage', { id: this.group.id, name: this.group.name }, this);
 			}
 		},
 		destroyed(){
@@ -170,6 +177,41 @@
 	@import "../../../assets/less/setting";
 	@import "../../../assets/less/news_list";
 	@import "../../../assets/less/operate_bar";
+
+	/* table_title */
+
+	.table_title{
+		height: 36*@rem;
+		line-height: 36*@rem;
+		position: fixed;
+		top: @navbar_h;
+		width: 100%;
+		background: #fff;
+		border-bottom: 1px solid @base_color;
+		color: @base_color;
+
+		.title, .time{
+			.ft(12);
+			display: block;
+			text-align: center;
+		}
+
+		.title{
+			width: 76%;
+		}
+
+		.time{
+			.wd(70);
+		}
+
+		&:after{
+			.clr;
+		}
+	}
+
+	.table_list_cont{
+		margin-top: @navbar_h + 36*@rem;
+	}
 
 	/* no_collect_list */
 
@@ -205,20 +247,9 @@
 		}
 	}
 
-	/* 加载更多 */
-	.load_more{
-		position: relative;
-		border-bottom: @border_deep;
-		.ht(80);
-
-		.loading{
-			position: absolute;
-		}
-	}
-
 	/* layout */
 	@media screen and (min-width: 960px) {
-		.operate_bar {
+		.operate_bar, .table_title {
 			width: @wrapper_max_w;
 		}
 	}
