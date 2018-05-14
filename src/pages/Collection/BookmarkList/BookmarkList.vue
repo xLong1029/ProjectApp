@@ -121,9 +121,13 @@
 
 						if(this.newsList.length > 0) this.noList = false;
 
+						var _this = this;
+						this.$nextTick(() => {
+							this.listNum = this.newsList.length;	
+						})
+
 						// 获取到缓存滚动高度
 						if(this.listScrollH > 0){
-							var _this = this;
 							this.$nextTick(() => {
 								scrollTo(0, _this.listScrollH);	
 							})

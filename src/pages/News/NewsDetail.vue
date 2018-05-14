@@ -29,7 +29,7 @@
             <div id="operateBar">
                 <ul class="operate_bar">
                     <li class="operate_item" @click="collect">                  
-                        <div v-if="isCollected">
+                        <div v-if="newsCont.isCollect">
                             <i class="operate_icon icon_collection is_collected"></i>
                             <span class="operate_title is_collected">已收藏</span>
                         </div>
@@ -41,9 +41,16 @@
                 </ul>
             </div>
             <!-- 选择框 -->
-            <SelectModal :show="showModal" :list-data="groupList" @setShowModal="getShowModal" @getSelectData="getselectData">
-                <div slot="title">请选择收藏夹分组</div>
-            </SelectModal>
+            <ScrollModal :show="showModal">
+                <!-- 标题栏 -->
+                <button slot="h_left" class="button cancel_btn" @click="hideModal">取消</button>
+                <div slot="h_center">请选择收藏夹分组</div>
+                <button slot="h_right" class="button comfir_btn" @click="saveCollect">完成</button>
+                <!-- 选择列表 -->
+                <ul slot="content" class="group_list">
+                    <li :class="['group_list_item', selectIndex == index ? 'active' : '']" v-for="(item, index) in groupList" :key="index" @click="getGroupSelect(item, index)">{{ item.name }}</li>
+                </ul>
+            </ScrollModal>
 		</div>
 	</div>
 </template>
@@ -51,7 +58,7 @@
 <script>
     // 组件
 	import Loading from "components/Common/Loading.vue";
-    import SelectModal from "components/Modal/SelectModal.vue"
+    import ScrollModal from "components/Modal/ScrollModal.vue"
     // Api方法
     import Api from "api/news.js";
     // 混合
@@ -63,7 +70,7 @@
 
 	export default {
         name: "newsDetail",
-        components: { Loading, SelectModal },
+        components: { Loading, ScrollModal },
         mixins: [ Modal ],
 		data(){
 			return{
@@ -71,8 +78,8 @@
                 pageLoading: false,
                 // 上级页面Type
                 pageType: null,
-                // 是否已收藏
-                isCollected: false,
+                // 资讯编号
+                newsId: 0,
                 // 资讯内容
                 newsCont: {
                     title: '暂无标题',
@@ -83,32 +90,18 @@
                     webSite: '暂无来源',
                     prevID: 0,
                     nextID: 0,
+                    isCollect: false
                 },
+                // 资讯已删除
+                isDeleted: false,
                 // 显示弹窗
                 showModal: false,
                 // 分组列表
-                groupList: [
-					{
-						id: 1,
-						name: '分组一'
-					},
-					{
-						id: 2,
-						name: '分组二'
-					},
-					{
-						id: 3,
-						name: '分组三'
-					},
-					{
-						id: 4,
-						name: '分组四'
-					},
-					{
-						id: 5,
-						name: '分组五'
-					}
-				]
+                groupList: [],
+                // 收藏的分组编号
+                groupId: 0,
+                // 选择值索引
+                selectIndex: -1
 			}
 		},
 		created(){
@@ -118,15 +111,31 @@
             init(){
                 this.$store.commit('SET_NAV_TITLE', '资讯详情');
                 this.pageType = GetUrlQuery('type');
+                this.newsId = GetUrlQuery('id');
                 // type == 1 说明是从资讯列表过来的
                 if(this.pageType == 1){
                     // 更新返回路由
                     this.$store.commit('SET_GOBACK_ROUTE', { name: 'ProjectNews', query: {} });
-                }                
-                this.getNewsCont(GetUrlQuery('id'));
+                }
+                            
+                this.getNewsCont(this.newsId);
+                this.getGroups();                
+            },
+            // 获取分组信息
+            getGroups(){
+                Api.GetGroups()
+				.then(res => {
+					if(res.code == 200){
+						this.groupList = res.data;
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
             },
             // 获取资讯内容
             getNewsCont(newsId){
+                // 重置资讯编号
+                this.newsId = newsId;
                 // 开始加载
 				this.pageLoading = true;
 
@@ -142,11 +151,12 @@
                             // 移除img标签，因为爬虫爬到的文章图片路径问题无法显示
 							$('.article_cont').find('img').remove();
 						})
-					}
+                    }
 					else {
                         // 停止加载
                         this.pageLoading = false;
                         this.newsCont.htmlContext = res.msg;
+                        if(res.code == 0) this.isDeleted = true;
                     }
 				})
 				.catch(err => console.log(err))
@@ -171,21 +181,39 @@
             collect(){
                 // 若已收藏则不做任何操作
                 if(this.isCollected) return true;
+                if(this.isDeleted) this.showWarnModel('已删除的资讯不可再收藏!', 'warning');
                 // 判断是否已登录
                 if(GetCookie('project_token')) {
                     this.showModal = true;
                 }
 			    else this.showWarnModel('登录账户才可以收藏！', 'warning');
             },
-            // 获取弹窗显示值
-            getShowModal(value){
-                this.showModal = value;
+            // 关闭弹窗
+            hideModal(){
+                this.showModal = false;
+                this.groupId = 0;
+                this.selectIndex = -1;
             },
-            // 获取selectModel选择值
-            getselectData(index){
-                console.log('选中值索引：', index);
-                this.isCollected = true;
+            // 选择分组
+            getGroupSelect(item, index){
+                this.groupId = item.id;
+                this.selectIndex = index;
             },
+            // 保存收藏
+            saveCollect(){
+                Api.AddArticle({
+                    declareId: this.newsId,
+                    groupId: this.groupId
+                })
+				.then(res => {
+					if(res.code == 200) {
+                        this.getNewsCont(this.newsId);
+                        this.hideModal();
+                    }
+					else this.showWarnModel(res.msg, 'warning');
+				})
+                .catch(err => console.log(err))
+            }
         }
 	};
 </script>
@@ -201,5 +229,30 @@
     
     .is_collected{
         color: @base_color;
+    }
+
+    .group_list{
+        margin-top: @navbar_h;
+        width: 100%;
+    }
+
+    .group_list_item{
+        display: block;
+        height: 46*@rem;
+        line-height: 46*@rem;
+		padding: 0 12*@rem;
+		border-bottom: @border_light;
+		text-align: center;
+		cursor: pointer;
+
+		&:hover{
+			color: @base_color;
+			background: @base_hover_color;
+        }
+        
+        &.active{
+            color: #fff;
+			background: @base_color;
+        }
     }
 </style>

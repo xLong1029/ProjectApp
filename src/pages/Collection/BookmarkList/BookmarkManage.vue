@@ -4,7 +4,7 @@
 		<Header>
 			<button slot="left" class="button cancel_btn" @click="$router.go(-1)">取消</button>
 			<span slot="center">文章管理</span>
-			<input slot="right" type="button" class="button select_btn" @click="selectAll" value="全选"/>
+			<button slot="right" class="button select_btn" @click="selectAll">全选</button>
 		</Header>
         <!-- 页面内容 -->
 		<div class="content">
