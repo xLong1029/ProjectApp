@@ -13,7 +13,7 @@
 			<div class="table_list_cont">
 				<!-- 书签列表 -->
 				<div v-if="!noList">
-					<NewsList :data="newsList" :num="listNum" :show-tag="false"></NewsList>
+					<NewsList :data="newsList" :num="listNum" :show-tag="false" :page-type="2"></NewsList>
 				</div>
 				<div v-else class="no_collect_list">
 					<p>暂无收藏内容</p>
@@ -45,7 +45,7 @@
 	import NewsList from "components/News/NewsList.vue";
 	// 通用JS
 	import Common from 'common/common.js';
-	import { DelCookie, SetCookie, GetCookie, GetUrlQuery } from 'common/important.js';
+	import { DelCookie, GetCookie, GetUrlQuery } from 'common/important.js';
 	// 混合
 	import ScrollPage from 'mixins/scrollPage.js';
 	import Modal from "mixins/modal.js";
@@ -60,6 +60,8 @@
 			return{
 				// 是否加载
 				pageLoading: false,
+				// 列表滚动高度
+				listScrollH: 0,
 				// 无内容
 				noList: true,
 				// 资讯列表
@@ -139,12 +141,8 @@
 			},
 			// 页面滚动
 			scrollPage(){				
-				let	scrollTop = $(window).scrollTop();
-				
-				// 缓存有滚动高度，未到该高度不触发后面的操作
-				if(this.listScrollH > 0 && scrollTop <= this.listScrollH) return false;
-
-				let windowH = $(window).height(),
+				let	scrollTop = $(window).scrollTop(),
+					windowH = $(window).height(),
 					documentH = $(document).height();
 
 				if(scrollTop > windowH/2){
@@ -153,12 +151,6 @@
 				else{
 					this.showTopBtn = false;
 				}
-			},
-			// 跳转资讯详情页
-			toDetail(id){
-				// 列表滚动高度存缓存
-				SetCookie('scrollH', $(window).scrollTop());
-				Common.GotoPage('NewsDetail', { id: id, type: 2 }, this);
 			},
 			// 跳转到新增/编辑页
 			toStore(){

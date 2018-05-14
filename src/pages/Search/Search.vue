@@ -23,7 +23,7 @@
 				<p v-if="getResult" class="res_title edge_frame">搜索结果：
 					<span v-if="noResult" class="no_result">无信息</span>
 				</p>
-				<NewsList v-if="!noResult" :data="resList" :num="listNum" :show-tag="false"></NewsList>
+				<NewsList v-if="!noResult" :data="resList" :num="listNum" :show-tag="false" :save-scorll-h="false"></NewsList>
 				<!-- 加载更多 -->
 				<div v-if="loadMore" class="load_more">
 					<Loading></Loading>

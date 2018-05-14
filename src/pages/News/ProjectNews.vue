@@ -5,7 +5,7 @@
 		<!-- 加载结束 -->
 		<div v-else>
 			<!-- 资讯列表 -->
-			<NewsList :data="newsList" :num="listNum" :show-tag="true"></NewsList>
+			<NewsList :data="newsList" :num="listNum" :show-tag="true" :page-type="1"></NewsList>
 			<div class="clearfix"></div>
 			<!-- 加载更多 -->
 			<div v-if="loadMore" class="load_more">

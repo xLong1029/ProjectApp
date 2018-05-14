@@ -35,20 +35,28 @@ export default {
 			// 从缓存获取列表滚动高度
 			let getScrollH = GetCookie('scrollH');
 			if(getScrollH){
-				this.listScrollH = parseInt(getScrollH);
+                this.listScrollH = parseInt(getScrollH);
+                if(this.listScrollH > $(window).height()/2) this.showTopBtn = true;
 			}
 
 			this.getListData(this.listNum, false);
         },
         // 页面滚动
         scrollPage(){				
-            let	scrollTop = $(window).scrollTop();
+            let	scrollTop = $(window).scrollTop(),
+                windowH = $(window).height(),
+                documentH = $(document).height();
+
+            if(scrollTop > windowH/2){
+                this.showTopBtn = true;
+                console.log(222);
+            }
+            else{
+                this.showTopBtn = false;
+            }
             
             // 缓存有滚动高度，未到该高度不触发后面的操作
             if(this.listScrollH > 0 && scrollTop <= this.listScrollH) return false;
-
-            let windowH = $(window).height(),
-                documentH = $(document).height();
 
             if(scrollTop + windowH > documentH - 40){
                 if(!this.loadMoreNow) {
@@ -61,18 +69,6 @@ export default {
                     this.getListData(this.listNum, true);
                 }
             }
-            if(scrollTop > windowH/2){
-                this.showTopBtn = true;
-            }
-            else{
-                this.showTopBtn = false;
-            }
-        },
-        // 跳转资讯详情页
-        toDetail(id){
-            // 列表滚动高度存缓存
-            SetCookie('scrollH', $(window).scrollTop());
-            Common.GotoPage('NewsDetail', { id: id, type: 1 }, this);
         }
     }
 }
