@@ -32,5 +32,13 @@ export default {
 			.then(res => resolve(res))
 			.catch(err => reject(err))
 		})
-    },
+	},
+	// 取消收藏
+	DeleteArticle: (obj) => {
+        return new Promise((resolve,reject)=>{
+			tools.HttpPost(`/api/Projectdeclare/Collect/DeleteArticle`, obj)
+			.then(res => resolve(res))
+			.catch(err => reject(err))
+		})
+	}
 }

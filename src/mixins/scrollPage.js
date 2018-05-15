@@ -49,7 +49,6 @@ export default {
 
             if(scrollTop > windowH/2){
                 this.showTopBtn = true;
-                console.log(222);
             }
             else{
                 this.showTopBtn = false;

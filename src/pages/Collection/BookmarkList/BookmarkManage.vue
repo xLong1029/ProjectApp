@@ -27,13 +27,7 @@
                 <div v-else class="no_collect_list">
                     <p>暂无收藏内容</p>
                 </div>
-                <!-- 加载更多 -->
-                <div v-if="loadMore" class="load_more">
-                    <Loading></Loading>
-                </div>
             </div>
-            <!-- 返回顶部 -->
-		    <BackTop v-show="showTopBtn"></BackTop>
 		</div>
         <!-- 操作栏 -->
 		<div id="operateBar">
@@ -65,8 +59,6 @@
 	// 通用JS
 	import Common from 'common/common.js'
 	import { GetCookie, GetUrlQuery } from 'common/important.js';
-	// 混合
-	import ScrollPage from 'mixins/scrollPage.js';
 	import Modal from "mixins/modal.js";
 	// Api方法
 	import Api from "api/collection.js";
@@ -74,13 +66,15 @@
 	export default {
 		name: "bookmark",
 		components: { Loading, BackTop, Checkbox, Header, PopModel },
-		mixins: [ Modal, ScrollPage ],
+		mixins: [ Modal ],
 		data(){
 			return{
 				// 是否加载
 				pageLoading: false,
 				// 是否显示弹窗
 				showDelComfir: false,
+				// 显示列表数量
+				listNum: 0,
 				// 无内容
 				noList: true,
 				// 资讯列表
@@ -97,10 +91,6 @@
 		created(){
             this.init();
             this.getListData();
-		},
-		mounted(){
-			// 监听滚动事件
-			window.addEventListener('scroll', this.scrollPage);
 		},
 		methods:{
 			// 初始化
@@ -131,27 +121,15 @@
 						})
 
 						if(this.newsList.length > 0) this.noList = false;
+
+						var _this = this;
+						this.$nextTick(() => {
+							this.listNum = this.newsList.length;
+						})
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
-			},
-			// 页面滚动
-			scrollPage(){				
-				let	scrollTop = $(window).scrollTop();
-				
-				// 缓存有滚动高度，未到该高度不触发后面的操作
-				if(this.listScrollH > 0 && scrollTop <= this.listScrollH) return false;
-
-				let windowH = $(window).height(),
-					documentH = $(document).height();
-
-				if(scrollTop > windowH/2){
-					this.showTopBtn = true;
-				}
-				else{
-					this.showTopBtn = false;
-				}
 			},
 			// 跳转到新增/编辑页
 			toStore(){
@@ -210,10 +188,6 @@
 			hideModel(value){
 				this.showDelComfir = value;
 			}
-		},
-		destroyed(){
-			// 移除滚动事件
-			window.removeEventListener("scroll",this.scrollPage);
 		}
 	};
 </script>
@@ -275,7 +249,7 @@
 	}
 
 	.cancel_btn{
-		background: #ecaa1e;
+		background: @cancel_btn_color;
 	}
 
 	/* layout */

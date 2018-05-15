@@ -139,7 +139,7 @@
 	}
 
 	.reg_btn{
-		background: #ecaa1e;
+		background: @cancel_btn_color;
 
 		&:hover{
 			color: #fff;

@@ -46,11 +46,23 @@
                 <button slot="h_left" class="button cancel_btn" @click="hideModal">取消</button>
                 <div slot="h_center">请选择收藏夹分组</div>
                 <button slot="h_right" class="button comfir_btn" @click="saveCollect">完成</button>
-                <!-- 选择列表 -->
-                <ul slot="content" class="group_list">
-                    <li :class="['group_list_item', selectIndex == index ? 'active' : '']" v-for="(item, index) in groupList" :key="index" @click="getGroupSelect(item, index)">{{ item.name }}</li>
-                </ul>
+                <div slot="content">
+                    <!-- 加载数据 -->
+                    <Loading v-if="listLoading"></Loading>
+                    <!-- 选择列表 -->
+                    <ul v-else  class="group_list">
+                        <li :class="['group_list_item', selectIndex == index ? 'active' : '']" v-for="(item, index) in groupList" :key="index" @click="getGroupSelect(item, index)">{{ item.name }}</li>
+                    </ul>
+                </div>
             </ScrollModal>
+            <!-- 删除提示窗口 -->
+            <PopModel :show="showDelComfir" @close="hideDelModel">
+                <div slot="content"> 确认取消该收藏吗？ </div>
+                <div slot="footer">				
+                    <button class="button" @click="cancelCollect">确定</button>
+                    <button class="button cancel_btn" @click="deleteCancel">取消</button>
+                </div>
+            </PopModel>
 		</div>
 	</div>
 </template>
@@ -58,7 +70,8 @@
 <script>
     // 组件
 	import Loading from "components/Common/Loading.vue";
-    import ScrollModal from "components/Modal/ScrollModal.vue"
+    import ScrollModal from "components/Modal/ScrollModal.vue";
+    import PopModel from "components/Modal/PopModal.vue";
     // Api方法
     import Api from "api/news.js";
     // 混合
@@ -70,7 +83,7 @@
 
 	export default {
         name: "newsDetail",
-        components: { Loading, ScrollModal },
+        components: { Loading, ScrollModal, PopModel },
         mixins: [ Modal ],
 		data(){
 			return{
@@ -82,6 +95,10 @@
                 newsId: 0,
                 // 资讯内容
                 newsCont: {
+                    group:{
+                        id: 0,
+                        name: ''
+                    },
                     title: '暂无标题',
                     htmlContext: '暂无内容',
                     keyWord: '暂无标签',
@@ -96,12 +113,14 @@
                 isDeleted: false,
                 // 显示弹窗
                 showModal: false,
+                // 分组列表加载
+                listLoading: false,
                 // 分组列表
                 groupList: [],
-                // 收藏的分组编号
-                groupId: 0,
                 // 选择值索引
-                selectIndex: -1
+                selectIndex: -1,
+                // 是否显示弹窗
+				showDelComfir: false
 			}
 		},
 		created(){
@@ -118,13 +137,14 @@
                     this.$store.commit('SET_GOBACK_ROUTE', { name: 'ProjectNews', query: {} });
                 }
                             
-                this.getNewsCont(this.newsId);
-                this.getGroups();                
+                this.getNewsCont(this.newsId);               
             },
             // 获取分组信息
             getGroups(){
+                this.listLoading = true;
                 Api.GetGroups()
 				.then(res => {
+                    this.listLoading = false;
 					if(res.code == 200){
 						this.groupList = res.data;
 					}
@@ -179,31 +199,39 @@
             },
             // 收藏文章
             collect(){
-                // 若已收藏则不做任何操作
-                if(this.isCollected) return true;
                 if(this.isDeleted) this.showWarnModel('已删除的资讯不可再收藏!', 'warning');
                 // 判断是否已登录
                 if(GetCookie('project_token')) {
-                    this.showModal = true;
+                    // 已收藏
+                    if(this.newsCont.isCollect){
+                        // 取消收藏
+                        this.showDelComfir = true;
+                        return true;
+                    }
+                    // 未收藏
+                    else{
+                        this.showModal = true;
+                        this.getGroups();
+                    }                    
                 }
 			    else this.showWarnModel('登录账户才可以收藏！', 'warning');
             },
             // 关闭弹窗
             hideModal(){
                 this.showModal = false;
-                this.groupId = 0;
+                this.newsCont.group.id = 0;
                 this.selectIndex = -1;
             },
             // 选择分组
             getGroupSelect(item, index){
-                this.groupId = item.id;
+                this.newsCont.group.id = item.id;
                 this.selectIndex = index;
             },
             // 保存收藏
             saveCollect(){
                 Api.AddArticle({
                     declareId: this.newsId,
-                    groupId: this.groupId
+                    groupId: this.newsCont.group.id
                 })
 				.then(res => {
 					if(res.code == 200) {
@@ -213,7 +241,28 @@
 					else this.showWarnModel(res.msg, 'warning');
 				})
                 .catch(err => console.log(err))
-            }
+            },
+			// 取消“取消收藏”操作
+			deleteCancel(){
+				this.showDelComfir = false;
+			},
+            // 取消收藏确认
+            cancelCollect(){
+                Api.DeleteArticle([this.newsId])
+				.then(res => {
+					this.pageLoading = false;
+					if(res.code == 200){
+                        this.getNewsCont(this.newsId);
+                        this.deleteCancel();
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
+            },
+            // 关闭“取消收藏”弹窗
+			hideDelModel(value){
+				this.showDelComfir = value;
+			}
         }
 	};
 </script>
@@ -255,4 +304,8 @@
 			background: @base_color;
         }
     }
+
+    .cancel_btn{
+		background: @cancel_btn_color;
+	}
 </style>
