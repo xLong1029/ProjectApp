@@ -21,9 +21,6 @@
 				<!-- <div class="form_line">
 					<router-link class="button reg_btn" :to="{ name: 'Register' }">注册新用户</router-link>
 				</div> -->
-				<div class="form_line" style="color:#888;">
-					测试账号：17777075292密码：mimashi123
-				</div>
 			</form>
 		</section>
 		<!-- 版权信息 -->
