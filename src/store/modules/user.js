@@ -12,7 +12,7 @@ const user = {
         // 用户账号
 		userAccount: GetLocalS('userAccount'),
 		// 是否已登录
-		isLogined: false,
+		isLogined: GetCookie('project_token') ? true : false,
 	},
 	// 计算属性
 	getters: {
