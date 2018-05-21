@@ -14,7 +14,7 @@
             <div v-else>
                 <!-- 书签列表 -->
                 <ul v-if="!noList" class="news_list">
-                    <li v-for="(item, index) in newsList" v-if="index < listNum" :key="index" class="news_li_item">
+                    <li v-for="(item, index) in newsList" v-if="index < listNum" :key="index" class="news_li_item" @click="changeCheckBox(index)">
                         <div class="news_li_cont">
                             <h2 class="news_li_title fl">{{ item.title }}</h2>
                             <!-- 选择 -->
@@ -116,9 +116,12 @@
 								id: item.id,
 								title: item.title,
 								keyWords: [],
-								time: item.strCollectTime
+								time: item.strCollectTime,
+								checked: false
 							}
 						})
+
+						console.log(this.newsList);
 
 						if(this.newsList.length > 0) this.noList = false;
 
@@ -138,7 +141,18 @@
             // 从子组件获取Checkbox值
             getCheckBoxValue(e){
                 this.newsList[e[1]].checked = e[0];
-            },
+			},
+			// 勾选多选框
+			changeCheckBox(index){
+				if(this.newsList[index].checked){
+					this.newsList[index].checked = false;
+					this.$refs.checkbox[index].setChecked(false);
+				}
+				else{
+					this.newsList[index].checked = true;
+					this.$refs.checkbox[index].setChecked(true);
+				}
+			},
             // 全选
 			selectAll(e){
 				let value = true;
@@ -195,8 +209,8 @@
 <style lang="less" scoped>
 	// 引入通用设置文件
 	@import "../../../assets/less/setting";
-	@import "../../../assets/less/news_list";
 	@import "../../../assets/less/navbar";
+	@import "../../../assets/less/news_list";
 	@import "../../../assets/less/operate_bar";
 
 	/* no_collect_list */
@@ -251,6 +265,15 @@
 	.cancel_btn{
 		background: @cancel_btn_color;
 	}
+
+	/* news_list */
+    .news_li_title{
+        font-weight: normal;
+		width: 76%;
+		white-space: normal;
+
+        .ft(14);
+    }
 
 	/* layout */
 	@media screen and (min-width: 960px) {

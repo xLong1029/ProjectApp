@@ -130,7 +130,6 @@
 <style lang="less" scoped>
 	// 引入通用设置文件
 	@import "../../assets/less/setting";
-	@import "../../assets/less/news_list";
 
 	.proj_news{
 		.news_li_title{

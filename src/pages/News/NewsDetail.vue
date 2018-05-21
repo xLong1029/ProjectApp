@@ -50,7 +50,7 @@
                     <!-- 加载数据 -->
                     <Loading v-if="listLoading"></Loading>
                     <!-- 选择列表 -->
-                    <ul v-else  class="group_list">
+                    <ul v-else class="group_list">
                         <li :class="['group_list_item', selectIndex == index ? 'active' : '']" v-for="(item, index) in groupList" :key="index" @click="getGroupSelect(item, index)">{{ item.name }}</li>
                     </ul>
                 </div>
@@ -280,7 +280,13 @@
         color: @base_color;
     }
 
-    .group_list{
+    .no_group_list{
+        p{
+            text-align: center;
+        }
+    }
+
+    .group_list, .no_group_list{
         margin-top: @navbar_h;
         width: 100%;
     }

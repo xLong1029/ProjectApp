@@ -5,20 +5,20 @@
 		<!-- 加载结束 -->
 		<div v-else>
 			<!-- 表格标题 -->
-			<div class="table_title">
+			<!-- <div class="table_title">
 				<span class="title fl">文章名称</span>
 				<span class="time fr">收藏日期</span>
-			</div>
+			</div> -->
 			<!-- 表格列表内容 -->
-			<div class="table_list_cont">
+			<!-- <div class="table_list_cont"> -->
 				<!-- 书签列表 -->
 				<div v-if="!noList">
-					<NewsList :data="newsList" :num="listNum" :show-tag="false" :page-type="2"></NewsList>
+					<NewsList :data="newsList" :num="listNum" :show-all-title="true" :show-tag="false" :show-date="false" :page-type="2"></NewsList>
 				</div>
 				<div v-else class="no_collect_list">
 					<p>暂无收藏内容</p>
 				</div>
-			</div>
+			<!-- </div> -->
 		</div>
 		<!-- 操作栏 -->
 		<div id="operateBar">
@@ -116,7 +116,7 @@
 							return {
 								id: item.id,
 								title: item.title,
-								keyWords: [],
+								keyWords: item.keyWords,
 								time: item.strCollectTime
 							}
 						})
@@ -171,7 +171,6 @@
 <style lang="less" scoped>
 	// 引入通用设置文件
 	@import "../../../assets/less/setting";
-	@import "../../../assets/less/news_list";
 	@import "../../../assets/less/operate_bar";
 
 	/* table_title */

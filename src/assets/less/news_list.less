@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* news_list */
-	
+        
 .news_li_item{
     padding: 10*@rem @edge_w;
     background: #fff;
@@ -27,12 +27,24 @@
     width: 100%;
 }
 
-.news_li_title{
+.news_li_title, .news_li_title_all{
     font-weight: normal;
-    width: 76%;
+    width: 100%;
 
-    .ellipsis;
     .ft(14);
+}
+
+.news_li_title{
+    width: 76%;
+    .ellipsis;
+}
+
+.news_li_title.full_width{
+    width: 100%;
+}
+
+.news_li_tag_time{
+    .mt(8);
 }
 
 .news_li_time{

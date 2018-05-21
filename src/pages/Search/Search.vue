@@ -23,7 +23,7 @@
 				<p v-if="getResult" class="res_title edge_frame">搜索结果：
 					<span v-if="noResult" class="no_result">无信息</span>
 				</p>
-				<NewsList v-if="!noResult" :data="resList" :num="listNum" :show-tag="false" :save-scorll-h="false"></NewsList>
+				<NewsList v-if="!noResult" :data="resList" :num="listNum" :save-scorll-h="false"></NewsList>
 				<!-- 加载更多 -->
 				<div v-if="loadMore" class="load_more">
 					<Loading></Loading>
@@ -44,7 +44,7 @@
 	import Copyright from "components/Common/Copyright.vue";
 	import BackTop from "components/Common/BackTop.vue";
 	// Api方法
-	import Api from "api/search.js";
+	import Api from "api/news.js";
 	// 通用js
 	import Common from 'common/common.js'
 	// 混合
@@ -95,7 +95,7 @@
 				if(more) this.loadMore = true;
 				else this.sLoading = true;
 
-				Api.Search({
+				Api.DeclareList({
 					keyword: this.keyword,
 					pageNum: 1,
 					pageSize: num
