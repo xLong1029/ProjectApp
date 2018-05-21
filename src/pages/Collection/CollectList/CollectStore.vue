@@ -14,7 +14,7 @@
 			<div v-else class="cont_frame">
 				<form>
 					<div class="form_line">
-						<input ref="groupName" type="text" v-model="form.name" placeholder="分组名称" @click="selectInput"/>
+						<input ref="groupName" type="text" v-model="form.name" placeholder="请填写分组名称" @click="selectInput"/>
 					</div>
 				</form>
 			</div>

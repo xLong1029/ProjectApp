@@ -41,16 +41,17 @@
                 </ul>
             </div>
             <!-- 选择框 -->
-            <ScrollModal :show="showModal">
+            <ScrollModal :show="showSelectModel">
                 <!-- 标题栏 -->
-                <button slot="h_left" class="button cancel_btn" @click="hideModal">取消</button>
+                <button slot="h_left" class="button cancel_btn" @click="hideSelectModel">取消</button>
                 <div slot="h_center">请选择收藏夹分组</div>
                 <button slot="h_right" class="button comfir_btn" @click="saveCollect">完成</button>
                 <div slot="content">
+                    <div class="add_group" @click="showAddGroup"> + 新增分组</div>
                     <!-- 加载数据 -->
                     <Loading v-if="listLoading"></Loading>
                     <!-- 选择列表 -->
-                    <ul v-else class="group_list">
+                    <ul v-else class="group_list">                        
                         <li :class="['group_list_item', selectIndex == index ? 'active' : '']" v-for="(item, index) in groupList" :key="index" @click="getGroupSelect(item, index)">{{ item.name }}</li>
                     </ul>
                 </div>
@@ -59,8 +60,18 @@
             <PopModel :show="showDelComfir" @close="hideDelModel">
                 <div slot="content"> 确认取消该收藏吗？ </div>
                 <div slot="footer">				
-                    <button class="button" @click="cancelCollect">确定</button>
-                    <button class="button cancel_btn" @click="deleteCancel">取消</button>
+                    <button class="button model_btn fr" @click="cancelCollect">确定</button>
+                    <button class="button model_btn cancel_btn fl" @click="deleteCancel">取消</button>
+                </div>
+            </PopModel>
+            <!-- 新增分组窗口 -->
+            <PopModel :show="showAddModel" @close="hideAddModel">
+                <div slot="content">
+                    <input ref="groupName" type="text" v-model="groupName" placeholder="请填写分组名称"/>
+                </div>
+                <div slot="footer">				
+                    <button class="button model_btn fr" @click="addGroup">确定</button>
+                    <button class="button model_btn cancel_btn fl" @click="showAddModel = false;">取消</button>
                 </div>
             </PopModel>
 		</div>
@@ -111,16 +122,20 @@
                 },
                 // 资讯已删除
                 isDeleted: false,
-                // 显示弹窗
-                showModal: false,
+                // 是否显示选择弹窗
+                showSelectModel: false,
                 // 分组列表加载
                 listLoading: false,
                 // 分组列表
                 groupList: [],
                 // 选择值索引
                 selectIndex: -1,
-                // 是否显示弹窗
-				showDelComfir: false
+                // 是否显示删除提示弹窗
+                showDelComfir: false,
+                // 是否显示新增分组弹窗
+                showAddModel: false,
+                // 新增分组名称
+                groupName: ''
 			}
 		},
 		created(){
@@ -187,7 +202,7 @@
                     Common.GotoPage('NewsDetail', { id : id, type: this.pageType }, this);
                     this.getNewsCont(id);
                 }
-                else this.showWarnModel('已经是第一篇啦！', 'warning');
+                else this.showWarnModel('已经是第一篇啦', 'warning');
             },
             // 查看下一篇
             readNext(id){
@@ -195,11 +210,11 @@
                     Common.GotoPage('NewsDetail', { id : id, type: this.pageType }, this);
                     this.getNewsCont(id);
                 }
-                else this.showWarnModel('已经是最后一篇啦！', 'warning');
+                else this.showWarnModel('已经是最后一篇啦', 'warning');
             },
             // 收藏文章
             collect(){
-                if(this.isDeleted) this.showWarnModel('已删除的资讯不可再收藏!', 'warning');
+                if(this.isDeleted) this.showWarnModel('已删除的资讯不可再收藏', 'warning');
                 // 判断是否已登录
                 if(GetCookie('project_token')) {
                     // 已收藏
@@ -210,15 +225,15 @@
                     }
                     // 未收藏
                     else{
-                        this.showModal = true;
+                        this.showSelectModel = true;
                         this.getGroups();
                     }                    
                 }
-			    else this.showWarnModel('登录账户才可以收藏！', 'warning');
+			    else this.showWarnModel('登录账户才可以收藏', 'warning');
             },
-            // 关闭弹窗
-            hideModal(){
-                this.showModal = false;
+            // 关闭分组弹窗
+            hideSelectModel(){
+                this.showSelectModel = false;
                 this.newsCont.group.id = 0;
                 this.selectIndex = -1;
             },
@@ -229,6 +244,11 @@
             },
             // 保存收藏
             saveCollect(){
+                if(this.newsCont.group.id == 0){
+                    this.showWarnModel('请选择分组', 'warning');
+                    return false;
+                }
+
                 Api.AddArticle({
                     declareId: this.newsId,
                     groupId: this.newsCont.group.id
@@ -236,7 +256,7 @@
 				.then(res => {
 					if(res.code == 200) {
                         this.getNewsCont(this.newsId);
-                        this.hideModal();
+                        this.hideSelectModel();
                     }
 					else this.showWarnModel(res.msg, 'warning');
 				})
@@ -262,7 +282,34 @@
             // 关闭“取消收藏”弹窗
 			hideDelModel(value){
 				this.showDelComfir = value;
-			}
+            },
+            // 显示“新增分组”弹窗
+            showAddGroup(){
+                this.showAddModel = true;
+                this.groupName = '';
+            },
+            // 关闭“新增分组”弹窗
+            hideAddModel(value){
+                this.showAddModel = value;
+            },
+            // 新增分组
+            addGroup(){
+                if(this.groupName == ''){
+                    this.showWarnModel('请输入分组名称', 'warning');
+                    return false;
+                }
+
+                Api.AddGroup(this.groupName)
+                .then(res => {
+                    this.pageLoading = false;
+                    if(res.code == 200){
+                        this.getGroups();
+                        this.showAddModel = false;
+                    }
+                    else this.showWarnModel(res.msg, 'warning');
+                })
+                .catch(err => console.log(err))
+            }
         }
 	};
 </script>
@@ -310,8 +357,34 @@
 			background: @base_color;
         }
     }
+    .add_group{
+        display: block;
+        position: fixed;
+        width: 100%;
+        top: @navbar_h;
+        height: 46*@rem;
+        line-height: 46*@rem;
+        padding: 0 12*@rem;
+        text-align: center;
+        border-bottom: 1px solid lighten(@base_color, 30%);
+        background: #fff;
+        z-index: 99;
+        color: @base_color;
+        cursor: pointer;
+    }
 
     .cancel_btn{
 		background: @cancel_btn_color;
-	}
+    }
+
+    .button.model_btn{
+        width: 48%;
+    }
+    
+    /* layout */
+    @media screen and (min-width: 960px) {
+        .add_group {
+            width: @wrapper_max_w;
+        }
+    }
 </style>

@@ -25,6 +25,14 @@ export default {
 			.catch(err => reject(err))
 		})
 	},
+	// 新增分组
+	AddGroup: (name) => {
+        return new Promise((resolve,reject)=>{
+			tools.HttpPost(`/api/Projectdeclare/Collect/AddGroup?name=${name}`)
+			.then(res => resolve(res))
+			.catch(err => reject(err))
+		})
+    },
 	// 获取分组
 	GetGroups: (keyoword) => {
 		return new Promise((resolve,reject)=>{
