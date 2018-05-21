@@ -60,8 +60,8 @@
             <PopModel :show="showDelComfir" @close="hideDelModel">
                 <div slot="content"> 确认取消该收藏吗？ </div>
                 <div slot="footer">				
-                    <button class="button model_btn fr" @click="cancelCollect">确定</button>
-                    <button class="button model_btn cancel_btn fl" @click="deleteCancel">取消</button>
+                    <button class="button fr" style="width: 48%;" @click="cancelCollect">确定</button>
+                    <button class="button cancel_btn fl" style="width: 48%;" @click="deleteCancel">取消</button>
                 </div>
             </PopModel>
             <!-- 新增分组窗口 -->
@@ -70,8 +70,8 @@
                     <input ref="groupName" type="text" v-model="groupName" placeholder="请填写分组名称"/>
                 </div>
                 <div slot="footer">				
-                    <button class="button model_btn fr" @click="addGroup">确定</button>
-                    <button class="button model_btn cancel_btn fl" @click="showAddModel = false;">取消</button>
+                    <button class="button fr" style="width: 48%;" @click="addGroup">确定</button>
+                    <button class="button cancel_btn fl" style="width: 48%;" @click="showAddModel = false;">取消</button>
                 </div>
             </PopModel>
 		</div>
@@ -375,10 +375,6 @@
 
     .cancel_btn{
 		background: @cancel_btn_color;
-    }
-
-    .button.model_btn{
-        width: 48%;
     }
     
     /* layout */
