@@ -13,7 +13,7 @@
                 <!-- 资讯内容 -->
                 <section class="article_cont" v-html="newsCont.htmlContext">{{ newsCont.htmlContext }}</section>
                 <!-- 提示 -->
-                <section class="article_hint">* 温馨提示：附件类内容建议到源网址下载</section>
+                <section class="article_hint">* 温馨提示：请到源网址下载附件</section>
                 <!-- 原文链接 -->
                 <section class="article_org_link">原文来自：
                     <a :href="newsCont.url">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a>
