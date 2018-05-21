@@ -158,6 +158,10 @@
 			},
 			// 跳转到管理页
 			toManage(){
+				if(this.newsList.length <= 0){
+					this.showWarnModel('暂无收藏文章可管理', 'warning');
+					return false;
+				}
 				Common.GotoPage('BookmarkManage', { id: this.group.id, name: this.group.name }, this);
 			}
 		},

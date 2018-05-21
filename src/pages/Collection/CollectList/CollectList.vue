@@ -74,7 +74,7 @@
 						this.groupList = res.data;
 						if(this.groupList.length > 0) this.noList = false;
 					}
-					else this.showWarnModel(res.msg, 'warning');
+					// else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
 			},
@@ -88,6 +88,10 @@
 			},
 			// 跳转到管理页
 			toManage(){
+				if(this.groupList.length <= 0){
+					this.showWarnModel('暂无分组可管理', 'warning');
+					return false;
+				}
 				Common.GotoPage('CollectManage', {}, this);
 			}
 		}

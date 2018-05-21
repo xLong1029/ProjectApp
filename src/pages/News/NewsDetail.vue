@@ -334,7 +334,7 @@
     }
 
     .group_list, .no_group_list{
-        margin-top: @navbar_h;
+        margin-top: @navbar_h + 46*@rem;
         width: 100%;
     }
 

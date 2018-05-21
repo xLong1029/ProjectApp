@@ -39,8 +39,8 @@
 		<PopModel :show="showDelComfir" @close="hideModel">
 			<div slot="content"> 确认删除这些分组吗？ </div>
 			<div slot="footer">				
-				<button class="button" @click="deleteComfir">确定</button>
-				<button class="button cancel_btn" @click="deleteCancel">取消</button>
+				<button class="button model_btn fr" @click="deleteComfir">确定</button>
+				<button class="button model_btn cancel_btn fl" @click="deleteCancel">取消</button>
 			</div>
 		</PopModel>
 	</div>
@@ -71,33 +71,7 @@
 				// 是否显示弹窗
 				showDelComfir: false,
 				// 分组列表
-				groupList:[
-					{
-						id: 1,
-						name: '分组一',
-						checked: false
-					},
-					{
-						id: 2,
-						name: '分组二',
-						checked: false
-					},
-					{
-						id: 3,
-						name: '分组三',
-						checked: false
-					},
-					{
-						id: 4,
-						name: '分组四',
-						checked: false
-					},
-					{
-						id: 5,
-						name: '分组五',
-						checked: false
-					}
-				],
+				groupList:[],
 				// 选值列表
 				selectList:[]
 			}
@@ -115,7 +89,7 @@
 					if(res.code == 200){
 						this.groupList = res.data;
 					}
-					else this.showWarnModel(res.msg, 'warning');
+					// else this.showWarnModel(res.msg, 'warning');
 				})
 				.catch(err => console.log(err))
 			},
@@ -223,6 +197,10 @@
 		.mr(30);
 		.mt(2);
 	}
+
+	.button.model_btn{
+        width: 48%;
+    }
 
 	.cancel_btn{
 		background: @cancel_btn_color;

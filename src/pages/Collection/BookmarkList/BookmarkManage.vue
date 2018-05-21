@@ -42,8 +42,8 @@
 		<PopModel :show="showDelComfir" @close="hideModel">
 			<div slot="content"> 确认删除这些文章吗？ </div>
 			<div slot="footer">				
-				<button class="button" @click="deleteComfir">确定</button>
-				<button class="button cancel_btn" @click="deleteCancel">取消</button>
+				<button class="button model_btn fr" @click="deleteComfir">确定</button>
+				<button class="button model_btn cancel_btn fl" @click="deleteCancel">取消</button>
 			</div>
 		</PopModel>
 	</div>
@@ -273,6 +273,10 @@
 		white-space: normal;
 
         .ft(14);
+	}
+	
+	.button.model_btn{
+        width: 48%;
     }
 
 	/* layout */
