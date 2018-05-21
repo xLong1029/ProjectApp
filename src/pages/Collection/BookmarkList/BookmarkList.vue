@@ -13,7 +13,7 @@
 			<!-- <div class="table_list_cont"> -->
 				<!-- 书签列表 -->
 				<div v-if="!noList">
-					<NewsList :data="newsList" :num="listNum" :show-all-title="true" :show-date="false" :page-type="2"></NewsList>
+					<NewsList :data="newsList" :num="listNum" :show-all-title="true" :page-type="2"></NewsList>
 				</div>
 				<div v-else class="no_collect_list">
 					<p>暂无收藏内容</p>
