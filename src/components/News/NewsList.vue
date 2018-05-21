@@ -7,7 +7,7 @@
                     <h2 class="news_li_title_all">{{ item.title }}</h2>
                     <!-- 显示标签 -->
                     <div v-if="showTag" class="news_li_tag_time">
-                        <span v-for="(tag, i) in item.keyWords" v-if="index < 4" :key="i" class="tag fl">{{ tag }}</span>
+                        <span v-for="(tag, i) in item.keyWords" v-if="i < 4" :key="i" class="tag fl">{{ tag }}</span>
                         <span v-if="showDate" class="news_li_time fr">{{ item.time }}</span>	
                     </div>
                     <!-- 无标签 -->
@@ -18,7 +18,7 @@
                     <h2 :class="['news_li_title', showTag ? 'full_width' : 'fl']">{{ item.title }}</h2>
                     <!-- 显示标签 -->
                     <div v-if="showTag" class="news_li_tag_time">
-                        <span v-for="(tag, i) in item.keyWords" v-if="index < 4" :key="i" class="tag fl">{{ tag }}</span>
+                        <span v-for="(tag, i) in item.keyWords" v-if="i < 4" :key="i" class="tag fl">{{ tag }}</span>
                         <span class="news_li_time fr">{{ item.time }}</span>	
                     </div>
                     <!-- 无标签 -->
