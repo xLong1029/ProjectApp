@@ -1,6 +1,6 @@
 <template>
 	<div id="copyright" class="copyright edge_frame">
-        <p>Copyright © 2018-2019<br/>SOLO之队版权所有 桂ICP备12345678号-1</p>
+        <p>© 2018 筑加网 版权所有<br/>桂ICP备16008233号-1</p>
     </div>
 </template>
 
