@@ -94,6 +94,7 @@
 			// 退出登录
 			logOut(){
 				ClearAccount(this.$store.commit);
+				this.hideSideBar();
 			}
 		}
 	};
