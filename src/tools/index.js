@@ -1,16 +1,6 @@
 import axios from 'axios';
 import { GetCookie } from 'common/important.js';
 
-// axios请求拦截
-// axios.interceptors.request.use(function (config){
-// 	config.url = 'http://xmxx.zhujia100.com' + config.url;
-// 	// 处理请求之前的配置
-// 	return config;
-// }, function (error){
-// 	// 请求失败的处理
-// 	return Promise.reject(error);
-// });
-
 export default {
 	/*
 	 * [封装get和post请求函数]
