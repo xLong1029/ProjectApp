@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GetCookie } from 'common/important.js';
+import { GetLocalS } from 'common/important.js';
 
 // axios请求拦截
 axios.interceptors.request.use(function (config){
@@ -26,7 +26,7 @@ export default {
 				headers:{
 					'Cache-Control': 'no-cache',
 					Pragma: 'no-cache',
-					token: GetCookie('project_token')
+					token: GetLocalS('project_token')
 				}
 			};
 		}
@@ -39,7 +39,7 @@ export default {
 			headers:{
 				'Cache-Control': 'no-cache',
 				Pragma: 'no-cache',
-				token: GetCookie('project_token')
+				token: GetLocalS('project_token')
 			}
 		};
 		return axios.post(url, data, conf)

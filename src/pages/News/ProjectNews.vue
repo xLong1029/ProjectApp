@@ -30,7 +30,7 @@
 	import Modal from "mixins/modal.js"
 	// 通用js
 	import Common from 'common/common.js'
-	import { GetCookie, SetCookie, DelCookie } from 'common/important.js'
+	import { GetLocalS, SetLocalS, DelLocalS } from 'common/important.js'
 
 	export default {
 		name: "projectNews",
@@ -53,8 +53,8 @@
 			if(to.name === 'NewsDetail') next();
 			else{
 				// 清除列表数量和滚动高度缓存
-				DelCookie('listNum');
-				DelCookie('scrollH');				
+				DelLocalS('listNum');
+				DelLocalS('scrollH');				
 				next();
 			}
         },

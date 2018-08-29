@@ -54,7 +54,7 @@
 	import PopModel from "components/Modal/PopModal.vue";
 	// 通用JS
 	import Common from 'common/common.js';
-	import { GetCookie } from 'common/important.js';
+	import { GetLocalS } from 'common/important.js';
 	// Api方法
 	import Api from "api/collection.js";
 	// 混合

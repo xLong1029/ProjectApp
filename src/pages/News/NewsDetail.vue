@@ -88,7 +88,7 @@
     // 混合
     import Modal from "mixins/modal.js";
     // 获取url参数方法
-    import { GetCookie, GetUrlQuery } from "common/important.js";
+    import { GetLocalS, GetUrlQuery } from "common/important.js";
     // 通用js
     import Common from 'common/common.js'
 
@@ -216,7 +216,7 @@
             collect(){
                 if(this.isDeleted) this.showWarnModel('已删除的资讯不可再收藏', 'warning');
                 // 判断是否已登录
-                if(GetCookie('project_token')) {
+                if(GetLocalS('project_token')) {
                     // 已收藏
                     if(this.newsCont.isCollect){
                         // 取消收藏

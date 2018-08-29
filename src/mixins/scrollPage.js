@@ -8,7 +8,7 @@
 
  // 通用JS
  import Common from 'common/common.js'
- import { SetCookie, GetCookie } from 'common/important.js';
+ import { SetLocalS, GetLocalS } from 'common/important.js';
 
 export default {
 	data() {
@@ -27,13 +27,13 @@ export default {
         // 固定高度设置
         scrollHSet(){
             // 从缓存获取列表数量
-			let getListNum = GetCookie('listNum');
+			let getListNum = GetLocalS('listNum');
 			if(getListNum){
 				this.listNum = parseInt(getListNum);
 			}				
 
 			// 从缓存获取列表滚动高度
-			let getScrollH = GetCookie('scrollH');
+			let getScrollH = GetLocalS('scrollH');
 			if(getScrollH){
                 this.listScrollH = parseInt(getScrollH);
                 if(this.listScrollH > $(window).height()/2) this.showTopBtn = true;
@@ -63,7 +63,7 @@ export default {
                     // 累加5条记录
                     this.listNum += 5;
                     // 列表数量存缓存
-                    SetCookie('listNum', this.listNum);		
+                    SetLocalS('listNum', this.listNum);		
                     // 获取更多内容
                     this.getListData(this.listNum, true);
                 }

@@ -5,11 +5,11 @@
  * 版本 : version 1.0
  */
 
-import { DelCookie, DelLocalS, SetCookie, SetLocalS } from 'common/important.js'
+import { DelLocalS, SetLocalS } from 'common/important.js'
 
 // 设置账户信息
 export function SetAccount(_commit, info){
-    SetCookie('project_token', info.token);
+    SetLocalS('project_token', info.token);
     SetLocalS('userAccount', info);
 
     _commit('SET_USER_TOKEN', info.token);
@@ -19,7 +19,7 @@ export function SetAccount(_commit, info){
 
 // 清空账户信息
 export function ClearAccount(_commit){
-    DelCookie('project_token');
+    DelLocalS('project_token');
     DelLocalS('userAccount');
 
     _commit('SET_USER_TOKEN', null);

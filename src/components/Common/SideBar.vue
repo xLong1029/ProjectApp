@@ -27,7 +27,6 @@
 <script>
 	// 通用js
 	import Common from 'common/common.js';
-	import { GetCookie, DelLocalS } from 'common/important.js';
 	import { ClearAccount } from 'common/account.js';
 	//Vuex
 	import { mapGetters } from 'vuex';
@@ -94,6 +93,7 @@
 			// 退出登录
 			logOut(){
 				ClearAccount(this.$store.commit);
+				this.hideSideBar();
 			}
 		}
 	};

@@ -45,7 +45,7 @@
 	import NewsList from "components/News/NewsList.vue";
 	// 通用JS
 	import Common from 'common/common.js';
-	import { DelCookie, GetCookie, GetUrlQuery } from 'common/important.js';
+	import { DelLocalS, GetLocalS, GetUrlQuery } from 'common/important.js';
 	// 混合
 	import ScrollPage from 'mixins/scrollPage.js';
 	import Modal from "mixins/modal.js";
@@ -80,8 +80,8 @@
 			if(to.name === 'NewsDetail') next();
 			else{
 				// 清除列表数量和滚动高度缓存
-				DelCookie('listNum');
-				DelCookie('scrollH');				
+				DelLocalS('listNum');
+				DelLocalS('scrollH');				
 				next();
 			}
         },

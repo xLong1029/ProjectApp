@@ -31,7 +31,7 @@
 	import Header from "components/Common/Header.vue";
 	// 通用JS
 	import Common from 'common/common.js';
-	import { GetCookie, GetUrlQuery } from 'common/important.js';
+	import { GetLocalS, GetUrlQuery } from 'common/important.js';
 	// 混合
 	import Modal from "mixins/modal.js";
 	// Api方法

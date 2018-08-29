@@ -28,7 +28,6 @@
 	import Loading from "components/Common/Loading.vue";
 	// 通用JS
 	import Common from 'common/common.js';
-	import { GetCookie } from 'common/important.js';
 	// Api方法
 	import Api from "api/user_center.js";
 	//Vuex
@@ -76,14 +75,6 @@
 					this.showWarnModel('请输入新密码', 'warning');
 					return false;
 				}
-				// else if(this.form.newPassword == ''){
-				// 	this.showWarnModel('请输入确认密码', 'warning');
-				// 	return false;
-				// }
-				// else if(this.form.newPassword != this.form.comfirmPassword){
-				// 	this.showWarnModel('新密码2次数输入不一致', 'error');
-				// 	return false;
-				// }
 				else{
 					this.onSubmit();
 				}

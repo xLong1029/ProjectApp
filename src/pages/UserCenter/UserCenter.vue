@@ -25,7 +25,6 @@
 	import Loading from "components/Common/Loading.vue";
 	// 通用js
 	import Common from 'common/common.js';
-	import { GetCookie } from 'common/important.js';
 	import { ClearAccount } from 'common/account.js';
 	// Api方法
 	import Api from "api/user_center.js";

@@ -1,4 +1,4 @@
-import { GetCookie, GetLocalS } from 'common/important.js';
+import { GetLocalS } from 'common/important.js';
 import { SetAccount, ClearAccount } from 'common/account.js';
 // Api方法
 import Api from "api/login.js";
@@ -8,11 +8,11 @@ const user = {
 	// 负责存储整个应用的状态数据
 	state: {		
 	  	// 登录凭证
-        token: GetCookie('project_token'),
+        token: GetLocalS('project_token'),
         // 用户账号
 		userAccount: GetLocalS('userAccount'),
 		// 是否已登录
-		isLogined: GetCookie('project_token') ? true : false,
+		isLogined: GetLocalS('project_token') ? true : false,
 	},
 	// 计算属性
 	getters: {
@@ -36,7 +36,7 @@ const user = {
 	actions: {
         // 验证token
         CheckToken ({ commit , state }) {
-			Api.CheckToken(GetCookie('project_token'))
+			Api.CheckToken(GetLocalS('project_token'))
 			.then(res => {
 				const result = res.data;
 				// 登录认证成功

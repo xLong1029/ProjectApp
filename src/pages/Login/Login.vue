@@ -34,7 +34,7 @@
 	import Checkbox from "components/Form/Checkbox.vue";
 	// 通用js
 	import Common from 'common/common.js';
-	import { GetCookie, SetCookie, Encrypt, Decrypt, SetLocalS } from 'common/important.js';
+	import { GetLocalS, SetLocalS, Encrypt, Decrypt } from 'common/important.js';
 	import { SetAccount } from 'common/account.js';
 	// Api方法
 	import Api from "api/login.js";
@@ -59,10 +59,10 @@
 			}
 		},
 		created(){
-			if(GetCookie('username') && GetCookie('password')){
-				this.form.userName = GetCookie('username');
+			if(GetLocalS('username') && GetLocalS('password')){
+				this.form.userName = GetLocalS('username');
 				//解密
-				this.form.password = Decrypt(GetCookie('password'));
+				this.form.password = Decrypt(GetLocalS('password'));
 				this.remember = true;
 			}
 		},
@@ -91,9 +91,9 @@
 
 						// 记住密码
 						if(this.remember){
-							SetCookie('username', this.form.userName);
+							SetLocalS('username', this.form.userName);
 							//加密
-							SetCookie('password', Encrypt(this.form.password));
+							SetLocalS('password', Encrypt(this.form.password));
 						}
 
 						Common.GotoPage('ProjectNews', {} , this);

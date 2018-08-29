@@ -7,7 +7,7 @@ import 'babel-polyfill'
 // 全局引用Jquery
 import $ from "jquery";
 
-import { GetCookie } from 'common/important.js';
+import { GetLocalS } from 'common/important.js';
 
 // 应用字体图标
 require('./assets/iconfonts/style.css');
@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
 	// 免登录白名单，可直接进入
 	if(whiteList.indexOf(to.name) != -1) next();
 	else{
-		let isLogined = Boolean(GetCookie('project_token'));
+		let isLogined = Boolean(GetLocalS('project_token'));
 		// 判断是否已登录
 		if(isLogined){
 			// token验证
