@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* 相对缩放设置 */
+/* 字体大小 */
+/* 颜色 */
+/* 间距高宽*/
+/* 边框 */
+/* Mixin */
+.border_radius_4 {
+  -webkit-border-radius: 0.04rem;
+  -moz-border-radius: 0.04rem;
+  -o-border-radius: 0.04rem;
+  border-radius: 0.04rem;
+}
+.clr {
+  clear: both;
+  content: '.';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  font-size: 0;
+  line-height: 0;
+  width: 0;
+  height: 0;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

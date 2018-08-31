@@ -16,7 +16,8 @@
                 <section class="article_hint">* 温馨提示：请到源网址下载附件</section>
                 <!-- 原文链接 -->
                 <section class="article_org_link">原文来自：
-                    <a :href="newsCont.url" target="blank">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a>
+                    <!-- <a :href="newsCont.url" target="blank">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a> -->
+                    <a @click="openScoure(newsCont.url)">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a>
                 </section>
                 <!-- 文章选择 -->
                 <section class="select_artc">
@@ -40,6 +41,18 @@
                     </li>
                 </ul>
             </div>
+            <!-- 显示原文框 -->
+            <ScrollModal :show="showSoucreModel">
+                <!-- 标题栏 -->
+                <i class="icon_close" slot="h_right" @click="hideSoucre"></i>
+                <div slot="h_center">查看原文</div>
+                <div slot="content" class="news_source">
+                    <div class="news_source_cont">
+                        <iframe frameborder="0" width="100%" height="100%" :src="newsUrl">
+                        </iframe>
+                    </div>
+                </div>
+            </ScrollModal>
             <!-- 选择框 -->
             <ScrollModal :show="showSelectModel">
                 <!-- 标题栏 -->
@@ -135,7 +148,11 @@
                 // 是否显示新增分组弹窗
                 showAddModel: false,
                 // 新增分组名称
-                groupName: ''
+                groupName: '',
+                // 是否显示源文框
+                showSoucreModel: false,
+                // 资讯源链接
+                newsUrl: '',
 			}
 		},
 		created(){
@@ -199,7 +216,7 @@
             // 查看上一篇
             readPrev(id){
                 if(id !=0){
-                    Common.GotoPage('NewsDetail', { id : id, type: this.pageType }, this);
+                    Common.GotoPage('NewsDetail', { id, type: this.pageType }, this);
                     this.getNewsCont(id);
                 }
                 else this.showWarnModel('已经是第一篇啦', 'warning');
@@ -207,7 +224,7 @@
             // 查看下一篇
             readNext(id){
                 if(id !=0){
-                    Common.GotoPage('NewsDetail', { id : id, type: this.pageType }, this);
+                    Common.GotoPage('NewsDetail', { id, type: this.pageType }, this);
                     this.getNewsCont(id);
                 }
                 else this.showWarnModel('已经是最后一篇啦', 'warning');
@@ -309,6 +326,16 @@
                     else this.showWarnModel(res.msg, 'warning');
                 })
                 .catch(err => console.log(err))
+            },
+            // 打开源网站
+            openScoure(url){
+                this.showSoucreModel = true;
+                this.newsUrl = url;
+                console.log(this.newsUrl);
+            },
+            // 隐藏源网站
+            hideSoucre(){
+                this.showSoucreModel = false;
             }
         }
 	};
@@ -375,6 +402,14 @@
 
     .cancel_btn{
 		background: @cancel_btn_color;
+    }
+
+    .news_source{
+        margin-top: @navbar_h;
+        
+        .news_source_cont{
+            height: 100vh;
+        }
     }
     
     /* layout */
