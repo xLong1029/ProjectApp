@@ -43,7 +43,7 @@
         * 是否显示标签 showTag
         * 是否显示全部标题 showAllTitle
         * 是否显示日期 showDate
-        * 页面类型 pageType: 1 父级页面是资讯列表页, 2 父级页面是书签页
+        * 页面类型 pageType: 1 父级页面是资讯列表页, 2 父级页面是消息通知页
         * 是否保存页面滚动高度 saveScrollH
         */
         props: {
@@ -88,9 +88,9 @@
                 }
                 
                 if(this.pageType){
-                    Common.GotoPage('NewsDetail', { id: item.id, type: this.pageType }, this);
+                    Common.GotoPage('NewsDetail', { newsId: item.id, type: this.pageType }, this);
                 }
-                else Common.GotoPage('NewsDetail', { id: item.id }, this);
+                else Common.GotoPage('NewsDetail', { newsId: item.id }, this);
 			},
         }
 	};

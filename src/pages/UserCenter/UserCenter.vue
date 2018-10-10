@@ -5,14 +5,14 @@
 		<!-- 加载结束 -->
 		<div v-else>
 			<!-- 账号信息 -->
-			<div class="cont_frame user_info_list">
+			<div class="cont_frame">
 				欢迎你，{{ userAccount.userName }}
 			</div>
-			<ul>
-				<li class="cont_frame user_info_list" @click="gotoChangePwd">
+			<ul class="user_info_list">
+				<li class="cont_frame user_info_list_item" @click="gotoChangePwd">
 					<i class="list_icon icon_password"></i>修改密码<i class="icon_next"></i>
 				</li>
-				<li class="cont_frame user_info_list" @click="logOut">
+				<li class="cont_frame user_info_list_item" @click="logOut">
 					<i class="list_icon icon_exit"></i>退出登录<i class="icon_next"></i>
 				</li>
 			</ul>
@@ -69,7 +69,7 @@
 
 	/* user_info_list */
 
-	.user_info_list{
+	.user_info_list_item{
 		cursor: pointer;
 
 		.list_icon{			

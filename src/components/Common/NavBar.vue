@@ -9,8 +9,11 @@
 			<i class="icon_back"></i>
 		</a>
 		<!-- 非二级页面，显示消息图标 -->
-		<a v-else class="btn fr" @click="toSearch">
-			<i class="icon_search"></i>
+		<a v-else class="btn fr" @click="toMsg">
+			<span class="msg">
+				<i class="icon_email"></i>
+				<i v-show="hasNewMsg" class="new_msg"></i>
+			</span>
 		</a>
 		<!-- 非二级页面，显示搜索图标 -->
 		<!-- <a v-else class="btn fr" @click="toSearch">
@@ -43,13 +46,16 @@
 			},
 		},
 		computed: {
-            ...mapGetters([ 'showTabBar', 'navTitle', 'goBackRoute' ]),
+            ...mapGetters([ 'showTabBar', 'navTitle', 'goBackRoute', 'hasNewMsg' ]),
         },
 		data() {
 			return {
 				// 是否为二级页面
 				isSecondPage: false,
 			};
+		},
+		created() {
+			this.$store.commit('SET_HAS_NEW_MSG', true);
 		},
 		methods:{
 			// 向右推出
@@ -59,6 +65,10 @@
 			// 跳转“搜索”页面
 			toSearch(){
 				Common.GotoPage('Search', {}, this);
+			},
+			// 跳转“消息中心”页面
+			toMsg(){
+				Common.GotoPage('Message', {}, this);
 			},
 			// 返回上一页
 			goBack(){
@@ -73,4 +83,20 @@
 	//引入通用设置文件
 	@import "../../assets/less/setting";
 	@import "../../assets/less/navbar";
+
+	.msg{
+		position: relative;
+	}
+	
+	i.new_msg{
+		position: absolute;
+		background: @warn_color;
+		display: inline-block;
+
+		right: -2*@rem;
+		
+		.wd(6);
+		.ht(6);
+		.border_radius_4;
+	}
 </style>

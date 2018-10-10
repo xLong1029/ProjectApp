@@ -162,11 +162,16 @@
             init(){
                 this.$store.commit('SET_NAV_TITLE', '资讯详情');
                 this.pageType = GetUrlQuery('type');
-                this.newsId = GetUrlQuery('id');
+                this.newsId = GetUrlQuery('newsId');
                 // type == 1 说明是从资讯列表过来的
                 if(this.pageType == 1){
                     // 更新返回路由
                     this.$store.commit('SET_GOBACK_ROUTE', { name: 'ProjectNews', query: {} });
+                }
+                // type == 2 说明是从书签页过来的
+                if(this.pageType == 2){
+                    // 更新返回路由
+                    this.$store.commit('SET_GOBACK_ROUTE', { name: 'Message', query: {} });
                 }
                             
                 this.getNewsCont(this.newsId);               
@@ -216,18 +221,26 @@
             // 查看上一篇
             readPrev(id){
                 if(id !=0){
-                    Common.GotoPage('NewsDetail', { id, type: this.pageType }, this);
-                    this.getNewsCont(id);
+                    this.gotoArticle(id);
                 }
                 else this.showWarnModel('已经是第一篇啦', 'warning');
             },
             // 查看下一篇
             readNext(id){
                 if(id !=0){
-                    Common.GotoPage('NewsDetail', { id, type: this.pageType }, this);
-                    this.getNewsCont(id);
+                    this.gotoArticle(id);
                 }
                 else this.showWarnModel('已经是最后一篇啦', 'warning');
+            },
+            // 跳转其他文章
+            gotoArticle(id){
+                if(this.pageType){
+                    Common.GotoPage('NewsDetail', { newsId: id, type: this.pageType }, this);
+                }
+                else{
+                    Common.GotoPage('NewsDetail', { newsId: id }, this);
+                }
+                this.getNewsCont(id);
             },
             // 收藏文章
             collect(){
