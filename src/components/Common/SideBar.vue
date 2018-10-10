@@ -40,6 +40,15 @@
 			return {
 				// 侧边栏导航
 				sideNav: [
+					// 资讯列表
+					[
+						{
+							rName: 'ProjectNews',
+							icon: 'icon_news',
+							rQuery: {},
+							title: "申报资讯"
+						}
+					],
 					// 个人设置
 					[
 						{
@@ -54,23 +63,29 @@
 							rQuery: {},
 							title: "收藏夹"
 						},
-					],
-					// 资讯列表
-					[
 						{
-							rName: 'ProjectNews',
-							icon: 'icon_news',
+							rName: 'Message',
+							icon: 'icon_email',
 							rQuery: {},
-							title: "申报资讯"
+							title: "消息通知"
 						}
-					],
-					// 资讯列表
+					],					
+					// 搜索
 					[
 						{
 							rName: 'Search',
 							icon: 'icon_search',
 							rQuery: {},
 							title: "搜索"
+						}
+					],
+					// 关于我们
+					[
+						{
+							rName: 'About',
+							icon: 'icon_company',
+							rQuery: {},
+							title: "关于我们"
 						}
 					]
 				]

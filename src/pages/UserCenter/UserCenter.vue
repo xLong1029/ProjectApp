@@ -39,8 +39,6 @@
         },
 		data(){
 			return{
-				// 是否已登录
-				isLogined: false,
 				// 是否加载
 				pageLoading: false
 			}

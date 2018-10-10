@@ -8,10 +8,14 @@
 		<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="goBack">
 			<i class="icon_back"></i>
 		</a>
-		<!-- 非二级页面，显示搜索图标 -->
+		<!-- 非二级页面，显示消息图标 -->
 		<a v-else class="btn fr" @click="toSearch">
 			<i class="icon_search"></i>
 		</a>
+		<!-- 非二级页面，显示搜索图标 -->
+		<!-- <a v-else class="btn fr" @click="toSearch">
+			<i class="icon_search"></i>
+		</a> -->
 		<!-- 二级页面标题 -->
 		<div class="title fl">
 			<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>

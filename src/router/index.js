@@ -25,7 +25,10 @@ import BookmarkList from 'pages/Collection/BookmarkList/BookmarkList'
 import BookmarkManage from 'pages/Collection/BookmarkList/BookmarkManage'
 // 信息搜索
 import Search from 'pages/Search/Search'
-
+// 关于我们
+import About from 'pages/About/About'
+// 消息通知
+import Message from 'pages/Message/Message'
 
 Vue.use(Router)
 
@@ -46,10 +49,14 @@ export default new Router({
             { path: '/UserCenter', name: 'UserCenter', component: UserCenter },
             // 修改密码
             { path: '/ChangePassword', name: 'ChangePassword', component: ChangePassword },
+            // 消息通知
+            { path: '/Message', name: 'Message', component: Message },
             // 收藏夹
             { path: '/CollectList', name: 'CollectList', component: CollectList },
             // 书签列表
             { path: '/BookmarkList', name: 'BookmarkList', component: BookmarkList },
+            // 关于我们
+            { path: '/About', name: 'About', component: About },    
             // 未登录提示页
             { path: '/UnLogined', name: 'UnLogined', component: UnLogined },
         ]
