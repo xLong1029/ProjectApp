@@ -8,10 +8,10 @@
                     <!-- 显示标签 -->
                     <div v-if="showTag" class="news_li_tag_time">
                         <span v-for="(tag, i) in item.keyWords" v-if="i < 4" :key="i" class="tag fl">{{ tag }}</span>
-                        <span v-if="showDate" class="news_li_time fr">{{ item.time }}</span>	
+                        <span v-if="showDate" class="news_li_time fr">{{ item.publishDate }}</span>	
                     </div>
                     <!-- 无标签 -->
-                    <span v-if="!showTag && showDate" class="news_li_time fl">{{ item.time }}</span>	
+                    <span v-if="!showTag && showDate" class="news_li_time fl">{{ item.publishDate }}</span>	
                 </div>
                 <!-- 显示部分标题 -->
                 <div v-else class="news_li_cont">
@@ -19,10 +19,10 @@
                     <!-- 显示标签 -->
                     <div v-if="showTag" class="news_li_tag_time">
                         <span v-for="(tag, i) in item.keyWords" v-if="i < 4" :key="i" class="tag fl">{{ tag }}</span>
-                        <span class="news_li_time fr">{{ item.time }}</span>	
+                        <span class="news_li_time fr">{{ item.publishDate }}</span>	
                     </div>
                     <!-- 无标签 -->
-                    <span v-else class="news_li_time fr">{{ item.time }}</span>	
+                    <span v-else class="news_li_time fr">{{ item.publishDate }}</span>	
                 </div>
             </li>
         </ul>

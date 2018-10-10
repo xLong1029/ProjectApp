@@ -103,14 +103,7 @@
 				.then(res => {
 					if(res.code == 200){
 						// 调整数据内容
-						this.resList = res.data.result.map((item, index)=>{
-							return {
-								id: item.id,
-								keyWords: item.keyWords,
-								title: item.title,
-								time: item.publishDate
-							}
-						})
+						this.resList = res.data.result;
 
 						this.getResult = true;
 						this.noResult = false;

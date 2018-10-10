@@ -85,14 +85,7 @@
 				.then(res => {
 					if(res.code == 200){						
 						// 调整数据内容
-						this.newsList = res.data.result.map((item, index)=>{
-							return {
-								id: item.id,
-								keyWords: item.keyWords,
-								title: item.title,
-								time: item.publishDate
-							}
-						})
+						this.newsList = res.data.result;
 
 						// 是否加载更多
 						if(more){
