@@ -69,7 +69,7 @@
                     </ul>
                 </div>
             </ScrollModal>
-            <!-- 删除提示窗口 -->
+            <!-- 取消收藏提示窗口 -->
             <PopModel :show="showDelComfir" @close="hideDelModel">
                 <div slot="content"> 确认取消该收藏吗？ </div>
                 <div slot="footer">				

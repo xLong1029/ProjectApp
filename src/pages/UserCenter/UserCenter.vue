@@ -10,10 +10,10 @@
 			</div>
 			<ul>
 				<li class="cont_frame user_info_list" @click="gotoChangePwd">
-					<i class="list_icon icon_password"></i>修改密码<i class="icon-next"></i>
+					<i class="list_icon icon_password"></i>修改密码<i class="icon_next"></i>
 				</li>
 				<li class="cont_frame user_info_list" @click="logOut">
-					<i class="list_icon icon_exit"></i>退出登录<i class="icon-next"></i>
+					<i class="list_icon icon_exit"></i>退出登录<i class="icon_next"></i>
 				</li>
 			</ul>
 		</div>
@@ -78,7 +78,7 @@
 			.mr(5);
 		}
 
-		.icon-next{
+		.icon_next{
 			color: #ddd;
 			float: right;
 
