@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'solo';
-  src:  url('fonts/solo.eot?awjtj8');
-  src:  url('fonts/solo.eot?awjtj8#iefix') format('embedded-opentype'),
-    url('fonts/solo.ttf?awjtj8') format('truetype'),
-    url('fonts/solo.woff?awjtj8') format('woff'),
-    url('fonts/solo.svg?awjtj8#solo') format('svg');
+  src:  url('fonts/solo.eot?vk1l9i');
+  src:  url('fonts/solo.eot?vk1l9i#iefix') format('embedded-opentype'),
+    url('fonts/solo.ttf?vk1l9i') format('truetype'),
+    url('fonts/solo.woff?vk1l9i') format('woff'),
+    url('fonts/solo.svg?vk1l9i#solo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -125,6 +125,9 @@
 }
 .icon_collection_line:before {
   content: "\e922";
+}
+.icon_readed:before {
+  content: "\e923";
 }
 .icon_email:before {
   content: "\e900";

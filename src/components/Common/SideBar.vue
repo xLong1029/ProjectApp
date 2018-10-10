@@ -12,6 +12,9 @@
 				<ul v-for="(navItem, index) in sideNav" :key="index" class="sidebar_nav">
 					<li v-for="(item, i) in navItem" :key="i" :class="['sidebar_li_item', item.rName === $route.name ? 'on' : '']" @click="hideSideBar(item.rName, item.rQuery)">
 						<span><i :class="item.icon"></i>{{ item.title }}</span>
+						<span v-if="item.rName == 'Message'">
+							<span class="new_msg">3</span>
+						</span>
 					</li>
 				</ul>
 			</div>
@@ -67,7 +70,7 @@
 							rName: 'Message',
 							icon: 'icon_email',
 							rQuery: {},
-							title: "消息通知"
+							title: "消息通知",
 						}
 					],					
 					// 搜索
@@ -175,6 +178,7 @@
 
 
 	.sidebar_li_item {
+		position: relative;
 		display: block;
 		height: 80*@half_rem;
 		line-height: 80*@half_rem;
@@ -194,6 +198,22 @@
 		i{
 			.mr(10);
 			color: @ic_gray_color;
+		}
+
+		.new_msg{
+			position: absolute;
+			background: @warn_color;
+			display: inline-block;
+			text-align: center;
+			line-height: 18*@rem;
+			right: 10*@rem;
+			top: 10*@rem;
+			color:#fff;
+
+			.wd(20);
+			.ht(20);
+			.ft(12);
+			.border_radius(10);
 		}
 	}
 
