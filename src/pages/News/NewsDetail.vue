@@ -168,7 +168,7 @@
                     // 更新返回路由
                     this.$store.commit('SET_GOBACK_ROUTE', { name: 'ProjectNews', query: {} });
                 }
-                // type == 2 说明是从书签页过来的
+                // type == 2 说明是从消息中心过来的
                 if(this.pageType == 2){
                     // 更新返回路由
                     this.$store.commit('SET_GOBACK_ROUTE', { name: 'Message', query: {} });

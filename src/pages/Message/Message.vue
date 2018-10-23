@@ -7,7 +7,7 @@
 			<ul class="msg_list">
 				<li v-for="(item, index) in declareList" :key="index" class="msg_ist_item cont_frame">
 					<div class="title">{{ item.webSite }}</div>
-					<NewsList :data="item.data" :num="item.data.length"></NewsList>
+					<NewsList :data="item.data" :num="item.data.length" :page-type="2"></NewsList>
 				</li>
 			</ul>
 			<!-- 操作栏 -->
@@ -60,7 +60,6 @@
 				.then(res => {
 					if(res.code == 200){
 						this.declareList = res.data.declareList;
-						console.log(this.declareList);
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})
