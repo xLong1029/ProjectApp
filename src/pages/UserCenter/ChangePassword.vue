@@ -1,30 +1,36 @@
 <template>
 	<div id="userCenter">
-		<!-- 加载数据 -->
-		<Loading v-if="pageLoading"></Loading>
-		<!-- 加载结束 -->
-		<div v-else>
-			<!-- 修改密码表单 -->
-			<form class="cont_frame">
-				<div class="form_line">
-					<input type="password" v-model="form.oldPassword" placeholder="旧密码"/>
-				</div>
-				<div class="form_line">
-					<input type="password" v-model="form.newPassword" placeholder="新密码"/>
-				</div>
-				<!-- <div class="form_line">
-					<input type="password" v-model="form.comfirmPassword" placeholder="确认密码"/>
-				</div> -->
-				<div class="form_line">
-					<input type="button" class="button" value="确认修改" @click="validForm"/>
-				</div>
-			</form>
+		<!-- 导航栏 -->
+		<NavBar title="修改密码" :is-second-page="true"></NavBar>
+		<!-- 页面内容 -->
+		<div class="content">
+			<!-- 加载数据 -->
+			<Loading v-if="pageLoading"></Loading>
+			<!-- 加载结束 -->
+			<div v-else>
+				<!-- 修改密码表单 -->
+				<form class="cont_frame">
+					<div class="form_line">
+						<input type="password" v-model="form.oldPassword" placeholder="旧密码"/>
+					</div>
+					<div class="form_line">
+						<input type="password" v-model="form.newPassword" placeholder="新密码"/>
+					</div>
+					<!-- <div class="form_line">
+						<input type="password" v-model="form.comfirmPassword" placeholder="确认密码"/>
+					</div> -->
+					<div class="form_line">
+						<input type="button" class="button" value="确认修改" @click="validForm"/>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 	// 组件
+	import NavBar from "components/Common/NavBar.vue";
 	import Loading from "components/Common/Loading.vue";
 	// 通用JS
 	import Common from 'common/common.js';
@@ -38,7 +44,7 @@
 	export default {
 		name: "userCenter",
 		mixins: [ Modal ],
-		components: { Loading },
+		components: { NavBar, Loading },
 		computed: {
             ...mapGetters([ 'userAccount' ]),
         },

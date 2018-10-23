@@ -1,37 +1,43 @@
 <template>
 	<div id="bookmark">
-		<!-- 加载数据 -->
-		<Loading v-if="pageLoading"></Loading>
-		<!-- 加载结束 -->
-		<div v-else>
-			<!-- 书签列表 -->
-			<div v-if="!noList">
-				<NewsList :data="newsList" :num="listNum" :show-all-title="true" :page-type="2"></NewsList>
+		<!-- 导航栏 -->
+		<NavBar :title="group.name" :show-msg="true"></NavBar>
+		<!-- 页面内容 -->
+		<div class="content">
+			<!-- 加载数据 -->
+			<Loading v-if="pageLoading"></Loading>
+			<!-- 加载结束 -->
+			<div v-else>
+				<!-- 书签列表 -->
+				<div v-if="!noList">
+					<NewsList :data="newsList" :num="listNum" :show-all-title="true"></NewsList>
+				</div>
+				<div v-else class="no_collect_list">
+					<p>暂无收藏内容</p>
+				</div>
 			</div>
-			<div v-else class="no_collect_list">
-				<p>暂无收藏内容</p>
+			<!-- 操作栏 -->
+			<div id="operateBar">
+				<ul class="operate_bar">
+					<li class="operate_item">
+						<i class="operate_icon icon_edit_line" @click="toStore"></i>
+						<span class="operate_title">更改组名</span>
+					</li>
+					<li class="operate_item">
+						<i class="operate_icon icon_article_setting_line" @click="toManage"></i>
+						<span class="operate_title">管理文章</span>
+					</li>
+				</ul>
 			</div>
+			<!-- 返回顶部 -->
+			<BackTop v-show="showTopBtn"></BackTop>
 		</div>
-		<!-- 操作栏 -->
-		<div id="operateBar">
-			<ul class="operate_bar">
-				<li class="operate_item">
-					<i class="operate_icon icon_edit_line" @click="toStore"></i>
-					<span class="operate_title">更改组名</span>
-				</li>
-				<li class="operate_item">
-					<i class="operate_icon icon_article_setting_line" @click="toManage"></i>
-					<span class="operate_title">管理文章</span>
-				</li>
-			</ul>
-		</div>
-		<!-- 返回顶部 -->
-		<BackTop v-show="showTopBtn"></BackTop>
 	</div>
 </template>
 
 <script>
 	// 组件
+	import NavBar from "components/Common/NavBar.vue";
 	import Loading from "components/Common/Loading.vue";
 	import BackTop from "components/Common/BackTop.vue";
 	import NewsList from "components/News/NewsList.vue";
@@ -46,7 +52,7 @@
 
 	export default {
 		name: "bookmark",
-		components: { Loading, BackTop, NewsList },
+		components: { NavBar, Loading, BackTop, NewsList },
 		mixins: [ Modal, ScrollPage ],
 		data(){
 			return{
@@ -90,9 +96,10 @@
 			init(){
 				let title = GetUrlQuery('name');
 				this.group.id = GetUrlQuery('id');
-				this.group.name = GetUrlQuery('name');
-				if(title) this.$store.commit('SET_NAV_TITLE', title);
-                else this.$store.commit('SET_NAV_TITLE', '书签列表');
+
+				// 设置标题
+				if(title) this.group.name = title;
+				else this.group.name = '书签列表';
 			},
 			// 获取书签数据
 			getListData(){

@@ -1,9 +1,9 @@
 <template>
 	<div id="about">
-		<!-- 加载数据 -->
-		<Loading v-if="pageLoading"></Loading>
-		<!-- 加载结束 -->
-		<div v-else>
+		<!-- 导航栏 -->
+		<NavBar :show-title="false" :show-msg="true"></NavBar>
+		<!-- 页面内容 -->
+		<div class="content">
 			关于我们
 		</div>
 	</div>
@@ -11,28 +11,18 @@
 
 <script>
 	// 组件
-	import Loading from "components/Common/Loading.vue";
-	// 通用js
-	import Common from 'common/common.js';
+	import NavBar from "components/Common/NavBar.vue";
 	// Api方法
 	import Api from "api/user_center.js";
 
 	export default {
 		name: "about",
-		components: { Loading },
+		components: { NavBar },
 		data(){
 			return{
-				// 是否加载
-				pageLoading: false
 			}
-		},
-		created(){
-			this.init();
 		},
 		methods:{
-			init(){
-                this.$store.commit('SET_NAV_TITLE', '关于我们');
-			}
 		}
 	};
 </script>

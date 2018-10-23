@@ -7,8 +7,6 @@ const common = {
 		showTabBar: true,
 		// 是否显示返回按钮
 		showBackBtn: false,
-		// 导航栏标题
-		navTitle: '华建项目申报',
 		// 返回上一页路由
 		goBackRoute: {
 			name: null,
@@ -33,7 +31,6 @@ const common = {
 		showSideBar: state => state.showSideBar,		
 		showTabBar: state => state.showTabBar,
 		showBackBtn: state => state.showBackBtn,
-		navTitle: state => state.navTitle,
 		goBackRoute: state => state.goBackRoute,
 		warnModal: state => state.warnModal,
 		unReadCount: state => state.unReadCount,
@@ -48,9 +45,6 @@ const common = {
 		},
 		SET_SHOW_BACK_BTN: (state, showBackBtn) => {
 			state.showBackBtn = showBackBtn;
-		},
-		SET_NAV_TITLE: (state, navTitle) => {
-			state.navTitle = navTitle;
 		},
 		SET_GOBACK_ROUTE: (state, goBackRoute) => {
 			state.goBackRoute = goBackRoute;

@@ -1,6 +1,6 @@
 <template>
 	<div id="projectNews">
-		<NavBar></NavBar>
+		<NavBar :show-title="false" :show-msg="true"></NavBar>
 		<div class="content">
 			<!-- 加载数据 -->
 			<Loading v-if="pageLoading"></Loading>
@@ -14,7 +14,7 @@
 					<Loading></Loading>
 				</div>
 				<!-- 返回顶部 -->
-				<BackTop v-show="showTopBtn" :hasTabBar="false"></BackTop>
+				<BackTop v-show="showTopBtn" :has-tab-bar="false"></BackTop>
 			</div>
 			<div style="height:20px"></div>
 		</div>

@@ -1,29 +1,33 @@
 <template>
-	<header id="navBar" class="navbar">
-		<!-- 判断：如果是二级页面，则添加fr样式，反之添加fl样式 -->
-		<a :class="['btn slide_right', secondPages.indexOf($route.name) !== -1 ? 'fr' : 'fl']" @click="pushRight">
-			<i class="icon_list"></i>
-		</a>			
-		<!-- 是否为二级页面，显示返回图标 -->
-		<a v-if="secondPages.indexOf($route.name) !== -1" class="btn slide_right fl" @click="goBack">
-			<i class="icon_back"></i>
+	<!-- 二级页面 -->
+	<Header v-if="isSecondPage">
+		<a slot="left" class="btn slide_right" @click="goBack"><i class="icon_back"></i></a>
+		<span slot="center">{{ title }}</span>
+		<a slot="right" class="btn slide_right" @click="pushRight"><i class="icon_list"></i></a>
+	</Header>
+	<!-- 非二级页面 -->
+	<Header v-else>
+		<a slot="left" class="btn slide_right" @click="pushRight"><i class="icon_list"></i></a>
+		<!-- 是否标题 -->
+		<span v-if="showTitle" slot="center">{{ title }}</span>
+		<router-link v-else slot="center" class="icon_logo" :to="{ name: 'ProjectNews' }"></router-link>
+		<!-- 是否显示搜索图标 -->
+		<a v-if="showSearch" slot="right" @click="gotoPage('Search')">
+			<i class="icon_search"></i>
 		</a>
-		<!-- 非二级页面，显示消息图标 -->
-		<a v-else class="btn fr" @click="toMsg">
+		<!-- 是否显示消息图标 -->
+		<a v-if="showMsg" slot="right" @click="gotoPage('Message')">
 			<span class="msg">
 				<i class="icon_email"></i>
 				<i v-show="unReadCount" class="new_msg"></i>
 			</span>
 		</a>
-		<!-- 二级页面标题 -->
-		<div class="title fl">			
-			<router-link v-if="$route.name == 'ProjectNews'" class="icon_logo" :to="{ name: 'ProjectNews' }"></router-link>
-			<span v-else>{{ navTitle }}</span>
-		</div>
-	</header>
+	</Header>
 </template>
 
 <script>
+	// 组件
+	import Header from "components/Common/Header.vue";
 	// Vuex
 	import { mapGetters } from 'vuex';
 	// 通用js
@@ -31,39 +35,51 @@
 
 	export default {
 		name: "navBar",
+		components: { Header },
 		/* 
-        * 获取父级传值
-        * 二级页面路由列表 secondPages
+		* 获取父级传值
+		* 是否为二级页面 isSecondPage
+		* 标题 title		
+		* 是否显示页面标题 showTitle
+		* 是否显示搜索图标 showSearch
+		* 是否显示消息图标 showMsg
         */
     	props: {
-			secondPages:{
-				type: Array,
-				default: () => {
-					return [];
-				}
+			isSecondPage:{
+				type: Boolean,
+				default: false,
 			},
+			title:{
+				type: String,
+				default: ''
+			},
+			showTitle:{
+				type: Boolean,
+				default: true,
+			},
+			showSearch:{
+				type: Boolean,
+				default: false,
+			},
+			showMsg:{
+				type: Boolean,
+				default: false,
+			}
 		},
 		computed: {
             ...mapGetters([ 'showTabBar', 'navTitle', 'goBackRoute', 'unReadCount' ]),
         },
 		data() {
-			return {
-				// 是否为二级页面
-				isSecondPage: false,
-			};
+			return {};
 		},
 		methods:{
 			// 向右推出
 			pushRight(){
 				this.$store.commit('SET_SHOW_SIDE_BAR', true);
 			},
-			// 跳转“搜索”页面
-			toSearch(){
-				Common.GotoPage('Search', {}, this);
-			},
-			// 跳转“消息中心”页面
-			toMsg(){
-				Common.GotoPage('Message', {}, this);
+			// 跳转页面
+			gotoPage(name){
+				Common.GotoPage(name, {}, this);
 			},
 			// 返回上一页
 			goBack(){

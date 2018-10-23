@@ -33,7 +33,7 @@
 		<!-- 版权信息 -->
 		<Copyright></Copyright>
 		<!-- 返回顶部 -->
-		<BackTop v-show="showTopBtn" :hasTabBar="false"></BackTop>
+		<BackTop v-show="showTopBtn" :has-tab-bar="false"></BackTop>
 	</div>
 </template>
 
@@ -72,9 +72,6 @@
 				// 资讯数量
 				listNum: 30
 			}
-		},
-		created(){
-			this.$store.commit('SET_NAV_TITLE', '信息搜索');
 		},
 		mounted(){
 			// 监听滚动事件

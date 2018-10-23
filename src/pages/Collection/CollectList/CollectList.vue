@@ -1,30 +1,35 @@
 <template>
 	<div id="collection">
-		<!-- 加载数据 -->
-		<Loading v-if="pageLoading"></Loading>
-		<!-- 加载结束 -->
-		<div v-else>
-			<!-- 分组列表 -->
-			<ul v-if="!noList"  class="collect_group_list">
-				<li v-for="(item, index) in groupList" :key="index" class="cont_frame collect_list_item" @click="toBookmark(item)">
-					<i class="list_icon icon_file"></i>{{ item.name }}<i class="icon_next"></i>
-				</li>
-			</ul>
-			<div v-else class="no_collect_list">
-				<p>暂无分组内容</p>
-			</div>			
-			<!-- 操作栏 -->
-			<div id="operateBar">
-				<ul class="operate_bar">
-					<li class="operate_item">
-						<i class="operate_icon icon_file_add_line" @click="toStore"></i>
-						<span class="operate_title">添加分组</span>
-					</li>
-					<li class="operate_item" @click="toManage">
-						<i class="operate_icon icon_file_setting_line"></i>
-						<span class="operate_title">管理分组</span>
+		<!-- 导航栏 -->
+		<NavBar title="收藏夹" :show-msg="true"></NavBar>
+		<!-- 页面内容 -->
+		<div class="content">
+			<!-- 加载数据 -->
+			<Loading v-if="pageLoading"></Loading>
+			<!-- 加载结束 -->
+			<div v-else>
+				<!-- 分组列表 -->
+				<ul v-if="!noList"  class="collect_group_list">
+					<li v-for="(item, index) in groupList" :key="index" class="cont_frame collect_list_item" @click="toBookmark(item)">
+						<i class="list_icon icon_file"></i>{{ item.name }}<i class="icon_next"></i>
 					</li>
 				</ul>
+				<div v-else class="no_collect_list">
+					<p>暂无分组内容</p>
+				</div>			
+				<!-- 操作栏 -->
+				<div id="operateBar">
+					<ul class="operate_bar">
+						<li class="operate_item">
+							<i class="operate_icon icon_file_add_line" @click="toStore"></i>
+							<span class="operate_title">添加分组</span>
+						</li>
+						<li class="operate_item" @click="toManage">
+							<i class="operate_icon icon_file_setting_line"></i>
+							<span class="operate_title">管理分组</span>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -32,6 +37,7 @@
 
 <script>
 	// 组件
+	import NavBar from "components/Common/NavBar.vue";
 	import Loading from "components/Common/Loading.vue";
 	// 通用JS
 	import Common from 'common/common.js';
@@ -43,7 +49,7 @@
 
 	export default {
 		name: "collection",
-		components: { Loading },
+		components: { NavBar, Loading },
 		mixins: [ Modal ],
 		data(){
 			return{
@@ -61,7 +67,6 @@
 		methods:{
 			// 初始化
 			init(){
-				this.$store.commit('SET_NAV_TITLE', '收藏夹');
 				this.getPageData();
 			},
 			// 获取分组数据

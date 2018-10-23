@@ -1,27 +1,33 @@
 <template>
 	<div id="userCenter">
-		<!-- 加载数据 -->
-		<Loading v-if="pageLoading"></Loading>
-		<!-- 加载结束 -->
-		<div v-else>
-			<!-- 账号信息 -->
-			<div class="cont_frame">
-				欢迎你，{{ userAccount.userName }}
+		<!-- 导航栏 -->
+		<NavBar title="个人中心" :show-title="false" :show-msg="true"></NavBar>
+		<!-- 页面内容 -->
+		<div class="content">
+			<!-- 加载数据 -->
+			<Loading v-if="pageLoading"></Loading>
+			<!-- 加载结束 -->
+			<div v-else>
+				<!-- 账号信息 -->
+				<div class="cont_frame">
+					欢迎你，{{ userAccount.userName }}
+				</div>
+				<ul class="user_info_list">
+					<li class="cont_frame user_info_list_item" @click="gotoChangePwd">
+						<i class="list_icon icon_password"></i>修改密码<i class="icon_next"></i>
+					</li>
+					<li class="cont_frame user_info_list_item" @click="logOut">
+						<i class="list_icon icon_exit"></i>退出登录<i class="icon_next"></i>
+					</li>
+				</ul>
 			</div>
-			<ul class="user_info_list">
-				<li class="cont_frame user_info_list_item" @click="gotoChangePwd">
-					<i class="list_icon icon_password"></i>修改密码<i class="icon_next"></i>
-				</li>
-				<li class="cont_frame user_info_list_item" @click="logOut">
-					<i class="list_icon icon_exit"></i>退出登录<i class="icon_next"></i>
-				</li>
-			</ul>
 		</div>
 	</div>
 </template>
 
 <script>
 	// 组件
+	import NavBar from "components/Common/NavBar.vue";
 	import Loading from "components/Common/Loading.vue";
 	// 通用js
 	import Common from 'common/common.js';
@@ -33,7 +39,7 @@
 
 	export default {
 		name: "userCenter",
-		components: { Loading },
+		components: { NavBar, Loading },
 		computed: {
             ...mapGetters([ 'userAccount' ]),
         },
@@ -43,13 +49,7 @@
 				pageLoading: false
 			}
 		},
-		created(){
-			this.init();
-		},
 		methods:{
-			init(){
-                this.$store.commit('SET_NAV_TITLE', '个人中心');
-			},
 			// 跳转修改密码
 			gotoChangePwd(){
 				Common.GotoPage('ChangePassword', {}, this);
