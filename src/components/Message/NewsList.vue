@@ -18,6 +18,8 @@
     // 通用JS
     import Common from 'common/common.js';
     import { SetCookie } from 'common/important.js';
+    // Api方法
+	import Api from "api/message.js";
     
 	export default {
         name: "newsList",
@@ -63,6 +65,14 @@
                     Common.GotoPage('NewsDetail', { newsId: item.id, type: this.pageType }, this);
                 }
                 else Common.GotoPage('NewsDetail', { newsId: item.id }, this);
+                
+                // 标记已读
+                Api.Readed([item.id])
+				.then(res => {
+					if(res.code == 200) return true;
+					else console.log(res.msg);
+				})
+				.catch(err => console.log(err))
 			},
         }
 	};

@@ -20,7 +20,7 @@
 					<ul class="operate_bar">
 						<li class="operate_item">
 							<i class="operate_icon icon_readed" @click="readAll"></i>
-							<span class="operate_title">全部已读</span>
+							<span class="operate_title">标记全部已读</span>
 						</li>
 					</ul>
 				</div>
@@ -56,7 +56,9 @@
 				// 是否显示提示
 				showHint: true,
 				// 消息列表
-				declareList: []
+				declareList: [],
+				// 资讯ID列表
+				idsList:[]
 			}
 		},
 		created(){
@@ -81,6 +83,13 @@
 					this.pageLoading = false;
 					if(res.code == 200){
 						this.declareList = res.data.declareList;
+
+						for(let i = 0; i < this.declareList.length; i++){
+							let data = this.declareList[i].data;
+							for(let j = 0; j < data.length; j++){
+								this.idsList.push(data[j].id);
+							}
+						}
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})
@@ -88,7 +97,15 @@
 			},
 			// 全部已读
 			readAll(){
-				
+				Api.Readed(this.idsList)
+				.then(res => {
+					this.pageLoading = false;
+					if(res.code == 200){
+						this.showWarnModel('消息已全部标记成已读！', 'success');
+					}
+					else this.showWarnModel(res.msg, 'warning');
+				})
+				.catch(err => console.log(err))
 			},
 			// 页面滚动
 			scrollPage(){				
