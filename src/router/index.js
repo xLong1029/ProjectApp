@@ -27,6 +27,8 @@ import BookmarkManage from 'pages/Collection/BookmarkList/BookmarkManage'
 import Search from 'pages/Search/Search'
 // 关于我们
 import About from 'pages/About/About'
+// 公司简介
+import CompanyIntro from 'pages/About/CompanyIntro'
 // 消息通知
 import Message from 'pages/Message/Message'
 
@@ -56,7 +58,9 @@ export default new Router({
             // 书签列表
             { path: '/BookmarkList', name: 'BookmarkList', component: BookmarkList },
             // 关于我们
-            { path: '/About', name: 'About', component: About },    
+            { path: '/About', name: 'About', component: About },
+            // 公司简介
+            { path: '/CompanyIntro', name: 'CompanyIntro', component: CompanyIntro },  
             // 未登录提示页
             { path: '/UnLogined', name: 'UnLogined', component: UnLogined },
         ]
