@@ -19,6 +19,8 @@
 					</li>
 				</ul>
 			</div>
+			<!-- 返回顶部 -->
+			<BackTop v-show="showTopBtn"></BackTop>
 		</div>
 	</div>
 </template>
@@ -27,17 +29,19 @@
 	// 组件
 	import Loading from "components/Common/Loading.vue";
 	import NewsList from "components/Message/NewsList.vue";
+	import BackTop from "components/Common/BackTop.vue";
 	// 通用js
 	import Common from 'common/common.js';
 	// 混合
 	import Modal from "mixins/modal.js";
+	import ScrollPage from 'mixins/scrollPage.js';
 	// Api方法
 	import Api from "api/message.js";
 
 	export default {
 		name: "msgCenter",
-		components: { Loading, NewsList },
-		mixins: [ Modal ],
+		components: { Loading, NewsList, BackTop },
+		mixins: [ ScrollPage, Modal ],
 		data(){
 			return{
 				// 是否加载
@@ -49,15 +53,21 @@
 		created(){
 			this.init();
 		},
+		mounted(){
+			// 监听滚动事件
+			window.addEventListener('scroll', this.scrollPage);
+		},
 		methods:{
 			init(){
-				this.$store.commit('SET_NAV_TITLE', '消息中心');
+				this.$store.commit('SET_NAV_TITLE', '今日资讯');
 				this.getMsg();
 			},
 			// 获取未读消息
 			getMsg(){
+				this.pageLoading = true;
 				Api.GetMessage()
 				.then(res => {
+					this.pageLoading = false;
 					if(res.code == 200){
 						this.declareList = res.data.declareList;
 					}
@@ -68,8 +78,25 @@
 			// 全部已读
 			readAll(){
 				
-			}
+			},
+			// 页面滚动
+			scrollPage(){				
+				let	scrollTop = $(window).scrollTop(),
+					windowH = $(window).height(),
+					documentH = $(document).height();
+
+				if(scrollTop > windowH/2){
+					this.showTopBtn = true;
+				}
+				else{
+					this.showTopBtn = false;
+				}
+			},
 		},
+		destroyed(){
+			// 移除滚动事件
+			window.removeEventListener("scroll",this.scrollPage);
+		}
 	};
 </script>
 

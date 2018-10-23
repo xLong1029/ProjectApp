@@ -3,13 +3,13 @@
 		<!-- 侧边栏组件 -->
 		<SideBar></SideBar>
 		<!-- 导航栏 -->
-		<NavBar :second-pages="secondPages"></NavBar>
+		<!-- <NavBar :second-pages="secondPages"></NavBar> -->
 		<!-- 页面内容 -->
-		<div class="content">
+		<!-- <div class="content"> -->
 			<transition name="animate">
 				<router-view></router-view>
 			</transition>
-		</div>
+		<!-- </div> -->
 		<!-- 版权信息 -->
 		<Copyright></Copyright>
 	</div>
@@ -28,7 +28,7 @@
 		data(){
 			return{
 				// 定义二级页面名称，作为动态props值
-       			secondPages:[ 'NewsDetail', 'NewsSource', 'ChangePassword', 'BookmarkList', 'Message', 'About' ],
+       			secondPages:[ 'NewsDetail', 'NewsSource', 'ChangePassword', 'BookmarkList' ],
 			}
 		}
 	};

@@ -16,9 +16,9 @@
 			</span>
 		</a>
 		<!-- 二级页面标题 -->
-		<div class="title fl">
-			<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>
-			<router-link v-else class="icon_logo" :to="{ name: 'ProjectNews' }"></router-link>
+		<div class="title fl">			
+			<router-link v-if="$route.name == 'ProjectNews'" class="icon_logo" :to="{ name: 'ProjectNews' }"></router-link>
+			<span v-else>{{ navTitle }}</span>
 		</div>
 	</header>
 </template>
@@ -38,7 +38,9 @@
     	props: {
 			secondPages:{
 				type: Array,
-				default: []
+				default: () => {
+					return [];
+				}
 			},
 		},
 		computed: {

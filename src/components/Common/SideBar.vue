@@ -50,6 +50,12 @@
 							icon: 'icon_news',
 							rQuery: {},
 							title: "申报资讯"
+						},
+						{
+							rName: 'Message',
+							icon: 'icon_email',
+							rQuery: {},
+							title: "今日资讯",
 						}
 					],
 					// 个人设置
@@ -65,12 +71,6 @@
 							icon: 'icon_collection',
 							rQuery: {},
 							title: "收藏夹"
-						},
-						{
-							rName: 'Message',
-							icon: 'icon_email',
-							rQuery: {},
-							title: "消息通知",
 						}
 					],					
 					// 搜索

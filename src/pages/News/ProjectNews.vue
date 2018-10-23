@@ -1,25 +1,29 @@
 <template>
 	<div id="projectNews">
-		<!-- 加载数据 -->
-		<Loading v-if="pageLoading"></Loading>
-		<!-- 加载结束 -->
-		<div v-else>
-			<!-- 资讯列表 -->
-			<NewsList :data="newsList" :num="listNum" :show-tag="true" :page-type="1"></NewsList>
-			<div class="clearfix"></div>
-			<!-- 加载更多 -->
-			<div v-if="loadMore" class="load_more">
-				<Loading></Loading>
+		<NavBar></NavBar>
+		<div class="content">
+			<!-- 加载数据 -->
+			<Loading v-if="pageLoading"></Loading>
+			<!-- 加载结束 -->
+			<div v-else>
+				<!-- 资讯列表 -->
+				<NewsList :data="newsList" :num="listNum" :show-tag="true" :page-type="1"></NewsList>
+				<div class="clearfix"></div>
+				<!-- 加载更多 -->
+				<div v-if="loadMore" class="load_more">
+					<Loading></Loading>
+				</div>
+				<!-- 返回顶部 -->
+				<BackTop v-show="showTopBtn" :hasTabBar="false"></BackTop>
 			</div>
-			<!-- 返回顶部 -->
-			<BackTop v-show="showTopBtn" :hasTabBar="false"></BackTop>
+			<div style="height:20px"></div>
 		</div>
-		<div style="height:20px"></div>
 	</div>
 </template>
 
 <script>
 	// 组件
+	import NavBar from "components/Common/NavBar.vue";
 	import Loading from "components/Common/Loading.vue";
 	import BackTop from "components/Common/BackTop.vue";
 	import NewsList from "components/News/NewsList.vue";
@@ -35,7 +39,7 @@
 
 	export default {
 		name: "projectNews",
-		components: { Loading, BackTop, NewsList },
+		components: { NavBar, Loading, BackTop, NewsList },
 		mixins: [ ScrollPage, Modal ],
 		data() {
 			return{

@@ -4,21 +4,13 @@
 		<Loading v-if="pageLoading"></Loading>
 		<!-- 加载结束 -->
 		<div v-else>
-			<!-- 表格标题 -->
-			<!-- <div class="table_title">
-				<span class="title fl">文章名称</span>
-				<span class="time fr">收藏日期</span>
-			</div> -->
-			<!-- 表格列表内容 -->
-			<!-- <div class="table_list_cont"> -->
-				<!-- 书签列表 -->
-				<div v-if="!noList">
-					<NewsList :data="newsList" :num="listNum" :show-all-title="true" :page-type="2"></NewsList>
-				</div>
-				<div v-else class="no_collect_list">
-					<p>暂无收藏内容</p>
-				</div>
-			<!-- </div> -->
+			<!-- 书签列表 -->
+			<div v-if="!noList">
+				<NewsList :data="newsList" :num="listNum" :show-all-title="true" :page-type="2"></NewsList>
+			</div>
+			<div v-else class="no_collect_list">
+				<p>暂无收藏内容</p>
+			</div>
 		</div>
 		<!-- 操作栏 -->
 		<div id="operateBar">
