@@ -4,7 +4,7 @@ export default {
     // 获取未读消息
 	GetMessage: () => {
         return new Promise((resolve,reject)=>{
-			tools.HttpPost(`/api/ProjectDeclare/Personal/GetMessage`, obj)
+			tools.HttpGet(`/api/ProjectDeclare/Personal/GetMessage`)
 			.then(res => resolve(res))
 			.catch(err => reject(err))
 		})

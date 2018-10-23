@@ -135,6 +135,7 @@
 						// 清空消息条数
 						this.$store.commit('SET_UN_READ_COUNT', 0);
 						this.showWarnModel('消息已全部标记成已读！', 'success');
+						this.noList = true;
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})

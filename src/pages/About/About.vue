@@ -9,7 +9,7 @@
 				<p>华建项目申报资讯平台</p>
 			</div>
 			<ul class="info_list">
-				<li class="info_list_item cont_frame" @click="gotoCompanyInfo">
+				<li class="info_list_item cont_frame" @click="gotoCompanyInfo" style="cursor: pointer;">
 					公司简介<i class="icon_next"></i>
 				</li>
 				<li class="info_list_item cont_frame">
