@@ -81,4 +81,8 @@
             color: #ccc;
         }
     }
+
+    .cancel_btn{
+		background: @cancel_btn_color;
+    }
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<div id="userCenter">
 		<!-- 导航栏 -->
-		<NavBar title="个人中心" :show-title="false" :show-msg="true"></NavBar>
+		<NavBar title="个人中心" :show-msg="true"></NavBar>
 		<!-- 页面内容 -->
 		<div class="content">
 			<!-- 加载数据 -->

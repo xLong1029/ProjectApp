@@ -1,7 +1,7 @@
 <template>
 	<div id="about">
 		<!-- 导航栏 -->
-		<NavBar :show-title="false" :show-msg="true"></NavBar>
+		<NavBar title="关于我们" :is-second-page="true"></NavBar>
 		<!-- 页面内容 -->
 		<div class="content">
 			<div class="info">

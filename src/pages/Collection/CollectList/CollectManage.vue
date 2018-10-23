@@ -197,8 +197,4 @@
 		.mr(30);
 		.mt(2);
 	}
-
-	.cancel_btn{
-		background: @cancel_btn_color;
-	}
 </style>

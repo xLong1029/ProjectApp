@@ -20,8 +20,8 @@
                     <section class="article_hint">* 温馨提示：请到源网址下载附件</section>
                     <!-- 原文链接 -->
                     <section class="article_org_link">原文来自：
-                        <!-- <a :href="newsCont.url" target="blank">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a> -->
-                        <a @click="openScoure(newsCont.url)">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a>
+                        <a :href="newsCont.url" target="blank">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a>
+                        <!-- <a @click="openScoure(newsCont.url)">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a> -->
                     </section>
                     <!-- 文章选择 -->
                     <section class="select_artc">
@@ -45,53 +45,53 @@
                         </li>
                     </ul>
                 </div>
-                <!-- 显示原文框 -->
-                <ScrollModal :show="showSoucreModel">
-                    <!-- 标题栏 -->
-                    <i class="icon_close" slot="h_right" @click="hideSoucre"></i>
-                    <div slot="h_center">查看原文</div>
-                    <div slot="content" class="news_source">
-                        <div class="news_source_cont">
-                            <iframe frameborder="0" width="100%" height="100%" :src="newsUrl">
-                            </iframe>
-                        </div>
-                    </div>
-                </ScrollModal>
-                <!-- 选择框 -->
-                <ScrollModal :show="showSelectModel">
-                    <!-- 标题栏 -->
-                    <button slot="h_left" class="button cancel_btn" @click="hideSelectModel">取消</button>
-                    <div slot="h_center">请选择收藏夹分组</div>
-                    <button slot="h_right" class="button comfir_btn" @click="saveCollect">完成</button>
-                    <div slot="content">
-                        <div class="add_group" @click="showAddGroup"> + 新增分组</div>
-                        <!-- 加载数据 -->
-                        <Loading v-if="listLoading"></Loading>
-                        <!-- 选择列表 -->
-                        <ul v-else class="group_list">                        
-                            <li :class="['group_list_item', selectIndex == index ? 'active' : '']" v-for="(item, index) in groupList" :key="index" @click="getGroupSelect(item, index)">{{ item.name }}</li>
-                        </ul>
-                    </div>
-                </ScrollModal>
-                <!-- 取消收藏提示窗口 -->
-                <PopModel :show="showDelComfir" @close="hideDelModel">
-                    <div slot="content"> 确认取消该收藏吗？ </div>
-                    <div slot="footer">				
-                        <button class="button fr" style="width: 48%;" @click="cancelCollect">确定</button>
-                        <button class="button cancel_btn fl" style="width: 48%;" @click="deleteCancel">取消</button>
-                    </div>
-                </PopModel>
-                <!-- 新增分组窗口 -->
-                <PopModel :show="showAddModel" @close="hideAddModel">
-                    <div slot="content">
-                        <input ref="groupName" type="text" v-model="groupName" placeholder="请填写分组名称"/>
-                    </div>
-                    <div slot="footer">				
-                        <button class="button fr" style="width: 48%;" @click="addGroup">确定</button>
-                        <button class="button cancel_btn fl" style="width: 48%;" @click="showAddModel = false;">取消</button>
-                    </div>
-                </PopModel>
             </div>
+            <!-- 显示原文框 -->
+            <ScrollModal :show="showSoucreModel">
+                <!-- 标题栏 -->
+                <i class="icon_close" slot="h_right" @click="hideSoucre"></i>
+                <div slot="h_center">查看原文</div>
+                <div slot="content" class="news_source">
+                    <div class="news_source_cont">
+                        <iframe frameborder="0" width="100%" height="100%" :src="newsUrl">
+                        </iframe>
+                    </div>
+                </div>
+            </ScrollModal>
+            <!-- 选择框 -->
+            <ScrollModal :show="showSelectModel">
+                <!-- 标题栏 -->
+                <button slot="h_left" class="button cancel_btn" @click="hideSelectModel">取消</button>
+                <div slot="h_center">请选择收藏夹分组</div>
+                <button slot="h_right" class="button comfir_btn" @click="saveCollect">完成</button>
+                <div slot="content">
+                    <div class="add_group" @click="showAddGroup"> + 新增分组</div>
+                    <!-- 加载数据 -->
+                    <Loading v-if="listLoading"></Loading>
+                    <!-- 选择列表 -->
+                    <ul v-else class="group_list">                        
+                        <li :class="['group_list_item', selectIndex == index ? 'active' : '']" v-for="(item, index) in groupList" :key="index" @click="getGroupSelect(item, index)">{{ item.name }}</li>
+                    </ul>
+                </div>
+            </ScrollModal>
+            <!-- 取消收藏提示窗口 -->
+            <PopModel :show="showDelComfir" @close="hideDelModel">
+                <div slot="content"> 确认取消该收藏吗？ </div>
+                <div slot="footer">				
+                    <button class="button fr" style="width: 48%;" @click="cancelCollect">确定</button>
+                    <button class="button cancel_btn fl" style="width: 48%;" @click="hideDelModel(false)">取消</button>
+                </div>
+            </PopModel>
+            <!-- 新增分组窗口 -->
+            <PopModel :show="showAddModel" @close="hideAddModel">
+                <div slot="content">
+                    <input ref="groupName" type="text" v-model="groupName" placeholder="请填写分组名称"/>
+                </div>
+                <div slot="footer">				
+                    <button class="button fr" style="width: 48%;" @click="addGroup">确定</button>
+                    <button class="button cancel_btn fl" style="width: 48%;" @click="hideAddModel(false)">取消</button>
+                </div>
+            </PopModel>
 		</div>
 	</div>
 </template>
@@ -297,10 +297,6 @@
 				})
                 .catch(err => console.log(err))
             },
-			// 取消“取消收藏”操作
-			deleteCancel(){
-				this.showDelComfir = false;
-			},
             // 取消收藏确认
             cancelCollect(){
                 Api.DeleteArticle([this.newsId])
@@ -416,10 +412,6 @@
         z-index: 99;
         color: @base_color;
         cursor: pointer;
-    }
-
-    .cancel_btn{
-		background: @cancel_btn_color;
     }
 
     .news_source{

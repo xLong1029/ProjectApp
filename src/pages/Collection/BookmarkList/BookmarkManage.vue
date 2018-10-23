@@ -262,10 +262,6 @@
 		width: 100%;
 	}
 
-	.cancel_btn{
-		background: @cancel_btn_color;
-	}
-
 	/* news_list */
     .news_li_title{
         font-weight: normal;

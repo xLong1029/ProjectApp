@@ -1,7 +1,7 @@
 <template>
 	<div id="bookmark">
 		<!-- 导航栏 -->
-		<NavBar :title="group.name" :show-msg="true"></NavBar>
+		<NavBar :title="group.name" :is-second-page="true"></NavBar>
 		<!-- 页面内容 -->
 		<div class="content">
 			<!-- 加载数据 -->
