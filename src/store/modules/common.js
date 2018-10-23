@@ -25,8 +25,8 @@ const common = {
 			// 提示类型，warning：警告，success：成功，fail：失败
 			type: 'warning',
 		},
-		// 有新通知
-		hasNewMsg: false
+		// 未读消息
+		unReadCount: 0
 	},
 	// 计算属性
 	getters: {
@@ -36,7 +36,7 @@ const common = {
 		navTitle: state => state.navTitle,
 		goBackRoute: state => state.goBackRoute,
 		warnModal: state => state.warnModal,
-		hasNewMsg: state => state.hasNewMsg
+		unReadCount: state => state.unReadCount,
 	},
 	// 用来处理数据的函数，只能同步操作
 	mutations: {
@@ -58,8 +58,8 @@ const common = {
 		SET_WARN_MODAL: (state, warnModal) => {
 			state.warnModal = warnModal;
 		},
-		SET_HAS_NEW_MSG: (state, hasNewMsg) => {
-			state.hasNewMsg = hasNewMsg;
+		SET_UN_READ_COUNT: (state, unReadCount) => {
+			state.unReadCount = unReadCount;
 		}
 	},
 }

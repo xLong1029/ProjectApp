@@ -2,27 +2,12 @@
 	<div id="newsList">
         <ul class="news_list">
             <li v-for="(item, index) in data" v-if="index < num" :key="index" class="news_li_item" @click="toDetail(item)">
-                <!-- 显示全部标题 -->
-                <div v-if="showAllTitle" class="news_li_cont full_title">
-                    <h2 class="news_li_title_all">{{ item.title }}</h2>
-                    <!-- 显示标签 -->
-                    <div v-if="showTag" class="news_li_tag_time">
-                        <span v-for="(tag, i) in item.keyWords" v-if="i < 4" :key="i" class="tag fl">{{ tag }}</span>
-                        <span v-if="showDate" class="news_li_time fr">{{ item.publishDate }}</span>	
-                    </div>
-                    <!-- 无标签 -->
-                    <span v-if="!showTag && showDate" class="news_li_time fl">{{ item.publishDate }}</span>	
-                </div>
-                <!-- 显示部分标题 -->
-                <div v-else class="news_li_cont">
-                    <h2 :class="['news_li_title', showTag ? 'full_width' : 'fl']">{{ item.title }}</h2>
-                    <!-- 显示标签 -->
-                    <div v-if="showTag" class="news_li_tag_time">
+                <div class="news_li_cont full_title">
+                    <h2 class="news_li_title_all">({{ index + 1 }}) {{ item.title }}</h2>
+                    <div  class="news_li_tag_time">
                         <span v-for="(tag, i) in item.keyWords" v-if="i < 4" :key="i" class="tag fl">{{ tag }}</span>
                         <span class="news_li_time fr">{{ item.publishDate }}</span>	
-                    </div>
-                    <!-- 无标签 -->
-                    <span v-else class="news_li_time fr">{{ item.publishDate }}</span>	
+                    </div>	
                 </div>
             </li>
         </ul>
@@ -40,9 +25,6 @@
         * 获取父级传值
         * 资讯列表 data
         * 显示数量 num
-        * 是否显示标签 showTag
-        * 是否显示全部标题 showAllTitle
-        * 是否显示日期 showDate
         * 页面类型 pageType: 1 父级页面是资讯列表页, 2 父级页面是消息通知页
         * 是否保存页面滚动高度 saveScrollH
         */
@@ -56,18 +38,6 @@
             num:{
                 type: Number,
                 default: 5
-            },
-            showTag:{
-                type: Boolean,
-                default: true
-            },
-            showAllTitle:{
-                type: Boolean,
-                default: true
-            },
-            showDate:{
-                type: Boolean,
-                default: true
             },
             pageType:{
                 type: Number,

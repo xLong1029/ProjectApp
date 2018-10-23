@@ -12,13 +12,9 @@
 		<a v-else class="btn fr" @click="toMsg">
 			<span class="msg">
 				<i class="icon_email"></i>
-				<i v-show="hasNewMsg" class="new_msg"></i>
+				<i v-show="unReadCount" class="new_msg"></i>
 			</span>
 		</a>
-		<!-- 非二级页面，显示搜索图标 -->
-		<!-- <a v-else class="btn fr" @click="toSearch">
-			<i class="icon_search"></i>
-		</a> -->
 		<!-- 二级页面标题 -->
 		<div class="title fl">
 			<span v-if="secondPages.indexOf($route.name) !== -1">{{ navTitle }}</span>
@@ -29,9 +25,9 @@
 
 <script>
 	// Vuex
-	import { mapGetters } from 'vuex'
+	import { mapGetters } from 'vuex';
 	// 通用js
-	import Common from 'common/common.js'
+	import Common from 'common/common.js';
 
 	export default {
 		name: "navBar",
@@ -46,16 +42,13 @@
 			},
 		},
 		computed: {
-            ...mapGetters([ 'showTabBar', 'navTitle', 'goBackRoute', 'hasNewMsg' ]),
+            ...mapGetters([ 'showTabBar', 'navTitle', 'goBackRoute', 'unReadCount' ]),
         },
 		data() {
 			return {
 				// 是否为二级页面
 				isSecondPage: false,
 			};
-		},
-		created() {
-			this.$store.commit('SET_HAS_NEW_MSG', true);
 		},
 		methods:{
 			// 向右推出

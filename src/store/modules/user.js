@@ -1,7 +1,8 @@
 import { GetLocalS } from 'common/important.js';
 import { SetAccount, ClearAccount } from 'common/account.js';
 // Api方法
-import Api from "api/login.js";
+import Login from "api/login.js";
+import Msg from "api/message.js";
 
 // 用户信息
 const user = {
@@ -36,18 +37,25 @@ const user = {
 	actions: {
         // 验证token
         CheckToken ({ commit , state }) {
-			Api.CheckToken(GetLocalS('project_token'))
+			Login.CheckToken(GetLocalS('project_token'))
 			.then(res => {
 				const result = res.data;
 				// 登录认证成功
-				if(res.code == 200)
-					SetAccount(commit, result);
+				if(res.code == 200) SetAccount(commit, result);
 				// 登录认证失败
 				else ClearAccount(commit);
 			})
 			.catch(err => {
 				ClearAccount(commit);
 			});
+
+			// 获取未读消息条数
+			Msg.GetMessage()
+			.then(res => {
+				if(res.code == 200) commit('SET_UN_READ_COUNT', res.data.unRead); 
+				else commit('SET_UN_READ_COUNT', 0);
+			})
+			.catch(err => console.log(err))
         }
     }
 }

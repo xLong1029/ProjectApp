@@ -12,8 +12,8 @@
 				<ul v-for="(navItem, index) in sideNav" :key="index" class="sidebar_nav">
 					<li v-for="(item, i) in navItem" :key="i" :class="['sidebar_li_item', item.rName === $route.name ? 'on' : '']" @click="hideSideBar(item.rName, item.rQuery)">
 						<span><i :class="item.icon"></i>{{ item.title }}</span>
-						<span v-if="item.rName == 'Message'">
-							<span class="new_msg">3</span>
+						<span v-if="item.rName == 'Message' && unReadCount">
+							<span class="new_msg">{{ unReadCount }}</span>
 						</span>
 					</li>
 				</ul>
@@ -37,7 +37,7 @@
 	export default {
 		name: "sideBar",
 		computed: {
-            ...mapGetters([ 'showSideBar', 'userAccount', 'isLogined' ]),
+            ...mapGetters([ 'showSideBar', 'userAccount', 'isLogined', 'unReadCount' ]),
         },
 		data() {
 			return {
@@ -205,12 +205,13 @@
 			background: @warn_color;
 			display: inline-block;
 			text-align: center;
-			line-height: 18*@rem;
+			line-height: 19*@rem;
 			right: 10*@rem;
 			top: 10*@rem;
 			color:#fff;
+			padding: 0 5*@rem;
+			min-width: 20*@rem;
 
-			.wd(20);
 			.ht(20);
 			.ft(12);
 			.border_radius(10);

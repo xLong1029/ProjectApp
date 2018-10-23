@@ -25,12 +25,13 @@
 	import NewsList from "components/News/NewsList.vue";
 	// Api方法
 	import Api from "api/news.js";
+	import Msg from "api/message.js";
 	// 混合
-	import ScrollPage from 'mixins/scrollPage.js'
-	import Modal from "mixins/modal.js"
+	import ScrollPage from 'mixins/scrollPage.js';
+	import Modal from "mixins/modal.js";
 	// 通用js
-	import Common from 'common/common.js'
-	import { GetLocalS, SetLocalS, DelLocalS } from 'common/important.js'
+	import Common from 'common/common.js';
+	import { GetLocalS, SetLocalS, DelLocalS } from 'common/important.js';
 
 	export default {
 		name: "projectNews",
@@ -71,6 +72,16 @@
 			init(){
 				// 重置返回路由
 				this.$store.commit('SET_GOBACK_ROUTE', { name: null, query: {} });
+				this.getMsg();
+			},
+			// 获取未读消息
+			getMsg(){
+				Msg.GetMessage()
+				.then(res => {
+					if(res.code == 200) this.$store.commit('SET_UN_READ_COUNT', res.data.unRead);
+					else this.$store.commit('SET_UN_READ_COUNT', 0);
+				})
+				.catch(err => console.log(err))
 			},
 			// 获取列表内容， num: 请求数量，more：是否加载更多
 			getListData(num, more){
