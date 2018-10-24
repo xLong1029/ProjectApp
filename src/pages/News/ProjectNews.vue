@@ -1,6 +1,8 @@
 <template>
 	<div id="projectNews">
+		<!-- 导航栏 -->
 		<NavBar :show-title="false" :show-msg="true"></NavBar>
+		<!-- 页面内容 -->
 		<div class="content">
 			<!-- 加载数据 -->
 			<Loading v-if="pageLoading"></Loading>
