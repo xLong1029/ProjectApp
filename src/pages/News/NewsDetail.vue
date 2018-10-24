@@ -53,8 +53,14 @@
                 <div slot="h_center">查看原文</div>
                 <div slot="content" class="news_source">
                     <div class="news_source_cont">
-                        <iframe frameborder="0" width="100%" height="100%" :src="newsUrl">
-                        </iframe>
+                        <object :data="newsUrl" width="100%" height="100%" type="text/html" border="0">
+                            <div class="news_source_hint">
+                                <p>源网站禁止在此查看，若想继续访问<br/>请长按复制以下链接到本地浏览器中打开：</p>
+                                <a class="link">{{ newsUrl }}</a>
+                            </div>
+                        </object>
+                        <!-- <iframe id="sourceUrl" frameborder="0" width="100%" height="100%" :src="newsUrl" sandbox="allow-scripts allow-same-origin">
+                        </iframe> -->
                     </div>
                 </div>
             </ScrollModal>
@@ -109,7 +115,8 @@
     // 获取url参数方法
     import { GetLocalS, GetUrlQuery } from "common/important.js";
     // 通用js
-    import Common from 'common/common.js'
+    import Common from 'common/common.js';
+    import axios from 'axios';
 
 	export default {
         name: "newsDetail",
@@ -345,6 +352,7 @@
             openScoure(url){
                 this.showSoucreModel = true;
                 this.newsUrl = url;
+
                 console.log(this.newsUrl);
             },
             // 隐藏源网站
@@ -416,6 +424,17 @@
 
     .news_source{
         margin-top: @navbar_h;
+
+        .news_source_hint{
+			text-align: center;
+			padding: 30*@rem 20*@rem;
+			overflow-wrap: break-word;
+
+			.link{
+				color: @base_color;
+				text-align: left;
+			}
+		}
         
         .news_source_cont{
             height: 100vh;
