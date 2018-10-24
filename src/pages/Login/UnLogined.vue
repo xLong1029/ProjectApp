@@ -1,15 +1,24 @@
 <template>
 	<div id="unLogined">
-		<div class="un_logined">
-			<p>你还未登录</p>
-			<router-link class="button login_btn" :to="{ name: 'Login' }">去登录</router-link>
+		<!-- 导航栏 -->
+		<NavBar :show-title="false" :show-msg="true"></NavBar>
+		<!-- 页面内容 -->
+		<div class="content">
+			<div class="un_logined">
+				<p>你还未登录</p>
+				<router-link class="button login_btn" :to="{ name: 'Login' }">去登录</router-link>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	// 组件
+	import NavBar from "components/Common/NavBar.vue";
+
 	export default {
 		name: "unLogined",
+		components: { NavBar },
 		data(){
 			return{}
 		},

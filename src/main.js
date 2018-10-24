@@ -17,7 +17,7 @@ Vue.use(Vuex);
 Vue.config.productionTip = false;
 
 // 免登录白名单
-const whiteList = [ 'Login', 'UnLogined', 'Register', 'NewsDetail', 'ProjectNews', 'Search' ];
+const whiteList = [ 'Login', 'UnLogined', 'Register', 'NewsDetail', 'ProjectNews', 'Search', 'About', 'CompanyIntro' ];
 
 // 全局路由配置
 // to: Route: 即将要进入的目标 路由对象

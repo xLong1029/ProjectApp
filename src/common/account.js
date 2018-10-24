@@ -25,4 +25,6 @@ export function ClearAccount(_commit){
     _commit('SET_USER_TOKEN', null);
     _commit('SET_USER_ACCOUNT', {});
     _commit('SET_IS_LOGINED', false);
+    // 清空消息条数
+    _commit('SET_UN_READ_COUNT', 0);
 }
