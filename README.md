@@ -1,8 +1,8 @@
-# projectApplication
+# projectApp
 
-项目申报资讯平台
+项目申报资讯平台App测试开发
 
-> 分支介绍
+## 分支介绍
 
 <p>
 master：线上主分支，保存打包后的文件<br/>
@@ -19,3 +19,28 @@ v1.0: 1.0版本分支<br/>
 v1.1: 1.1版本分支<br/>
 v1.2: 1.2版本分支
 </p>
+
+## 部分项目运行截图
+* 主页面-资讯
+
+![Image text](static/screen/screen-1.gif)
+
+* 登录
+
+![Image text](static/screen/screen-2.gif)
+
+* 今日资讯
+
+![Image text](static/screen/screen-3.gif)
+
+* 收藏夹
+
+![Image text](static/screen/screen-4.gif)
+
+* 搜索
+
+![Image text](static/screen/screen-5.gif)
+
+* 关于我们
+
+![Image text](static/screen/screen-6.gif)
