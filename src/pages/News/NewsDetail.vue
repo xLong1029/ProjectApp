@@ -21,7 +21,6 @@
                     <!-- 原文链接 -->
                     <section class="article_org_link">原文来自：
                         <a :href="newsCont.url" target="blank">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a>
-                        <!-- <a @click="openScoure(newsCont.url)">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a> -->
                     </section>
                     <!-- 文章选择 -->
                     <section class="select_artc">
@@ -46,18 +45,6 @@
                     </ul>
                 </div>
             </div>
-            <!-- 显示原文框 -->
-            <ScrollModal :show="showSoucreModel">
-                <!-- 标题栏 -->
-                <i class="icon_close" slot="h_right" @click="hideSoucre"></i>
-                <div slot="h_center">查看原文</div>
-                <div slot="content" class="news_source">
-                    <div class="news_source_cont">
-                        <iframe frameborder="0" width="100%" height="100%" :src="newsUrl">
-                        </iframe>
-                    </div>
-                </div>
-            </ScrollModal>
             <!-- 选择框 -->
             <ScrollModal :show="showSelectModel">
                 <!-- 标题栏 -->
@@ -340,12 +327,6 @@
                     else this.showWarnModel(res.msg, 'warning');
                 })
                 .catch(err => console.log(err))
-            },
-            // 打开源网站
-            openScoure(url){
-                this.showSoucreModel = true;
-                this.newsUrl = url;
-                console.log(this.newsUrl);
             },
             // 隐藏源网站
             hideSoucre(){
