@@ -17,11 +17,11 @@
                     <!-- 资讯内容 -->
                     <section class="article_cont" v-html="newsCont.htmlContext">{{ newsCont.htmlContext }}</section>
                     <!-- 提示 -->
-                    <section class="article_hint">* 温馨提示：请到源网址下载附件</section>
+                    <section class="article_hint">* 温馨提示：附件请到源网址下载</section>
                     <!-- 原文链接 -->
                     <section class="article_org_link">原文来自：
-                        <!-- <a :href="newsCont.url" target="blank">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a> -->
-                        <a @click="openScoure(newsCont.url)">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a>
+                        <!-- <a @click="openScoure(newsCont.url)">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击查看原文)</span></a> -->
+                        <a @click="getScoure(newsCont.url)">{{ newsCont.webSite }} <span v-if="newsCont.url">(点击获取原文链接)</span></a>
                     </section>
                     <!-- 文章选择 -->
                     <section class="select_artc">
@@ -53,14 +53,8 @@
                 <div slot="h_center">查看原文</div>
                 <div slot="content" class="news_source">
                     <div class="news_source_cont">
-                        <object :data="newsUrl" width="100%" height="100%" type="text/html" border="0">
-                            <div class="news_source_hint">
-                                <p>源网站禁止在此查看，若想继续访问<br/>请长按复制以下链接到本地浏览器中打开：</p>
-                                <a class="link">{{ newsUrl }}</a>
-                            </div>
-                        </object>
-                        <!-- <iframe id="sourceUrl" frameborder="0" width="100%" height="100%" :src="newsUrl" sandbox="allow-scripts allow-same-origin">
-                        </iframe> -->
+                        <iframe id="sourceUrl" frameborder="0" width="100%" height="100%" :src="newsUrl" sandbox="allow-scripts allow-same-origin">
+                        </iframe>
                     </div>
                 </div>
             </ScrollModal>
@@ -96,6 +90,18 @@
                 <div slot="footer">				
                     <button class="button fr" style="width: 48%;" @click="addGroup">确定</button>
                     <button class="button cancel_btn fl" style="width: 48%;" @click="hideAddModel(false)">取消</button>
+                </div>
+            </PopModel>
+            <!-- 原文链接提示窗口 -->
+            <PopModel :show="showSoModel" @close="hideSouModel">
+                <div slot="content">
+                    <p>以下是原文链接，可复制到本地浏览器中打开：</p>
+                    <p class="original_link">{{ newsUrl }}</p>
+                    <input ref="urlInput" v-model="newsUrl" class="url_input" type="text">
+                </div>
+                <div slot="footer">				
+                    <button class="button fr" style="width: 48%;" @click="copyLink">复制</button>
+                    <button class="button cancel_btn fl" style="width: 48%;" @click="hideSouModel(false)">取消</button>
                 </div>
             </PopModel>
 		</div>
@@ -166,6 +172,8 @@
                 showSoucreModel: false,
                 // 资讯源链接
                 newsUrl: '',
+                // 是否显示原文链接提示弹窗
+                showSoModel: false,
 			}
 		},
 		created(){
@@ -352,13 +360,26 @@
             openScoure(url){
                 this.showSoucreModel = true;
                 this.newsUrl = url;
-
-                console.log(this.newsUrl);
             },
             // 隐藏源网站
             hideSoucre(){
                 this.showSoucreModel = false;
-            }
+            },
+            // 获取原文链接
+            getScoure(url){
+                this.showSoModel = true;
+                this.newsUrl = url;
+            },
+            // 复制原文链接
+            copyLink(){
+                this.$refs.urlInput.select();
+                document.execCommand("Copy");
+                this.showSoModel = false;
+            },
+            // 关闭“获取原文链接”弹窗
+            hideSouModel(value){
+                this.showSoModel = value;
+            },            
         }
 	};
 </script>
@@ -424,21 +445,21 @@
 
     .news_source{
         margin-top: @navbar_h;
-
-        .news_source_hint{
-			text-align: center;
-			padding: 30*@rem 20*@rem;
-			overflow-wrap: break-word;
-
-			.link{
-				color: @base_color;
-				text-align: left;
-			}
-		}
         
         .news_source_cont{
             height: 100vh;
         }
+    }
+
+    .original_link{
+        color: @base_color;
+        overflow-wrap: break-word;
+    }
+
+    .url_input{
+        position: absolute;
+        opacity: 0;
+        top:0;
     }
     
     /* layout */
