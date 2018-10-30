@@ -1,6 +1,7 @@
-# projectApp
+# projectApplication
 
-> 项目申报App V1.2
+
+> 项目申报 V1.2
 
 <p>
 2018.10.23<br/>
@@ -12,3 +13,4 @@
 2018.10.24<br/>
 修复BUG：未登录页面导航栏不显示
 </p>
+

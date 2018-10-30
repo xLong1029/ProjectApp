@@ -14,7 +14,7 @@
 				</li>
 				<li class="info_list_item cont_frame">
 					当前版本
-					<span class="fr"><i class="tips">最新版</i>V1.2</span>
+					<span class="fr"><i class="tips">内测版</i>V1.2</span>
 				</li>
 			</ul>
 		</div>
