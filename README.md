@@ -23,24 +23,24 @@ v1.2: 1.2版本分支
 ## 部分项目运行截图
 * 主页面-资讯
 
-![Image text](screen/screen-1.gif)
+![Image text](unpackage/screen/screen-1.gif)
 
 * 登录
 
-![Image text](screen/screen-2.gif)
+![Image text](unpackage/screen/screen-2.gif)
 
 * 今日资讯
 
-![Image text](screen/screen-3.gif)
+![Image text](unpackage/screen/screen-3.gif)
 
 * 收藏夹
 
-![Image text](screen/screen-4.gif)
+![Image text](unpackage/screen/screen-4.gif)
 
 * 搜索
 
-![Image text](screen/screen-5.gif)
+![Image text](unpackage/screen/screen-5.gif)
 
 * 关于我们
 
-![Image text](screen/screen-6.gif)
+![Image text](unpackage/screen/screen-6.gif)
