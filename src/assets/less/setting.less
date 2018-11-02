@@ -73,21 +73,22 @@
 }
 
 // 边距设置
+.margin(@i, @j){ margin: @i*@rem @j*@rem}
 .mt(@edge){ margin-top: @edge*@rem; }
-
 .mb(@edge){ margin-bottom: @edge*@rem; }
-
 .ml(@edge){ margin-left: @edge*@rem; }
-
 .mr(@edge){ margin-right: @edge*@rem; }
 
+.padding(@i, @j){ padding: @i*@rem @j*@rem}
 .pt(@edge){ padding-top: @edge*@rem; }
-
 .pb(@edge){ padding-bottom: @edge*@rem; }
-
 .pl(@edge){ padding-left: @edge*@rem; }
-
 .pr(@edge){ padding-right: @edge*@rem; }
+
+.top(@edge){ top: @edge*@rem; }
+.bottom(@edge){ bottom: @edge*@rem; }
+.left(@edge){ left: @edge*@rem; }
+.right(@edge){ right: @edge*@rem; }
 
 // 字体大小
 .ft(@font){ font-size: @font*@rem; }
