@@ -40,7 +40,7 @@
 	import NavBar from "components/Common/NavBar.vue";
 	import Loading from "components/Common/Loading.vue";
 	import BackTop from "components/Common/BackTop.vue";
-	import NewsList from "components/News/NewsList.vue";
+	import NewsList from "components/Common/NewsList.vue";
 	// 通用JS
 	import Common from 'common/common.js';
 	import { DelLocalS, GetLocalS, GetUrlQuery } from 'common/important.js';
@@ -116,7 +116,8 @@
 								id: item.id,
 								title: item.title,
 								keyWords: item.keyWords,
-								time: item.strCollectTime
+								time: item.strCollectTime,
+								url: item.url
 							}
 						})
 

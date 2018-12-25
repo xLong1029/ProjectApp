@@ -40,7 +40,7 @@
 <script>
 	// 组件
 	import Loading from "components/Common/Loading.vue";
-	import NewsList from "components/News/NewsList.vue";
+	import NewsList from "components/Common/NewsList.vue";
 	import Copyright from "components/Common/Copyright.vue";
 	import BackTop from "components/Common/BackTop.vue";
 	// Api方法

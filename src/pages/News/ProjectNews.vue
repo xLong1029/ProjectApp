@@ -50,7 +50,7 @@
 				// 资讯列表
 				newsList: [],
 				// 列表滚动高度
-				listScrollH: 0,
+				listScrollH: 0
 			}
 		},
 		// 离开路由前导航钩子

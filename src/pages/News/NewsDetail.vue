@@ -93,15 +93,16 @@
     import Api from "api/news.js";
     // 混合
     import Modal from "mixins/modal.js";
+    import Collect from "mixins/collect.js";
     // 获取url参数方法
-    import { GetLocalS, GetUrlQuery } from "common/important.js";
+    import { GetUrlQuery } from "common/important.js";
     // 通用js
     import Common from 'common/common.js'
 
 	export default {
         name: "newsDetail",
         components: { NavBar, Loading, ScrollModal, PopModel },
-        mixins: [ Modal ],
+        mixins: [ Modal, Collect ],
 		data(){
 			return{
                 // 是否加载内容
@@ -128,20 +129,6 @@
                 },
                 // 资讯已删除
                 isDeleted: false,
-                // 是否显示选择弹窗
-                showSelectModel: false,
-                // 分组列表加载
-                listLoading: false,
-                // 分组列表
-                groupList: [],
-                // 选择值索引
-                selectIndex: -1,
-                // 是否显示删除提示弹窗
-                showDelComfir: false,
-                // 是否显示新增分组弹窗
-                showAddModel: false,
-                // 新增分组名称
-                groupName: '',
                 // 是否显示源文框
                 showSoucreModel: false,
                 // 资讯源链接
@@ -168,19 +155,6 @@
                             
                 this.getNewsCont(this.newsId);               
             },
-            // 获取分组信息
-            getGroups(){
-                this.listLoading = true;
-                Api.GetGroups()
-				.then(res => {
-                    this.listLoading = false;
-					if(res.code == 200){
-						this.groupList = res.data;
-					}
-					else this.showWarnModel(res.msg, 'warning');
-				})
-				.catch(err => console.log(err))
-            },
             // 获取资讯内容
             getNewsCont(newsId){
                 // 重置资讯编号
@@ -191,7 +165,8 @@
 				Api.DeclareDetail(newsId)
 				.then(res => {
 					if(res.code == 200){
-                        this.newsCont = res.data;                   
+                        this.newsCont = res.data;
+                        this.isCollect = res.data.isCollect;                  
 						// 停止加载
                         this.pageLoading = false;
                         
@@ -233,104 +208,6 @@
                     Common.GotoPage('NewsDetail', { newsId: id }, this);
                 }
                 this.getNewsCont(id);
-            },
-            // 收藏文章
-            collect(){
-                if(this.isDeleted) this.showWarnModel('已删除的资讯不可再收藏', 'warning');
-                // 判断是否已登录
-                if(GetLocalS('project_token')) {
-                    // 已收藏
-                    if(this.newsCont.isCollect){
-                        // 取消收藏
-                        this.showDelComfir = true;
-                        return true;
-                    }
-                    // 未收藏
-                    else{
-                        this.showSelectModel = true;
-                        this.getGroups();
-                    }                    
-                }
-			    else this.showWarnModel('登录账户才可以收藏', 'warning');
-            },
-            // 关闭分组弹窗
-            hideSelectModel(){
-                this.showSelectModel = false;
-                this.newsCont.group.id = 0;
-                this.selectIndex = -1;
-            },
-            // 选择分组
-            getGroupSelect(item, index){
-                this.newsCont.group.id = item.id;
-                this.selectIndex = index;
-            },
-            // 保存收藏
-            saveCollect(){
-                if(this.newsCont.group.id == 0){
-                    this.showWarnModel('请选择分组', 'warning');
-                    return false;
-                }
-
-                Api.AddArticle({
-                    declareId: this.newsId,
-                    groupId: this.newsCont.group.id
-                })
-				.then(res => {
-					if(res.code == 200) {
-                        this.getNewsCont(this.newsId);
-                        this.hideSelectModel();
-                    }
-					else this.showWarnModel(res.msg, 'warning');
-				})
-                .catch(err => console.log(err))
-            },
-            // 取消收藏确认
-            cancelCollect(){
-                Api.DeleteArticle([this.newsId])
-				.then(res => {
-					this.pageLoading = false;
-					if(res.code == 200){
-                        this.getNewsCont(this.newsId);
-                        this.deleteCancel();
-					}
-					else this.showWarnModel(res.msg, 'warning');
-				})
-				.catch(err => console.log(err))
-            },
-            // 关闭“取消收藏”弹窗
-			hideDelModel(value){
-				this.showDelComfir = value;
-            },
-            // 显示“新增分组”弹窗
-            showAddGroup(){
-                this.showAddModel = true;
-                this.groupName = '';
-            },
-            // 关闭“新增分组”弹窗
-            hideAddModel(value){
-                this.showAddModel = value;
-            },
-            // 新增分组
-            addGroup(){
-                if(this.groupName == ''){
-                    this.showWarnModel('请输入分组名称', 'warning');
-                    return false;
-                }
-
-                Api.AddGroup(this.groupName)
-                .then(res => {
-                    this.pageLoading = false;
-                    if(res.code == 200){
-                        this.getGroups();
-                        this.showAddModel = false;
-                    }
-                    else this.showWarnModel(res.msg, 'warning');
-                })
-                .catch(err => console.log(err))
-            },
-            // 隐藏源网站
-            hideSoucre(){
-                this.showSoucreModel = false;
             }
         }
 	};
@@ -340,59 +217,10 @@
     @import "../../assets/less/setting";
     @import "../../assets/less/article";
     @import "../../assets/less/operate_bar";
+    @import "../../assets/less/collect_set";
 
     .operate_item {
 		width: 100%;
-    }
-    
-    .is_collected{
-        color: @base_color;
-    }
-
-    .no_group_list{
-        p{
-            text-align: center;
-        }
-    }
-
-    .group_list, .no_group_list{
-        margin-top: @navbar_h + 46*@rem;
-        width: 100%;
-    }
-
-    .group_list_item{
-        display: block;
-        height: 46*@rem;
-        line-height: 46*@rem;
-		padding: 0 12*@rem;
-		border-bottom: @border_light;
-		text-align: center;
-		cursor: pointer;
-
-		&:hover{
-			color: @base_color;
-			background: @base_hover_color;
-        }
-        
-        &.active{
-            color: #fff;
-			background: @base_color;
-        }
-    }
-    .add_group{
-        display: block;
-        position: fixed;
-        width: 100%;
-        top: @navbar_h;
-        height: 46*@rem;
-        line-height: 46*@rem;
-        padding: 0 12*@rem;
-        text-align: center;
-        border-bottom: 1px solid lighten(@base_color, 30%);
-        background: #fff;
-        z-index: 99;
-        color: @base_color;
-        cursor: pointer;
     }
 
     .news_source{
@@ -400,13 +228,6 @@
         
         .news_source_cont{
             height: 100vh;
-        }
-    }
-    
-    /* layout */
-    @media screen and (min-width: 960px) {
-        .add_group {
-            width: @wrapper_max_w;
         }
     }
 </style>
