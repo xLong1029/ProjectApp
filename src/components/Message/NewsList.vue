@@ -56,15 +56,19 @@
         methods:{
             // 跳转到详情页
 			toDetail(item){
-                if(this.saveScrollH){
-                    // 列表滚动高度存缓存
-                    SetCookie('scrollH', $(window).scrollTop());
-                }
+                // 跳转详情页
+                // if(this.saveScrollH){
+                //     // 列表滚动高度存缓存
+                //     SetCookie('scrollH', $(window).scrollTop());
+                // }
                 
-                if(this.pageType){
-                    Common.GotoPage('NewsDetail', { newsId: item.id, type: this.pageType }, this);
-                }
-                else Common.GotoPage('NewsDetail', { newsId: item.id }, this);
+                // if(this.pageType){
+                //     Common.GotoPage('NewsDetail', { newsId: item.id, type: this.pageType }, this);
+                // }
+                // else Common.GotoPage('NewsDetail', { newsId: item.id }, this);
+
+                // 新窗口打开
+                window.open(item.url);
                 
                 // 标记已读
                 Api.Readed([item.id])
