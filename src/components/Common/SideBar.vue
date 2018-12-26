@@ -139,8 +139,6 @@
 		height: 100%;
 		top: 0;
 		z-index: 99;
-		-webkit-transition: all 0.3s ease;
-		-moz-transition: all 0.3s ease;
 		transition: all 0.3s ease;
 	}
 
