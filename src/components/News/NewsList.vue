@@ -2,15 +2,15 @@
 	<div id="newsList">
         <ul class="news_list">
             <li v-for="(item, index) in data" v-if="index < num" :key="index" class="news_li_item">
-                <div
-                    class="move_item"
-                    @touchstart="touchStart($event, index)"
-                    @touchmove="touchMove($event, index)"
-                    @touchend="touchEnd($event, index, item)"
-                    @mousedown="mouseDown($event, index)"
-                    @mouseup="mouseUp($event, index, item)"
-                >
-                    <div class="move_item_cont">
+                <div class="move_item">
+                    <div
+                        class="move_item_cont"
+                        @touchstart="touchStart($event, index)"
+                        @touchmove="touchMove($event, index)"
+                        @touchend="touchEnd($event, index, item)"
+                        @mousedown="mouseDown($event, index)"
+                        @mouseup="mouseUp($event, index, item)"
+                    >
                         <!-- 显示全部标题 -->
                         <div v-if="showAllTitle" class="news_li_cont full_title">
                             <h2 class="news_li_title_all">{{ item.title }}</h2>
