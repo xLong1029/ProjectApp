@@ -105,6 +105,9 @@ export default {
                 if(res.code == 200){
                     this.groupList = res.data;
                 }
+                else if(res.code == 0){
+                    this.showWarnModel(res.msg, 'warning');
+                }
                 else{
                     this.showWarnModel(res.msg, 'warning');
                     this.showSelectModel = false;
