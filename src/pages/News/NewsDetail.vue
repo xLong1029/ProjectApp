@@ -208,7 +208,40 @@
                     Common.GotoPage('NewsDetail', { newsId: id }, this);
                 }
                 this.getNewsCont(id);
-            }
+            },
+            // 保存收藏
+            saveCollect(){
+                if(this.newsCont.group.id == 0){
+                    this.showWarnModel('请选择分组', 'warning');
+                    return false;
+                }
+
+                Api.AddArticle({
+                    declareId: this.newsId,
+                    groupId: this.newsCont.group.id
+                })
+                .then(res => {
+                    if(res.code == 200) {
+                        this.getNewsCont(this.newsId);
+                        this.hideSelectModel();
+                    }
+                    else this.showWarnModel(res.msg, 'warning');
+                })
+                .catch(err => console.log(err))
+            },
+            // 取消收藏确认
+            cancelCollect(){
+                Api.DeleteArticle([this.newsId])
+                .then(res => {
+                    this.pageLoading = false;
+                    if(res.code == 200){
+                        this.getNewsCont(this.newsId);
+                        this.hideDelModel();
+                    }
+                    else this.showWarnModel(res.msg, 'warning');
+                })
+                .catch(err => console.log(err))
+            },
         }
 	};
 </script>

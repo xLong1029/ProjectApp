@@ -140,15 +140,27 @@
         mixins: [ Modal, Collect ],
 		data(){
 			return{
-                // x轴滑动开始位置
+                // X轴滑动开始位置
                 movewStartX: 0,
-                // x轴滑动结束位置
+                // X轴滑动结束位置
                 moveEndX: 0,
-                // x轴滑动距离
+                // X轴滑动距离
                 moveX: 0,
+                // Y轴滑动开始位置
+                movewStartY: 0,
+                // Y轴滑动结束位置
+                moveEndY: 0,
+                // Y轴滑动距离
+                moveY: 0,
                 // 当前数据在列表中的索引值
                 index: 0,
+                // 监听页面尺寸变化
+                timer: false,
             }
+        },
+        mounted() {
+            // 监听屏幕变化
+            window.addEventListener('resize', this.resizeSet);
         },
         methods:{
             // 跳转到详情页
@@ -165,14 +177,18 @@
             // },
             // 开始滑动
             touchStart(e, index){
-                e.preventDefault();
+                // e.preventDefault();
                 this.movewStartX = e.touches[0].pageX;
+                this.movewStartY = e.touches[0].pageY;
             },
             // 滑动事件
             touchMove(e, index){
-                e.preventDefault();                
+                // e.preventDefault();
                 this.moveEndX = e.changedTouches[0].pageX;
                 this.moveX = this.moveEndX - this.movewStartX;
+
+                this.moveEndY = e.changedTouches[0].pageY;
+                this.moveY = this.moveEndY - this.movewStartY;
             },
             // 结束滑动
             touchEnd(e, index, item){
@@ -180,19 +196,34 @@
             },
             // 鼠标按下
             mouseDown(e, index){
-                e.preventDefault();
+                // e.preventDefault();
                 this.movewStartX = e.pageX;
+                this.movewStartY = e.pageY;
             },
             // 鼠标弹起
             mouseUp(e, index, item){
                 this.moveEndX = e.pageX;
                 this.moveX = this.moveEndX - this.movewStartX;
 
+                this.moveEndY = e.pageY;
+                this.moveY = this.moveEndY - this.movewStartY;
+
                 this.moveDeal(index, item);
             },
             // 移动处理
             moveDeal(index, item){
-                // console.log(this.moveX);
+                // console.log('x轴距离：' + this.moveX);
+                // console.log('y轴距离：' + this.moveY);
+                
+                // 上下滑动不做任何操作
+                if(Math.abs(this.moveX) < Math.abs(this.moveY)){
+                    $('.move_item_collect').removeClass('show');
+                    $('.move_item').removeClass('move_left');
+                    $('.move_item').removeAttr('style');
+                    $('.move_item_cont').removeAttr('style');
+
+                    return false;
+                }
 
                 let winW = $(window).width(),
                     thisObj = $('.move_item').eq(index),
@@ -220,7 +251,7 @@
                         thisObj.width($(window).width() + 60);
                         contObj.width($(window).width());
                     }
-                    collectObj.addClass('show');               
+                    collectObj.addClass('show');
                     $('.move_item').removeClass('move_left');
                     thisObj.addClass('move_left');
                 }
@@ -233,6 +264,22 @@
 
                 // 重置滑动距离
                 this.moveX = 0;
+            },
+            // 屏幕变化
+            resizeSet(){
+                // 解决因为频繁触发resize导致页面很卡的问题
+                if (!this.timer) {
+                    $('.move_item_collect').removeClass('show');
+                    $('.move_item').removeClass('move_left');
+                    $('.move_item').removeAttr('style');
+                    $('.move_item_cont').removeAttr('style');
+                    this.timer = true;
+
+                    let that = this;
+                    setTimeout(function () {
+                        that.timer = false;
+                    }, 1000)
+                }
             },
             // 收藏文章
             collectAticle(index, item){
@@ -254,9 +301,51 @@
                 })
                 .then(res => {
                     if(res.code == 200) {
-                        $('.move_item').eq(index).find('.move_item_collect').addClass('is_collected');
+                        $('.move_item').eq(this.index).find('.move_item_collect').addClass('is_collected');
+                        $('.move_item').removeClass('move_left');
 
                         this.hideSelectModel();
+                    }
+                    else this.showWarnModel(res.msg, 'warning');
+                })
+                .catch(err => console.log(err))
+            },
+            // 保存收藏
+            saveCollect(){
+                if(this.newsCont.group.id == 0){
+                    this.showWarnModel('请选择分组', 'warning');
+                    return false;
+                }
+
+                Api.AddArticle({
+                    declareId: this.newsId,
+                    groupId: this.newsCont.group.id
+                })
+                .then(res => {
+                    if(res.code == 200) {
+                        $('.move_item').eq(this.index).find('.move_item_collect').addClass('is_collected');
+                        $('.move_item').removeClass('move_left');
+
+                        this.data[this.index].isCollect = true;
+
+                        this.hideSelectModel();
+                    }
+                    else this.showWarnModel(res.msg, 'warning');
+                })
+                .catch(err => console.log(err))
+            },
+            // 取消收藏确认
+            cancelCollect(){
+                Api.DeleteArticle([this.newsId])
+                .then(res => {
+                    this.pageLoading = false;
+                    if(res.code == 200){
+                        $('.move_item').eq(this.index).find('.move_item_collect').removeClass('is_collected');
+                        $('.move_item').removeClass('move_left');
+
+                        this.data[this.index].isCollect = false;
+
+                        this.hideDelModel();
                     }
                     else this.showWarnModel(res.msg, 'warning');
                 })

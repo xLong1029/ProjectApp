@@ -62,8 +62,6 @@
 }
 
 .move_item{
-    display: table;
-    // .pr(51);
     transition: all 0.2s ease;
 
     &:after{
@@ -71,13 +69,13 @@
     }
 
     &.move_left{
+        display: table;
         margin-left: -60px;
     }
 
     &_cont{
         width: 100%;
         float: left;
-        // border-right: @border_light;
     }
 
     &_collect{

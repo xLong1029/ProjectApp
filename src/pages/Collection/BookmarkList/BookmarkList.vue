@@ -71,21 +71,8 @@
 				}
 			}
 		},
-		// 离开路由前导航钩子
-        beforeRouteLeave (to, from, next) {
-			// alert('书签下一个路由：'+to.name);
-			// 进入资讯详情页
-			if(to.name === 'NewsDetail') next();
-			else{
-				// 清除列表数量和滚动高度缓存
-				DelLocalS('listNum');
-				DelLocalS('scrollH');				
-				next();
-			}
-        },
 		created(){
 			this.init();
-			this.scrollHSet();
 		},
 		mounted(){
 			// 监听滚动事件
@@ -100,6 +87,8 @@
 				// 设置标题
 				if(title) this.group.name = title;
 				else this.group.name = '书签列表';
+
+				this.getListData();
 			},
 			// 获取书签数据
 			getListData(){
@@ -127,13 +116,6 @@
 						this.$nextTick(() => {
 							this.listNum = this.newsList.length;	
 						})
-
-						// 获取到缓存滚动高度
-						if(this.listScrollH > 0){
-							this.$nextTick(() => {
-								scrollTo(0, _this.listScrollH);	
-							})
-						}
 					}
 					else this.showWarnModel(res.msg, 'warning');
 				})
@@ -167,7 +149,7 @@
 		},
 		destroyed(){
 			// 移除滚动事件
-			window.removeEventListener("scroll",this.scrollPage);
+			window.removeEventListener("scroll", this.scrollPage);
 		}
 	};
 </script>
