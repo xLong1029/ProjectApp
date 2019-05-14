@@ -13,7 +13,7 @@ module.exports = {
     // 设置api地址
     proxyTable: {
       '/api': {
-        target: 'http://172.16.3.82:8390/api/',
+        target: 'http://172.16.13.182:8390/api/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
